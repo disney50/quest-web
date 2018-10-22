@@ -16,11 +16,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.angularFireAuth.authState.subscribe(user => {
-      console.log(user);
-      
+    
       if (user) {
         this.authenticationState = user;
-      } else {
+        console.log(user);
+      } 
+      else {
         this.authenticationState = null;
       }
 

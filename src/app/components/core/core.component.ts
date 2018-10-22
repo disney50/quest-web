@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CoreComponent implements OnInit {
 
-  user: User;
+  questUser: User;
   firebaseUserId: string;
 
   constructor(private angularFireAuth: AngularFireAuth, private userService: UserService, private router: Router) { }
@@ -26,6 +26,7 @@ export class CoreComponent implements OnInit {
       if (user) {
         this.firebaseUserId = user.uid;
         this.userService.getUserByFirebaseUserId(this.firebaseUserId);
+        console.log(user);
       } 
       else {
         this.router.navigateByUrl('/login');
@@ -35,7 +36,8 @@ export class CoreComponent implements OnInit {
 
   getUser() {
     this.userService.user$.subscribe(user => {
-      this.user = user;
+      this.questUser = user;
+      console.log(this.questUser);
     });
   }
 
