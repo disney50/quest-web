@@ -7,23 +7,22 @@ import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ComponentsComponent } from './login/components/components.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComponentsComponent,
     LoginComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuth,
-    AngularFirestore,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    AngularFireAuth,
+    AngularFirestore
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
