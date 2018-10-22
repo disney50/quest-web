@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +10,24 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  public authenticationState = null;
+
+  constructor(private authService: AuthService, private router: Router, private angularFireAuth: AngularFireAuth) { }
 
   ngOnInit() {
+    this.angularFireAuth.authState.subscribe(user => {
+      console.log(user);
+      
+      if (user) {
+        this.authenticationState = user;
+      } else {
+        this.authenticationState = null;
+      }
+
+      if (this.authenticationState != null) {
+        this.router.navigateByUrl('/dashboard');
+      }
+    });
   }
 
   signIn() {
