@@ -10,7 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { CoreComponent } from './core/core.component';
+import { CoreComponent } from './components/core/core.component';
 
 @NgModule({
   declarations: [
