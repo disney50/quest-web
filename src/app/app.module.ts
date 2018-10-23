@@ -15,6 +15,7 @@ import { StoreModule } from '@ngrx/store';
 import * as reducers from './store/reducers';
 import * as effects from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot({user: reducers.userReducer}),
-    EffectsModule.forRoot([effects.UserEffects])
+    EffectsModule.forRoot([effects.UserEffects]),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [
     AngularFireAuth,

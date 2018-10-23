@@ -11,16 +11,17 @@ import { User } from 'src/app/models/user';
 })
 export class NavigateComponent implements OnInit {
 
-  user: User;
+  // user: User;
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.store.dispatch(new actions.GetUser);
 
-    this.store.select("user").subscribe(userState => {
-      this.user = userState.user;
-      console.log(this.user);
-    })
+    // this.store.dispatch(new actions.RequestGetUser());
+
+    // this.store.select("user").subscribe(userState => {
+    //   this.user = userState.user;
+    //   console.log(this.user);
+    // })
   }
 }

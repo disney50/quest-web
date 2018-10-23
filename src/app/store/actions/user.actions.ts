@@ -1,13 +1,13 @@
 import { Action } from '@ngrx/store';
 import { User } from 'src/app/models/user';
 
-export const GET_USER = "[user] GET_USER"
+export const REQUEST_GET_USER = "[user] GET_USER"
 export const GET_USER_SUCCESS = "[user] GET_QUEST_USER_SUCCESS";
 export const UNIMPLEMENTED_ACTION = "[user] UNIMPLEMENTED_ACTION"
 
-export class GetUser implements Action {
-    type = GET_USER;
-    constructor() {}
+export class RequestGetUser implements Action {
+    type = REQUEST_GET_USER;
+    constructor(public payload: string) {}
 }
 
 export class  GetUserSuccess implements Action {
@@ -21,6 +21,6 @@ export class UnimplementedAction implements Action {
 }
 
 export type UserActions = 
-    | GetUser
+    | RequestGetUser
     | GetUserSuccess
     | UnimplementedAction
