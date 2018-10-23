@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.angularFireAuth.authState.subscribe(user => {
-    
       if (user) {
         this.authenticationState = user;
       } 
