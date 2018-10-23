@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
     
       if (user) {
         this.authenticationState = user;
-        console.log(user);
       } 
       else {
         this.authenticationState = null;

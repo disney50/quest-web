@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
+import { User } from 'firebase';
 
 @Component({
-  selector: 'app-core',
-  templateUrl: './core.component.html',
-  styleUrls: ['./core.component.css']
+  selector: 'app-navigate',
+  templateUrl: './navigate.component.html',
+  styleUrls: ['./navigate.component.css']
 })
-export class CoreComponent implements OnInit {
+export class NavigateComponent implements OnInit {
 
   questUser: User;
   firebaseUserId: string;
@@ -26,7 +26,6 @@ export class CoreComponent implements OnInit {
       if (user) {
         this.firebaseUserId = user.uid;
         this.userService.getUserByFirebaseUserId(this.firebaseUserId);
-        console.log(user);
       } 
       else {
         this.router.navigateByUrl('/login');
@@ -36,8 +35,7 @@ export class CoreComponent implements OnInit {
 
   getUser() {
     this.userService.user$.subscribe(user => {
-      this.questUser = user;
-      console.log(this.questUser);
+      // this.questUser = user;
     });
   }
 

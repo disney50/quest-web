@@ -20,8 +20,6 @@ export class UserService {
         this.user = user.payload.doc.data() as User;
         this.user.userId = user.payload.doc.id;
         this.user$.next(this.user);
-        console.log(this.user);
-        console.log(this.user$);
       });
     });
   }

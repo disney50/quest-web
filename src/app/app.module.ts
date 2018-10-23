@@ -10,14 +10,14 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { CoreComponent } from './components/core/core.component';
+import { NavigateComponent } from './components/navigate/navigate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    CoreComponent
+    NavigateComponent
   ],
   imports: [
     BrowserModule,
