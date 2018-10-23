@@ -11,6 +11,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { NavigateComponent } from './components/navigate/navigate.component';
+import { StoreModule } from '@ngrx/store';
+import * as reducers from './store/reducers';
+import * as effects from './store/effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,9 @@ import { NavigateComponent } from './components/navigate/navigate.component';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forRoot({user: reducers.userReducer}),
+    EffectsModule.forRoot([effects.UserEffects])
   ],
   providers: [
     AngularFireAuth,
