@@ -15,3 +15,7 @@
     overflow-y: auto;
     align-items: center;
 }
+.register {
+    width: 200px;
+    height: 200px;
+}
