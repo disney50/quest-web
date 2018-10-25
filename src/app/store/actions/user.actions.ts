@@ -7,7 +7,7 @@ export const UNIMPLEMENTED_ACTION = "[user] UNIMPLEMENTED_ACTION"
 
 export class RequestGetUser implements Action {
     type = REQUEST_GET_USER;
-    constructor(public payload: string) {}
+    constructor() {}
 }
 
 export class  GetUserSuccess implements Action {

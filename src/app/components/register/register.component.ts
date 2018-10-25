@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
   femaleStatus: boolean = false;
   newUser: User = {} as User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -26,15 +27,21 @@ export class RegisterComponent implements OnInit {
     this.femaleStatus = true;
   }
 
-  registerNewUser(newUser: User) {
-    console.log(newUser);
+  checkNewUserGender() {
     if(this.maleStatus == true) {
-      newUser.gender = "MALE";
+      this.newUser.gender = "MALE";
     }
     else {
-      newUser.gender = "FEMALE";
+      this.newUser.gender = "FEMALE";
     }
-    console.log(newUser);
+    return this.newUser;
+  }
+
+  registerNewUser(): void {
+    this.checkNewUserGender();
+    this.userService.registerNewUser(this.newUser);
+    this.newUser = {} as User;
+    this.maleClickEvent();
   }
 
 }

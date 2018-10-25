@@ -12,10 +12,8 @@ export class UserEffects {
 
     @Effect()
     GetUser$ = this.actions$.ofType(actions.REQUEST_GET_USER).pipe(
-        switchMap((action: actions.RequestGetUser) => {            
-            console.log(action.payload);
-            
-            return this.angularFirestore.collection("users", ref => ref.where("firebaseUserId", "==", action.payload)).stateChanges();
+        switchMap((action: actions.RequestGetUser) => {                        
+            return this.angularFirestore.collection("users").stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
