@@ -15,7 +15,16 @@
     overflow-y: auto;
     align-items: center;
 }
-.register {
+
+.img-responsive {
     width: 200px;
     height: 200px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.custom-input {
+    border: solid white;
+    background: transparent;
 }
