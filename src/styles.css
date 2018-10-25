@@ -14,9 +14,10 @@
     display: flex;
     overflow-y: auto;
     align-items: center;
+    padding: 20px;
 }
 
-.img-responsive {
+.img-responsive-large {
     width: 200px;
     height: 200px;
     max-width: 100%;
@@ -24,7 +25,53 @@
     display: block;
 }
 
+.img-responsive-medium {
+    width: 150px;
+    height: 150px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
 .custom-input {
-    border: solid white;
     background: transparent;
+    color: white;
+    height: 40px;    
+}
+
+.custom-border {
+    border-width: 1px;
+    border-color: white;
+}
+
+.custom-btn {
+    background-color: rgba(3, 101, 100, 0.7);
+    border: none;
+    color: white;
+    height: 40px;  
+    width: 100%;  
+}
+
+.custom-deselected-btn {
+    background: transparent;
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    height: 40px;  
+}
+
+.custom-selected-btn {
+    background-color: rgba(3, 101, 100, 0.7);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    height: 40px; 
+}
+
+.custom-card {
+    background: transparent;
+    color: white;
+    border-radius: 0 !important;
+    border-width: 1px !important;
+    border: solid white;
 }

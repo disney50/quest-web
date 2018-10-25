@@ -4,6 +4,8 @@ export class User {
   name: string;
   surname: string;
   userId: string;
+  email: string;
+  password: string;
 
   constructor(userId: string, data: UserData) {
     this.firebaseUserId = data.firebaseUserId;
@@ -11,6 +13,8 @@ export class User {
     this.name = data.name;
     this.surname = data.surname;
     this.userId = userId;
+    this.email = data.email; 
+    this.password = data.password
   }
 
   toData(): UserData {
@@ -19,6 +23,8 @@ export class User {
       gender: this.gender,
       name: this.name,
       surname: this.surname,
+      email: this.email,
+      password: this.email
     } as UserData;
   } 
 }
@@ -28,4 +34,6 @@ export class UserData {
   gender: string;
   name: string;
   surname: string;
+  email: string;
+  password: string;
 }

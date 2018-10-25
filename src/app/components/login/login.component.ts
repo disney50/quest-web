@@ -21,29 +21,29 @@ export class LoginComponent implements OnInit {
   constructor(private store: Store<AppState>, private authService: AuthService, private router: Router, private angularFireAuth: AngularFireAuth) { }
 
   ngOnInit() {
-    this.angularFireAuth.authState.subscribe(user => {
-      if (user) {
-        this.authenticationState = user;
-        this.firebaseUserId = user.uid;
-        console.log(this.firebaseUserId);
-      } 
-      else {
-        this.authenticationState = null;
-      }
+    // this.angularFireAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     this.authenticationState = user;
+    //     this.firebaseUserId = user.uid;
+    //     console.log(this.firebaseUserId);
+    //   } 
+    //   else {
+    //     this.authenticationState = null;
+    //   }
 
-      if (this.authenticationState != null) {
-        console.log("SSSS");
+    //   if (this.authenticationState != null) {
+    //     console.log("SSSS");
         
-        this.store.dispatch(new actions.RequestGetUser(this.firebaseUserId));
-        this.router.navigateByUrl('/dashboard');
-      }
-    });
+    //     this.store.dispatch(new actions.RequestGetUser(this.firebaseUserId));
+    //     this.router.navigateByUrl('/dashboard');
+    //   }
+    // });
 
 
-    this.store.select("user").subscribe(userState => {
-      this.user = userState.user;
-      console.log(this.user);
-    })
+    // this.store.select("user").subscribe(userState => {
+    //   this.user = userState.user;
+    //   console.log(this.user);
+    // })
   }
 
   signIn() {
