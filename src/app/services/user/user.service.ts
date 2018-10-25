@@ -22,7 +22,9 @@ export class UserService {
   }
 
   registerNewUser(newUser: User) {
-    this.userCollection.add(newUser);
+    const newUserId = this.angularFirestore.createId();
+    newUser.userId = newUserId;
+    this.userCollection.doc(newUserId).set(newUser);
   }
 
 }
