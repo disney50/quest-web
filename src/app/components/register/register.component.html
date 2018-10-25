@@ -8,25 +8,29 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-12">
                 <div class="row justify-content-center align-items-center">
-                    <input class="custom-input custom-border mb-3 mr-3" type="email" style="width: 47%" placeholder="Enter email...">
-                    <input class="custom-input custom-border mb-3" type="password" style="width: 47%" placeholder="enter password...">
+                    <input [(ngModel)]="newUser.email" class="custom-input custom-border mb-3 mr-3" 
+                      type="email" style="width: 47%" placeholder="Enter email...">
+                    <input [(ngModel)]="newUser.password" class="custom-input custom-border mb-3" 
+                      type="password" style="width: 47%" placeholder="enter password...">
                 </div>
                 <div class="row justify-content-center align-items-center">
-                    <input class="custom-input custom-border mb-3 mr-3" type="text" style="width: 47%" placeholder="enter name...">
-                    <input class="custom-input custom-border mb-3" type="text" style="width: 47%" placeholder="enter surname...">
+                    <input [(ngModel)]="newUser.name" class="custom-input custom-border mb-3 mr-3" 
+                      type="text" style="width: 47%" placeholder="enter name...">
+                    <input [(ngModel)]="newUser.surname" class="custom-input custom-border mb-3" 
+                      type="text" style="width: 47%" placeholder="enter surname...">
                 </div>
                 <div class="row justify-content-center align-items-center">
-                    <button class="custom-deselected-btn mb-3" style="width: 50%" 
-                      (click)="maleClickEvent()" [ngClass]="maleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Male</button>
-                    <button class="custom-deselected-btn mb-3" style="width: 50%" 
-                      (click)="femaleClickEvent()" [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
+                    <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="maleClickEvent()" 
+                      [ngClass]="maleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Male</button>
+                    <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="femaleClickEvent()" 
+                      [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
                 </div>
               </div>
               <div class="custom-card">
                 <div class="card-body">
                     <img class="img-responsive-medium" src="../../../assets/codeez_logo.png"/>
                 </div>
-                <button class="custom-btn">
+                <button class="custom-btn" (click)="registerNewUser(newUser)">
                     Register
                 </button> 
               </div>     
