@@ -16,8 +16,10 @@
                     <input class="custom-input custom-border mb-1" type="text" style="width: 49%" placeholder="enter surname...">
                 </div>
                 <div class="row justify-content-center align-items-center">
-                    <button class="custom-selected-btn mb-1" style="width: 50%">Male</button>
-                    <button class="custom-deselected-btn mb-1" style="width: 50%">Female</button>
+                    <button class="custom-deselected-btn mb-1" style="width: 50%" 
+                      (click)="maleClickEvent()" [ngClass]="maleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Male</button>
+                    <button class="custom-deselected-btn mb-1" style="width: 50%" 
+                      (click)="femaleClickEvent()" [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
                 </div>
               </div>
               <div class="custom-card">
