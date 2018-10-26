@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
     private store: Store<AppState>,
     private explorerService: ExplorerService) {
 
-    this.store.dispatch(new actions.RequestGetPlanets,);
+    this.store.dispatch(new actions.RequestGetPlanets);
 
     this.store.select("planet").subscribe(planetState => {
       this.planets = planetState.planets;            

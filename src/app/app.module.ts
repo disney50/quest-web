@@ -31,8 +31,8 @@ import { RegisterComponent } from './components/register/register.component';
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({user: reducers.userReducer, planet: reducers.planetReducer}),
-    EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects]),
+    StoreModule.forRoot({user: reducers.userReducer, planet: reducers.planetReducer, explorer: reducers.explorerReducer}),
+    EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects, effects.ExplorerEffects]),
     StoreDevtoolsModule.instrument()
   ],
   providers: [
