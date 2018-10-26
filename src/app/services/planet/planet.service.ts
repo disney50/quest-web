@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { Planet, PlanetData } from 'src/app/models/planet';
 import { map } from 'rxjs/operators';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class PlanetService {
   planets$: Observable<any[]>;
   planetCollection: AngularFirestoreCollection<Planet>;
+  userPlanetCollection: AngularFirestoreCollection<Planet>;
 
   constructor(private angularFirestore: AngularFirestore) {
     this.planetCollection = this.angularFirestore.collection<Planet>("planets");
@@ -19,5 +21,10 @@ export class PlanetService {
         return actions.map(action => new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
       })
     );
+  }
+
+  addNewUserPlanet(signedInUser: User, currentPlanet: Planet) {
+    this.userPlanetCollection = this.angularFirestore.collection<Planet>("users/" + signedInUser.userId + "/planets");
+    this.userPlanetCollection.doc(currentPlanet.name).set(Object.assign({}, currentPlanet));
   }
 }

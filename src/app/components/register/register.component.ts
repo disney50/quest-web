@@ -5,6 +5,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { PlanetService } from 'src/app/services/planet/planet.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-register',
@@ -17,8 +20,13 @@ export class RegisterComponent implements OnInit {
   newUser: User = {} as User;
   planets: Planet[];
 
-  constructor(private userService: UserService, private store: Store<AppState>) {
-    this.store.dispatch(new actions.RequestGetPlanets);
+  constructor(private userService: UserService, 
+    private globalService: GlobalService,
+    private planetService: PlanetService,
+    private store: Store<AppState>,
+    private angularFirestore: AngularFirestore) {
+
+    this.store.dispatch(new actions.RequestGetPlanets,);
 
     this.store.select("planet").subscribe(planetState => {
       this.planets = planetState.planets;            
@@ -48,9 +56,22 @@ export class RegisterComponent implements OnInit {
     return this.newUser;
   }
 
-  registerNewUser(): void {
+  registerNewUser(selectedPlanet: Planet): void {
+    const newUserId = this.angularFirestore.createId();
+    this.newUser.userId = newUserId;
+
     this.checkNewUserGender();
-    this.userService.registerNewUser(this.newUser);
+
+    this.globalService.setSignedInUser(this.newUser);
+    console.log(this.globalService.signedInUser);
+
+    this.userService.registerNewUser(this.globalService.signedInUser);
+    
+    this.globalService.setCurrentPlanet(selectedPlanet);
+    console.log(this.globalService.currentPlanet);
+  
+    this.planetService.addNewUserPlanet(this.globalService.signedInUser, this.globalService.currentPlanet);
+
     this.newUser = {} as User;
     this.maleClickEvent();
   }
