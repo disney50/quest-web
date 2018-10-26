@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PlanetService {
-  planets$: Observable<any>;
+  planets$: Observable<any[]>;
   planetCollection: AngularFirestoreCollection<Planet>;
 
   constructor(private angularFirestore: AngularFirestore) {
@@ -18,7 +18,6 @@ export class PlanetService {
       map(actions => {
         return actions.map(action => new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
       })
-    )
+    );
   }
-
 }

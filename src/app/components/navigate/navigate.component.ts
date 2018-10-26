@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/app-state';
-import * as actions from '../../store/actions';
-import { User } from 'src/app/models/user';
-
 @Component({
   selector: 'app-navigate',
   templateUrl: './navigate.component.html',
@@ -13,15 +8,7 @@ export class NavigateComponent implements OnInit {
 
   // user: User;
 
-  constructor(private store: Store<AppState>) { }
+  constructor() { }
 
-  ngOnInit() {
-
-    // this.store.dispatch(new actions.RequestGetUser());
-
-    // this.store.select("user").subscribe(userState => {
-    //   this.user = userState.user;
-    //   console.log(this.user);
-    // })
-  }
+  ngOnInit() {}
 }

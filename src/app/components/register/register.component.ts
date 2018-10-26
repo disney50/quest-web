@@ -20,8 +20,7 @@ export class RegisterComponent implements OnInit {
   constructor(private userService: UserService, private store: Store<AppState>) {
     this.store.dispatch(new actions.RequestGetPlanets);
 
-    this.store.select("planet").subscribe(planetState =>{
-      console.log(planetState.planets);
+    this.store.select("planet").subscribe(planetState => {
       this.planets = planetState.planets;            
     })
    }
@@ -52,7 +51,6 @@ export class RegisterComponent implements OnInit {
   registerNewUser(): void {
     this.checkNewUserGender();
     this.userService.registerNewUser(this.newUser);
-    // this.explorerService.createNewExplorer(this.newUser);
     this.newUser = {} as User;
     this.maleClickEvent();
   }

@@ -3,11 +3,11 @@ import { Planet } from "../models/planet";
 
 export interface AppState {
 
-    userState: {
-        user: User;
-    }
-
     planetState: {
         planets: Planet[];
+    }
+    
+    userState: {
+        user: User;
     }
 }

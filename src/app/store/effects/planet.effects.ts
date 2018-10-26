@@ -11,9 +11,9 @@ export class PlanetEffects {
     constructor(private actions$: Actions, private angularFirestore: AngularFirestore) {}
 
     @Effect() 
-    GetPlanet$ = this.actions$.ofType(actions.REQUEST_GET_PLANETS).pipe(
-        switchMap((action: actions.RequestGetPlanets) => {
-            return this.angularFirestore.collection("planets").stateChanges();
+    GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_PLANETS).pipe(
+        switchMap(action => {
+            return this.angularFirestore.collection("planets").stateChanges()
         }),
         mergeMap(actions => actions),
         map(action => {
@@ -22,11 +22,5 @@ export class PlanetEffects {
             }
             return new actions.UnimplementedAction("");
         })
-    )
-
-    // GetSignedInUserPlanet$ = this.actions$.ofType(actions.REQUEST_GET_SIGNED_IN_USER_PLANETS).pipe(
-    //     switchMap((action: actions.RequestGetSignedInUserPlanets) => {
-    //         return this.angularFirestore.collection
-    //     })
-    // )
+    );
 }

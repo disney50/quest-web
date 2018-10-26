@@ -32,7 +32,7 @@ import { RegisterComponent } from './components/register/register.component';
     AppRoutingModule,
     FormsModule,
     StoreModule.forRoot({user: reducers.userReducer, planet: reducers.planetReducer}),
-    EffectsModule.forRoot([effects.UserEffects, effects.UserEffects]),
+    EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects]),
     StoreDevtoolsModule.instrument()
   ],
   providers: [
