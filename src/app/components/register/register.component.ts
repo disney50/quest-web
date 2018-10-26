@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
-import { ExplorerService } from 'src/app/services/explorer/explorer.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as actions from '../../store/actions';
+import { Planet } from 'src/app/models/planet';
 
 @Component({
   selector: 'app-register',
@@ -12,8 +15,16 @@ export class RegisterComponent implements OnInit {
   maleStatus: boolean = true;
   femaleStatus: boolean = false;
   newUser: User = {} as User;
+  planets: Planet[];
 
-  constructor(private userService: UserService, private explorerService: ExplorerService) { }
+  constructor(private userService: UserService, private store: Store<AppState>) {
+    this.store.dispatch(new actions.RequestGetPlanets);
+
+    this.store.select("planet").subscribe(planetState =>{
+      console.log(planetState.planets);
+      this.planets = planetState.planets;            
+    })
+   }
 
   ngOnInit() {
   }

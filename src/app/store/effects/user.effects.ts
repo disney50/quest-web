@@ -12,7 +12,7 @@ export class UserEffects {
 
     @Effect()
     GetUser$ = this.actions$.ofType(actions.REQUEST_GET_USER).pipe(
-        switchMap((action: actions.RequestGetUser) => {                        
+        switchMap(action => {                        
             return this.angularFirestore.collection("users").stateChanges();
         }),
         mergeMap(actions => actions),

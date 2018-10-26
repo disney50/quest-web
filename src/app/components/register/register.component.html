@@ -26,14 +26,18 @@
                       [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
                 </div>
               </div>
-              <div class="custom-card">
-                <div class="card-body">
-                    <img class="img-responsive-medium" src="../../../assets/codeez_logo.png"/>
-                </div>
-                <button class="custom-btn" (click)="registerNewUser(newUser)">
-                    Register
-                </button> 
-              </div>     
+              <ul class="list-group">
+                <li class="my-1 list-group-item list-group-item-action" *ngFor="let planet of planets">
+                  <div class="custom-card">
+                    <div class="card-body">
+                        <img class="img-responsive-medium" src="../../../assets/codeez_logo.png"/>
+                    </div>
+                    <button class="custom-btn" (click)="registerNewUser(newUser)">
+                        Register
+                    </button> 
+                  </div>
+                </li>
+              </ul>     
             </div>     
           </div>
         </div>
