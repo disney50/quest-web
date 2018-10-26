@@ -7,7 +7,8 @@ import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { PlanetService } from 'src/app/services/planet/planet.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { ExplorerService } from 'src/app/services/explorer/explorer.service';
+import { Explorer } from 'src/app/models/explorer';
 
 @Component({
   selector: 'app-register',
@@ -19,19 +20,21 @@ export class RegisterComponent implements OnInit {
   femaleStatus: boolean = false;
   newUser: User = {} as User;
   planets: Planet[];
+  newExplorer: Explorer = {} as Explorer;
+  newUserPlanet: Planet = {} as Planet;
 
   constructor(private userService: UserService, 
     private globalService: GlobalService,
     private planetService: PlanetService,
     private store: Store<AppState>,
-    private angularFirestore: AngularFirestore) {
+    private explorerService: ExplorerService) {
 
     this.store.dispatch(new actions.RequestGetPlanets,);
 
     this.store.select("planet").subscribe(planetState => {
       this.planets = planetState.planets;            
     })
-   }
+  }
 
   ngOnInit() {
   }
@@ -56,22 +59,41 @@ export class RegisterComponent implements OnInit {
     return this.newUser;
   }
 
-  registerNewUser(selectedPlanet: Planet): void {
-    const newUserId = this.angularFirestore.createId();
-    this.newUser.userId = newUserId;
-
+  createNewUser() {
     this.checkNewUserGender();
-
-    this.globalService.setSignedInUser(this.newUser);
-
-    this.userService.registerNewUser(this.globalService.signedInUser);
-    
-    this.globalService.setCurrentPlanet(selectedPlanet);
-  
-    this.planetService.addNewUserPlanet(this.globalService.signedInUser, this.globalService.currentPlanet);
-
-    this.newUser = {} as User;
-    this.maleClickEvent();
+    this.newUser = this.userService.createNewUserId(this.newUser);
+    this.registerNewUser();
   }
 
+  registerNewUser() {
+    this.userService.registerNewUser(this.newUser);
+    this.signInNewUser();
+  }
+
+  signInNewUser() {
+    this.globalService.setSignedInUser(this.newUser);
+    console.log(this.globalService.signedInUser);
+  }
+
+  addNewUserPlanet(planet: Planet) {
+    this.newUserPlanet = planet;
+    this.planetService.addNewUserPlanet(this.globalService.signedInUser, this.newUserPlanet);
+    this.setCurrentPlanet(this.newUserPlanet);
+  }
+
+  setCurrentPlanet(planet: Planet) {
+    this.globalService.setCurrentPlanet(planet);
+    console.log(this.globalService.currentPlanet);
+    this.createNewExplorer();
+  }
+
+  createNewExplorer() {
+    this.newExplorer = this.explorerService.createNewExplorer(this.globalService.signedInUser);
+    this.setCurrentExplorer();
+  }
+
+  setCurrentExplorer() {
+    this.globalService.setCurrentExplorer(this.newExplorer);
+    console.log(this.globalService.currentExplorer);
+  }
 }

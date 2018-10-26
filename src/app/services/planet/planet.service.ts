@@ -23,8 +23,8 @@ export class PlanetService {
     );
   }
 
-  addNewUserPlanet(signedInUser: User, currentPlanet: Planet) {
-    this.userPlanetCollection = this.angularFirestore.collection<Planet>("users/" + signedInUser.userId + "/planets");
-    this.userPlanetCollection.doc(currentPlanet.name).set(Object.assign({}, currentPlanet));
+  addNewUserPlanet(user: User, planet: Planet) {
+    this.userPlanetCollection = this.angularFirestore.collection<Planet>("users/" + user.userId + "/planets");
+    this.userPlanetCollection.doc(planet.name).set(Object.assign({}, planet));
   }
 }
