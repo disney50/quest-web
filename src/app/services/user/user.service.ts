@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { User, UserData } from 'src/app/models/user';
 import { map } from 'rxjs/operators';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
   users$: Observable<any>;
   userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private angularFirestore: AngularFirestore) {
+  constructor(private angularFirestore: AngularFirestore, private globalService: GlobalService) {
     this.userCollection = angularFirestore.collection<User>("users");
 
     this.users$ = angularFirestore.collection("users").snapshotChanges().pipe(
@@ -25,6 +26,7 @@ export class UserService {
     const newUserId = this.angularFirestore.createId();
     newUser.userId = newUserId;
     this.userCollection.doc(newUserId).set(newUser);
+    this.globalService.setSignedInUser(newUser);
   }
 
 }
