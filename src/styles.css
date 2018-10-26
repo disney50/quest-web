@@ -83,3 +83,8 @@
     border-width: 1px !important;
     border: solid white;
 }
+
+.horizontal-center {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -1,7 +1,7 @@
 <div class="middle bg">
   <div class="container">
         <div class="row justify-content-center align-items-center">
-          <div class="col-4">
+          <div class="col-sm-12 col-lg-6">
             <div class="row justify-content-center align-items-center pb-3">
               <img class="img-responsive-medium" src="../../../assets/ic_logo.png"/>
             </div>
@@ -25,20 +25,25 @@
                     <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="femaleClickEvent()" 
                       [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
                 </div>
-              </div>
-              <ul class="list-group">
-                <li class="my-1 list-group-item list-group-item-action" *ngFor="let planet of planets">
-                  <div class="custom-card">
-                    <div class="card-body">
-                        <img class="img-responsive-medium" src="../../../assets/codeez_logo.png"/>
-                    </div>
-                    <button class="custom-btn" (click)="registerNewUser(newUser)">
-                        Register
-                    </button> 
-                  </div>
-                </li>
-              </ul>     
+              </div>   
             </div>     
+          </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-12">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-6 col-lg-3" *ngFor="let planet of planets">
+                <div class="custom-card mb-3">
+                  <div class="card-body">
+                    <img class="img-responsive-small horizontal-center" src="../../../assets/codeez_logo.png"/>
+                    <h4 class="text-center">{{planet.name}}</h4>
+                  </div>
+                  <button class="custom-btn" (click)="registerNewUser(newUser)">
+                    Register
+                  </button> 
+                </div> 
+              </div>
+            </div>
           </div>
         </div>
   </div>
