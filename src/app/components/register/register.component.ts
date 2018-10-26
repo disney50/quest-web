@@ -63,12 +63,10 @@ export class RegisterComponent implements OnInit {
     this.checkNewUserGender();
 
     this.globalService.setSignedInUser(this.newUser);
-    console.log(this.globalService.signedInUser);
 
     this.userService.registerNewUser(this.globalService.signedInUser);
     
     this.globalService.setCurrentPlanet(selectedPlanet);
-    console.log(this.globalService.currentPlanet);
   
     this.planetService.addNewUserPlanet(this.globalService.signedInUser, this.globalService.currentPlanet);
 
