@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
     this.store.dispatch(new actions.RequestGetSignedInUser);
 
     this.store.select("user").subscribe(userState => {
-      userState.user = this.globalService.signedInUser;            
+      userState.signedInUser = this.globalService.signedInUser;            
     })
   }
 
