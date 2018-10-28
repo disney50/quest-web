@@ -29,8 +29,8 @@ export class PlanetEffects {
 
     @Effect()
     GetCurrentPlanet$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_PLANET).pipe(
-        switchMap(action => {                        
-            return this.angularFirestore.collection("users/" + this.globalService.signedInUser + "/planets").stateChanges();
+        switchMap(action => {
+            return this.angularFirestore.collection("users/" + this.globalService.signedInUser + "/planets", ref => ref.where('name', '==', this.globalService.currentPlanet.name)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
