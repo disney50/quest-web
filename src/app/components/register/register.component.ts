@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 import { Explorer } from 'src/app/models/explorer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit {
     private globalService: GlobalService,
     private planetService: PlanetService,
     private store: Store<AppState>,
-    private explorerService: ExplorerService) {
+    private explorerService: ExplorerService,
+    private router: Router) {
 
     this.store.dispatch(new actions.RequestGetPlanets);
 
@@ -36,8 +38,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   maleClickEvent() {
     this.maleStatus = true;
@@ -95,5 +96,6 @@ export class RegisterComponent implements OnInit {
   setCurrentExplorer() {
     this.globalService.setCurrentExplorer(this.newExplorer);
     console.log(this.globalService.currentExplorer);
+    this.router.navigateByUrl("/dashboard");
   }
 }
