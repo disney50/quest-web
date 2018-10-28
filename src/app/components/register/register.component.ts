@@ -73,7 +73,11 @@ export class RegisterComponent implements OnInit {
 
   signInNewUser() {
     this.globalService.setSignedInUser(this.newUser);
-    console.log(this.globalService.signedInUser);
+    this.store.dispatch(new actions.RequestGetUser);
+
+    this.store.select("user").subscribe(userState => {
+      userState.user = this.globalService.signedInUser;            
+    })
   }
 
   addNewUserPlanet(planet: Planet) {
@@ -84,7 +88,6 @@ export class RegisterComponent implements OnInit {
 
   setCurrentPlanet(planet: Planet) {
     this.globalService.setCurrentPlanet(planet);
-    console.log(this.globalService.currentPlanet);
     this.createNewExplorer();
   }
 
@@ -95,7 +98,6 @@ export class RegisterComponent implements OnInit {
 
   setCurrentExplorer() {
     this.globalService.setCurrentExplorer(this.newExplorer);
-    console.log(this.globalService.currentExplorer);
     this.router.navigateByUrl("/dashboard");
   }
 }
