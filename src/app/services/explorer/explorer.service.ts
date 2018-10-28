@@ -29,6 +29,7 @@ export class ExplorerService {
     newExplorer.name = user.name;
     newExplorer.surname = user.surname;
     newExplorer.xp = "0";
+    newExplorer.userId = user.userId;
     this.addNewPlanetExplorer(newExplorer, user);
     return newExplorer;
   }

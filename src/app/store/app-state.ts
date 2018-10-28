@@ -14,6 +14,6 @@ export interface AppState {
     }
 
     explorerState: {
-        explorers: Explorer[];
+        currentExplorer: Explorer;
     }
 }

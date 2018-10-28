@@ -103,6 +103,13 @@ export class RegisterComponent implements OnInit {
 
   setCurrentExplorer() {
     this.globalService.setCurrentExplorer(this.newExplorer);
+
+    this.store.dispatch(new actions.RequestGetCurrentExplorer);
+
+    this.store.select("explorer").subscribe(explorerState => {
+      explorerState.currentExplorer = this.globalService.currentExplorer;            
+    })
+
     this.router.navigateByUrl("/dashboard");
   }
 }

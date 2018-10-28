@@ -14,14 +14,14 @@ export class ExplorerEffects {
         private globalService: GlobalService) {}
 
     @Effect()
-    GetExplorers$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
+    GetCurrentExplorer$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_EXPLORER).pipe(
         switchMap(action => {                        
-            return this.angularFirestore.collection(this.globalService.currentPlanet + "explorers/entries").stateChanges();
+            return this.angularFirestore.collection(this.globalService.currentPlanet.name + "/explorers/entries", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetExplorerSuccess(new Explorer(action.payload.doc.data() as ExplorerData));
+                return new actions.GetCurrentExplorerSuccess(new Explorer(action.payload.doc.id, action.payload.doc.data() as ExplorerData));
             }
             return new actions.UnimplementedAction("");
         })

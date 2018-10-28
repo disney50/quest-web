@@ -1,9 +1,11 @@
 export class Explorer {
+    userId: string;
     name: string;
     surname: string;
     xp: string;
 
-    constructor(data: ExplorerData) {
+    constructor(userId: string, data: ExplorerData) {
+      this.userId = userId;
       this.name = data.name;
       this.surname = data.surname;
       this.xp = data.xp;
