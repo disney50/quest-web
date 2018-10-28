@@ -5,12 +5,12 @@ export function userReducer(state = intitialUserState, action: actions.UserActio
     const newState = {...state};
 
     switch(action.type) {
-        case actions.REQUEST_GET_USER:
-            newState.user = null;
+        case actions.REQUEST_GET_SIGNED_IN_USER:
+            newState.signedInUser = null;
             return newState;
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
-            newState.user = getUserSuccessAction.payload;
+            newState.signedInUser = getUserSuccessAction.payload;
             return newState;
         default:
             return state;        
@@ -18,5 +18,5 @@ export function userReducer(state = intitialUserState, action: actions.UserActio
 }
 
 export const intitialUserState = {
-    user: null
+    signedInUser: null
 }

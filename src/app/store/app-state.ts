@@ -5,11 +5,12 @@ import { Explorer } from "../models/explorer";
 export interface AppState {
 
     userState: {
-        user: User;
+        signedInUser: User;
     }
 
     planetState: {
         planets: Planet[];
+        currentPlanet: Planet;
     }
 
     explorerState: {
