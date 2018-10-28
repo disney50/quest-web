@@ -10,7 +10,6 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
-import { NavigateComponent } from './components/navigate/navigate.component';
 import { StoreModule } from '@ngrx/store';
 import * as reducers from './store/reducers';
 import * as effects from './store/effects';
@@ -23,7 +22,6 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    NavigateComponent,
     RegisterComponent
   ],
   imports: [
