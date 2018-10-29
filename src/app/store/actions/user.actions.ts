@@ -2,7 +2,8 @@ import { Action } from '@ngrx/store';
 import { User } from 'src/app/models/user';
 
 export const REQUEST_GET_SIGNED_IN_USER = "[user] REQUEST_GET_SIGNED_IN_USER"
-export const GET_USER_SUCCESS = "[user] GET_USER_SUCCESS";
+export const GET_SIGNED_IN_USER_SUCCESS = "[user] GET_USER_SUCCESS";
+export const REMOVE_SIGNED_IN_USER = "[user] REMOVE_SIGNED_IN_USER";
 export const UNIMPLEMENTED_ACTION = "[user] UNIMPLEMENTED_ACTION"
 
 export class RequestGetSignedInUser implements Action {
@@ -10,9 +11,14 @@ export class RequestGetSignedInUser implements Action {
     constructor() {}
 }
 
-export class  GetUserSuccess implements Action {
-    type = GET_USER_SUCCESS;
+export class GetSignedInUserSuccess implements Action {
+    type = GET_SIGNED_IN_USER_SUCCESS;
     constructor(public payload: User) {}
+}
+
+export class RemoveSignedInUser implements Action {
+    type = REMOVE_SIGNED_IN_USER;
+    constructor() {}
 }
 
 export class UnimplementedAction implements Action {
@@ -22,5 +28,6 @@ export class UnimplementedAction implements Action {
 
 export type UserActions = 
     | RequestGetSignedInUser
-    | GetUserSuccess
+    | GetSignedInUserSuccess
+    | RemoveSignedInUser
     | UnimplementedAction

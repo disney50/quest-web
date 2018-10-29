@@ -14,16 +14,27 @@ export class UserEffects {
         private globalService: GlobalService) {}
 
     @Effect()
-    GetUser$ = this.actions$.ofType(actions.REQUEST_GET_SIGNED_IN_USER).pipe(
+    GetSignedInUser$ = this.actions$.ofType(actions.REQUEST_GET_SIGNED_IN_USER).pipe(
         switchMap(action => {                        
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetUserSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+                return new actions.GetSignedInUserSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
             }
             return new actions.UnimplementedAction("");
+        })
+    )
+
+    @Effect()
+    RemoveSignedInUser$ = this.actions$.ofType(actions.REMOVE_SIGNED_IN_USER).pipe(
+        switchMap(action => {                        
+            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            return new actions.RemoveSignedInUser();
         })
     )
 }
