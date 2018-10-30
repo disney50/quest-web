@@ -98,3 +98,21 @@
     border: transparent;
     background: transparent;
 }
+
+.dropdown-menu {
+    background-color: rgba(107, 157, 160);
+    border-radius: 0%;
+}
+
+.dropdown-menu a:hover {
+    background-color: transparent;
+    color: rgba(107, 157, 160);
+}
+
+.dropdown-menu:hover {
+    background-color: white;
+}
+
+.dropdown-item {
+    color: white;
+}
