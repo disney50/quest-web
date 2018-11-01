@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -7,14 +8,19 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  user: User = {} as User;
 
-  public authenticationState = null;
-  user: User;
-  firebaseUserId: string;
-
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() { 
+  }
+
+  navigateRegister() {
+    this.router.navigateByUrl("register");
+  }
+
+  signIn() {
+    
   }
 
 }

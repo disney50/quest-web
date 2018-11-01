@@ -60,6 +60,14 @@
     width: 100%;  
 }
 
+.custom-btn-light {
+    background-color: rgba(85, 119, 123, 0.7);
+    border: none;
+    color: white;
+    height: 40px;  
+    width: 100%; 
+}
+
 .custom-deselected-btn {
     background: transparent;
     border-width: 1px;
