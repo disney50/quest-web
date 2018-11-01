@@ -12,7 +12,15 @@ export class GlobalService {
   currentExplorer: Explorer = {} as Explorer;
   currentPlanet: Planet = {} as Planet;
 
+  email: string;
+  password: string;
+
   constructor() { }
+
+  setEmailAndPassword(user: User) {
+    this.email = user.email;
+    this.password = user.password;
+  }
 
   setSignedInUser(signedInUser: User): void {
     this.signedInUser = signedInUser;

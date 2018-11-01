@@ -28,6 +28,20 @@ export class UserEffects {
     )
 
     @Effect()
+    SignInUser$ = this.actions$.ofType(actions.REQUEST_USER_SIGN_IN).pipe(
+        switchMap(action => {                        
+            return this.angularFirestore.collection("users", ref => ref.where('email', '==', this.globalService.email).where('password', '==', this.globalService.password).limit(1)).stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            if(action.type === "added") {
+                return new actions.UserSignInSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+            }
+            return new actions.UnimplementedAction("");
+        })
+    )
+
+    @Effect()
     RemoveSignedInUser$ = this.actions$.ofType(actions.REMOVE_SIGNED_IN_USER).pipe(
         switchMap(action => {                        
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();

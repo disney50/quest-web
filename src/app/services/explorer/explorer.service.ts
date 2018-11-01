@@ -15,12 +15,6 @@ export class ExplorerService {
 
   constructor(private angularFirestore: AngularFirestore, 
     private globalService: GlobalService) {      
-
-    // this.explorers$ = this.angularFirestore.collection(this.globalService.currentPlanet.name + "/explorers/entries").snapshotChanges().pipe(
-    //   map(actions => {
-    //     return actions.map(action => new Explorer(action.payload.doc.data() as ExplorerData));
-    //   })
-    // )
   }
 
   createNewExplorer(user: User) {

@@ -10,6 +10,9 @@
         </div>
         <div class="row justify-content-center align-items-center">
               <div class="col-12">
+                <div *ngIf="message != null" class="row justify-content-center align-items-center">
+                  <p style="color: white">{{message}}</p>
+                </div>
                 <div class="row justify-content-center align-items-center">
                     <input [(ngModel)]="user.email" class="custom-input custom-border mb-3 mr-3" 
                       type="email" style="width: 47%" placeholder="Enter email...">
@@ -17,7 +20,7 @@
                       type="password" style="width: 47%" placeholder="enter password...">
                 </div>
                 <div class="row justify-content-center align-items-center">
-                  <button class="custom-btn">
+                  <button class="custom-btn" (click)="signIn()">
                     Sign In
                   </button>
                 </div>
