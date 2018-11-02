@@ -30,14 +30,29 @@ export class PlanetEffects {
     @Effect()
     GetCurrentPlanet$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_PLANET).pipe(
         switchMap(action => {
-            return this.angularFirestore.collection("users/" + this.globalService.signedInUser + "/planets", ref => ref.where('name', '==', this.globalService.currentPlanet.name)).stateChanges();
+            return this.angularFirestore.collection("users/" + this.globalService.signedInUser.userId + "/planets", ref => ref.where('name', '==', this.globalService.currentPlanet.name)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetCurrentPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
+                return new actions.GetPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
             }
             return new actions.UnimplementedAction("");
         })
     )
+
+    @Effect()
+    GetUserPlanet$ = this.actions$.ofType(actions.REQUEST_GET_USER_PLANET).pipe(
+        switchMap(action => {
+            return this.angularFirestore.collection("users/" + this.globalService.signedInUser.userId + "/planets", ref => ref.limit(1)).stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            if(action.type === "added") {
+                return new actions.GetPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
+            }
+            return new actions.UnimplementedAction("");
+        })
+    )
+    
 }

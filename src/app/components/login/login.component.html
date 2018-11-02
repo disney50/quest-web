@@ -14,13 +14,13 @@
                   <p style="color: white">{{message}}</p>
                 </div>
                 <div class="row justify-content-center align-items-center">
-                    <input [(ngModel)]="user.email" class="custom-input custom-border mb-3 mr-3" 
+                    <input [(ngModel)]="existingUser.email" class="custom-input custom-border mb-3 mr-3" 
                       type="email" style="width: 47%" placeholder="Enter email...">
-                    <input [(ngModel)]="user.password" class="custom-input custom-border mb-3" 
+                    <input [(ngModel)]="existingUser.password" class="custom-input custom-border mb-3" 
                       type="password" style="width: 47%" placeholder="enter password...">
                 </div>
                 <div class="row justify-content-center align-items-center">
-                  <button class="custom-btn" (click)="signIn()">
+                  <button class="custom-btn" (click)="checkEmailAndPassWordFields()">
                     Sign In
                   </button>
                 </div>
