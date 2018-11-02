@@ -26,23 +26,11 @@ export class GlobalService {
     this.signedInUser = signedInUser;
   }
 
-  removeSignedInUser() {
-    this.signedInUser = {} as User;
-  }
-
   setCurrentExplorer(currentExplorer: Explorer) {
     this.currentExplorer = currentExplorer;
   }
 
-  removeCurrentExplorer() {
-    this.currentExplorer = {} as Explorer;
-  }
-
   setCurrentPlanet(currentPlanet: Planet) {
     this.currentPlanet = currentPlanet;
-  }
-
-  removeCurrentPlanet() {
-    this.currentPlanet = {} as Planet;
   }
 }

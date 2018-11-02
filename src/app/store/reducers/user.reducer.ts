@@ -1,29 +1,29 @@
 import * as actions from '../actions';
 import { User } from 'src/app/models/user';
 
-export function userReducer(state = intitialUserState, action: actions.UserActions) {
+export function userReducer(userState = initialUserState, action: actions.UserActions) {
 
-    const newState = {...state};
+    const newUserState = {...userState};
 
     switch(action.type) {
         case actions.REQUEST_GET_NEW_USER:
-            newState.signedInUser = {} as User;
-            return newState;
+            newUserState.signedInUser = {} as User;
+            return newUserState;
         case actions.REQUEST_GET_EXISTING_USER:
-            newState.signedInUser = {} as User;
-            return newState; 
+            newUserState.signedInUser = {} as User;
+            return newUserState; 
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
-            newState.signedInUser = getUserSuccessAction.payload;            
-            return newState;   
+            newUserState.signedInUser = getUserSuccessAction.payload;            
+            return newUserState;   
         case actions.LOG_OUT_USER:
-            newState.signedInUser = {} as User;
-            return newState;    
+            newUserState.signedInUser = {} as User;
+            return newUserState;    
         default:
-            return state;        
+            return userState;        
     }
 }
 
-export const intitialUserState = {
+export const initialUserState = {
     signedInUser: {} as User
 }

@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     this.store.dispatch(new actions.RequestGetPlanets);
 
     this.store.select("planet").subscribe(planetState => {
-      this.planets = planetState.planets;            
+      this.planets = planetState.allPlanets;            
     })
   }
 

@@ -18,17 +18,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {}
 
   logOutUser() {
-    this.globalService.removeSignedInUser();
-    
     this.store.dispatch(new actions.LogOutUser);
-  }
-
-  removeCurrentPlanet() {
-    this.globalService.removeCurrentPlanet();
-    this.store.dispatch(new actions.LogOutUser);
-  }
-
-  removeCurrentExplorer() {
-
   }
 }
