@@ -48,17 +48,16 @@ export class LoginComponent implements OnInit {
   }
 
   signInExistingUser() {
-      this.store.dispatch(new actions.RequestUserSignIn);
+      this.store.dispatch(new actions.RequestGetExistingUser);
 
-      this.store.select("user").subscribe(userState =>{
-        this.users = userState.users;
-        if(this.users.length != 0) {
-          this.existingUser.email = this.users[0].email;
-          this.existingUser.gender = this.users[0].gender;
-          this.existingUser.name = this.users[0].name;
-          this.existingUser.password = this.users[0].password;
-          this.existingUser.surname = this.users[0].surname;
-          this.existingUser.userId = this.users[0].userId;
+      this.store.select("user").subscribe(userState =>{                
+        if(userState.signedInUser != {} as User) {          
+          this.existingUser.email = userState.signedInUser.email;
+          this.existingUser.gender = userState.signedInUser.gender;
+          this.existingUser.name = userState.signedInUser.name;
+          this.existingUser.password = userState.signedInUser.password;
+          this.existingUser.surname = userState.signedInUser.surname;
+          this.existingUser.userId = userState.signedInUser.userId;
           this.globalService.setSignedInUser(this.existingUser);
           this.getExistingUserPlanet();
         }

@@ -21,7 +21,7 @@ export class ExplorerEffects {
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetCurrentExplorerSuccess(new Explorer(action.payload.doc.id, action.payload.doc.data() as ExplorerData));
+                return new actions.GetExplorerSuccess(new Explorer(action.payload.doc.id, action.payload.doc.data() as ExplorerData));
             }
             return new actions.UnimplementedAction("");
         })

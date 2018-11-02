@@ -19,15 +19,13 @@ export class DashboardComponent implements OnInit {
 
   logOutUser() {
     this.globalService.removeSignedInUser();
-    this.store.dispatch(new actions.RemoveSignedInUser);
-    this.store.select("user").subscribe(userState => {
-      userState.signedInUser = this.globalService.signedInUser;            
-    })
+    
+    this.store.dispatch(new actions.LogOutUser);
   }
 
   removeCurrentPlanet() {
     this.globalService.removeCurrentPlanet();
-    this.store.dispatch(new actions.RemoveAllPlanets);
+    this.store.dispatch(new actions.LogOutUser);
   }
 
   removeCurrentExplorer() {

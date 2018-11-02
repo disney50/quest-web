@@ -6,21 +6,17 @@ export function userReducer(state = intitialUserState, action: actions.UserActio
     const newState = {...state};
 
     switch(action.type) {
-        case actions.REQUEST_GET_SIGNED_IN_USER:
+        case actions.REQUEST_GET_NEW_USER:
             newState.signedInUser = {} as User;
             return newState;
-        case actions.REQUEST_USER_SIGN_IN:
-            newState.users = [];
+        case actions.REQUEST_GET_EXISTING_USER:
+            newState.signedInUser = {} as User;
             return newState; 
-        case actions.GET_SIGNED_IN_USER_SUCCESS:
-            const getUserSuccessAction = action as actions.GetSignedInUserSuccess;
-            newState.signedInUser = getUserSuccessAction.payload;
-            return newState;
-        case actions.USER_SIGN_IN_SUCCESS:
-            const userSignInSuccessAction = action as actions.UserSignInSuccess;
-            newState.users = [...newState.users, userSignInSuccessAction.payload];
-            return newState;    
-        case actions.REMOVE_SIGNED_IN_USER:
+        case actions.GET_USER_SUCCESS:
+            const getUserSuccessAction = action as actions.GetUserSuccess;
+            newState.signedInUser = getUserSuccessAction.payload;            
+            return newState;   
+        case actions.LOG_OUT_USER:
             newState.signedInUser = {} as User;
             return newState;    
         default:
@@ -29,6 +25,5 @@ export function userReducer(state = intitialUserState, action: actions.UserActio
 }
 
 export const intitialUserState = {
-    users: [],
     signedInUser: {} as User
 }

@@ -1,16 +1,16 @@
 import * as actions from '../actions';
+import { Explorer } from 'src/app/models/explorer';
 
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
     const newState = {...state};
 
     switch(action.type) {
         case actions.REQUEST_GET_CURRENT_EXPLORER:
-            newState.currentExplorer = null;
+            newState.currentExplorer = {} as Explorer;
             return newState;
-        case actions.GET_CURRENT_EXPLORER_SUCCESS:
-            const getCurrentExplorerSuccessAction = action as actions.GetCurrentExplorerSuccess;
-            newState.currentExplorer = getCurrentExplorerSuccessAction.payload;
-            console.log(getCurrentExplorerSuccessAction.payload);
+        case actions.GET_EXPLORER_SUCCESS:
+            const getExplorerSuccessAction = action as actions.GetExplorerSuccess;
+            newState.currentExplorer = getExplorerSuccessAction.payload;
             return newState;
         default:
             return state;       
@@ -18,5 +18,5 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
 }
 
 export const initialExplorerState = {
-    currentExplorer: null
+    currentExplorer: {} as Explorer
 }
