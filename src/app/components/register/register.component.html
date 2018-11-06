@@ -1,50 +1,67 @@
 <div class="middle bg">
   <div class="container">
+
+    <div class="row justify-content-center align-items-center pb-3">
+      <img class="img-responsive-medium" src="../../../assets/ic_logo.png"/>
+    </div>
+
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-12 col-lg-6">
         <div class="row justify-content-center align-items-center">
           <div class="col-sm-12 col-lg-6">
-            <div class="row justify-content-center align-items-center pb-3">
-              <img class="img-responsive-medium" src="../../../assets/ic_logo.png"/>
-            </div>
-            <div class="row justify-content-center align-items-center">
-              <div class="col-12">
-                <div class="row justify-content-center align-items-center">
-                    <input [(ngModel)]="newUser.email" class="custom-input custom-border mb-3 mr-3" 
-                      type="email" style="width: 47%" placeholder="Enter email...">
-                    <input [(ngModel)]="newUser.password" class="custom-input custom-border mb-3" 
-                      type="password" style="width: 47%" placeholder="enter password...">
-                </div>
-                <div class="row justify-content-center align-items-center">
-                    <input [(ngModel)]="newUser.name" class="custom-input custom-border mb-3 mr-3" 
-                      type="text" style="width: 47%" placeholder="enter name...">
-                    <input [(ngModel)]="newUser.surname" class="custom-input custom-border mb-3" 
-                      type="text" style="width: 47%" placeholder="enter surname...">
-                </div>
-                <div class="row justify-content-center align-items-center">
-                    <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="maleClickEvent()" 
-                      [ngClass]="maleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Male</button>
-                    <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="femaleClickEvent()" 
-                      [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
-                </div>
-              </div>   
-            </div>     
+            <input [(ngModel)]="newUser.email" class="custom-input custom-border mb-3 mr-3" 
+              type="email" placeholder="Enter email...">
+          </div>
+        
+          <div class="col-sm-12 col-lg-6">
+            <input [(ngModel)]="newUser.password" class="custom-input custom-border mb-3" 
+              type="password" placeholder="enter password...">
+          </div>                 
+        </div>
+                  
+        <div class="row justify-content-center align-items-center">
+          <div class="col-sm-12 col-lg-6">
+            <input [(ngModel)]="newUser.name" class="custom-input custom-border mb-3 mr-3" 
+              type="text" placeholder="enter name...">
+          </div>
+        
+          <div class="col-sm-12 col-lg-6">
+            <input [(ngModel)]="newUser.surname" class="custom-input custom-border mb-3" 
+              type="text" placeholder="enter surname...">
           </div>
         </div>
+        
         <div class="row justify-content-center align-items-center">
           <div class="col-12">
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-6 col-lg-3" *ngFor="let planet of planets">
-                <div class="custom-card mb-3">
-                  <div class="card-body">
-                    <img class="img-responsive-small horizontal-center" src="../../../assets/codeez_logo.png"/>
-                    <h4 class="text-center">{{planet.name}}</h4>
-                  </div>
-                  <button class="custom-btn" (click)="createNewUser(); addNewUserPlanet(planet)">
-                    Register
-                  </button> 
-                </div> 
-              </div>
-            </div>
+            <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="maleClickEvent()" 
+              [ngClass]="maleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Male</button>
+        
+            <button class="custom-deselected-btn mb-3" style="width: 50%" (click)="femaleClickEvent()" 
+              [ngClass]="femaleStatus ? 'custom-selected-btn' : 'custom-deselected-btn'">Female</button>
           </div>
         </div>
+      </div>
+    </div>
+     
+    <div class="row justify-content-center align-items-center">
+      <div class="col-12">
+
+        <div class="row justify-content-center align-items-center">
+          <div class="col-sm-6 col-lg-3" *ngFor="let planet of planets">
+            <div class="custom-card mb-3">
+              <div class="card-body">
+                <img class="img-responsive-small horizontal-center" src="../../../assets/codeez_logo.png"/>
+                <h4 class="text-center">{{planet.name}}</h4>
+              </div>
+              <button class="custom-btn" (click)="createNewUser(); addNewUserPlanet(planet)">
+                Register
+              </button> 
+            </div> 
+          </div>
+        </div>
+      
+      </div>
+    </div>
+
   </div>
 </div>
