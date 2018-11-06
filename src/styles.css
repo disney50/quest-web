@@ -51,46 +51,54 @@
 .border {
     border-width: 1px;
     border-color: rgb(230, 220, 201);
+    border-style: solid;
 }
 
 .btn-dark {
-    background-color: rgba(4, 101, 101);
+    background: rgb(4, 101, 101, 0.9);
     border: none;
     color: rgb(230, 220, 201);
     height: 40px;  
-    width: 100%;  
+    width: 100%;
+    cursor:default !important;  
 }
 
 .btn-light {
-    background-color: rgba(85, 119, 123);
+    background: rgb(85, 119, 123, 0.9);
     border: none;
     color: rgb(230, 220, 201);
     height: 40px;  
     width: 100%; 
+    cursor:default !important;
 }
 
-.deselected-btn {
+.btn-transparent {
     background: transparent;
-    border-width: 1px;
-    border-color: rgb(230, 220, 201);
+    border: none;
     color: rgb(230, 220, 201);
     height: 40px;  
+    width: 100%;
 }
 
-.selected-btn {
-    background-color: rgba(4, 101, 101);
-    border-width: 1px;
-    border-color: rgb(230, 220, 201);
+.btn-dark:hover {
+    background: rgb(4, 101, 101, 0.9);
     color: rgb(230, 220, 201);
-    height: 40px; 
+}
+
+.btn-light:hover {
+    background: rgb(85, 119, 123, 0.9);
+    color: rgb(230, 220, 201);
+}
+
+.btn-transparent:hover {
+    background: transparent;
+    color: rgb(230, 220, 201);
 }
 
 .card-transparent {
     background: transparent;
     color: rgb(230, 220, 201);
-    border-radius: 0 !important;
-    border-width: 1px !important;
-    border: solid rgb(230, 220, 201);
+    border-radius: 0% !important;
 }
 
 .horizontal-center {
@@ -99,22 +107,22 @@
 }
 
 .navbar {
-    background-color: rgba(4, 101, 101);
+    background: rgb(4, 101, 101, 0.9);
     color: rgb(230, 220, 201);
 }
 
 .dropdown-menu {
-    background-color: rgba(85, 119, 123);
+    background: rgb(85, 119, 123);
     border-radius: 0%;
 }
 
-.dropdown-menu a:hover {
-    background-color: transparent;
-    color: rgba(85, 119, 123);
+.dropdown-menu:hover {
+    background: white;
 }
 
-.dropdown-menu:hover {
-    background-color: white;
+.dropdown-menu a:hover {
+    background: transparent;
+    color: rgb(85, 119, 123);
 }
 
 .dropdown-item {
