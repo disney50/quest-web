@@ -1,38 +1,60 @@
 <div class="middle bg">
   <div class="container">
+
     <div class="row justify-content-center align-items-center">
       <div class="col-sm-12 col-lg-6">
-        <div class="row justify-content-center align-items-center pb-4">
+
+        <div class="row justify-content-center align-items-center pb-2">
           <img src="../../../assets/sign_in_title.png"/>
         </div>
-        <div class="row justify-content-center align-items-center pb-5">
+
+        <div class="row justify-content-center align-items-center pb-4">
           <img class="img-responsive-large" src="../../../assets/ic_logo.png"/>
         </div>
+        
         <div class="row justify-content-center align-items-center">
-              <div class="col-12">
-                <div *ngIf="message != null" class="row justify-content-center align-items-center">
-                  <p style="color: white">{{message}}</p>
-                </div>
-                <div class="row justify-content-center align-items-center">
-                    <input [(ngModel)]="existingUser.email" class="custom-input custom-border mb-3 mr-3" 
-                      type="email" style="width: 47%" placeholder="Enter email...">
-                    <input [(ngModel)]="existingUser.password" class="custom-input custom-border mb-3" 
-                      type="password" style="width: 47%" placeholder="enter password...">
-                </div>
-                <div class="row justify-content-center align-items-center">
-                  <button class="custom-btn" (click)="checkEmailAndPassWordFields()">
-                    Sign In
-                  </button>
-                </div>
-                <div class="row justify-content-center align-items-center text-center">
-                      <p class="mt-3 mr-3" style="width: 47%; color: white">No account?</p>
-                      <button class="custom-btn-light mt-3" style="width: 47%" (click)="navigateRegister()">
-                          Register
-                      </button>
-                </div>
-              </div>   
-            </div>     
-          </div>
+          <div class="col-12">
+            
+            <div *ngIf="message != null" class="row justify-content-center align-items-center text-center">
+              <p style="color: rgb(230, 220, 201)">{{message}}</p>
+            </div>
+
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-lg-6">
+                <input [(ngModel)]="existingUser.email" class="custom-input custom-border mb-3" 
+                  type="email" style="width: 100%" placeholder="Enter email...">
+              </div>
+
+              <div class="col-sm-12 col-lg-6">
+                <input [(ngModel)]="existingUser.password" class="custom-input custom-border mb-3" 
+                  type="password" style="width: 100%" placeholder="enter password...">
+              </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center">
+              <button class="custom-btn mr-3 ml-3 mb-3" (click)="checkEmailAndPassWordFields()">
+                Sign In
+              </button>
+            </div>
+
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-lg-6 text-center">
+                <p style="color: rgb(230, 220, 201)">No account?</p>
+              </div>
+
+              <div class="col-sm-12 col-lg-6">
+                <button class="custom-btn-light" (click)="navigateRegister()">
+                  Register
+                </button>
+              </div>
+
+            </div>
+
+          </div>   
+        </div>
+
+      </div>
     </div>
+
   </div>
 </div>
