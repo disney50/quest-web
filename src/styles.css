@@ -115,13 +115,13 @@
 
 .dropdown-menu a:hover {
     background-color: transparent;
-    color: rgb(230, 220, 201);
+    color: rgba(85, 119, 123);
 }
 
 .dropdown-menu:hover {
-    background-color: rgb(230, 220, 201);
+    background-color: white;
 }
 
 .dropdown-item {
-    color: rgb(230, 220, 201);
+    color: white;
 }

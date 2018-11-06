@@ -2,26 +2,27 @@
   <div class="container">
     
     <nav class="row navbar fixed-top navbar-expand navbar-dark custom-navbar">
-        <a class="navbar-brand nav-brand ml-2 font-regular-custom" routerLink="currentquests">
-          <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
-        </a>
+      <a class="navbar-brand nav-brand ml-2 font-regular-custom" routerLink="currentquests">
+        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
+      </a>
 
-        <a class="navbar-text text-white">
-            <b style="font-size: 125%">{{globalService.currentPlanet.name}}</b>
-        </a>
+      <a class="navbar-text text-white">
+        <b style="font-size: 125%">{{globalService.currentPlanet.name}}</b>
+      </a>
 
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link text-white" href="#" role="button" data-toggle="dropdown" style="font-size: 75%">
-                <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png"/>
-                {{globalService.signedInUser.name}}
-                <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png"/>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#" (click)="logOutUser()">Log Out</a>
-              </div>
-            </li>
-          </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link text-white" href="#" role="button" data-toggle="dropdown" style="font-size: 75%">
+            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png"/>
+            {{globalService.signedInUser.name}}
+            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png"/>
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#" (click)="logOutUser()">Log Out</a>
+          </div>
+        </li>
+      </ul>
     </nav>
 
   </div>
