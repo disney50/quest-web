@@ -41,19 +41,19 @@
     display: block;
 }
 
-.custom-input {
+.input {
     background: transparent;
     color: rgb(230, 220, 201);
     height: 40px;
     width: 100%;    
 }
 
-.custom-border {
+.border {
     border-width: 1px;
     border-color: rgb(230, 220, 201);
 }
 
-.custom-btn {
+.btn-dark {
     background-color: rgba(4, 101, 101);
     border: none;
     color: rgb(230, 220, 201);
@@ -61,7 +61,7 @@
     width: 100%;  
 }
 
-.custom-btn-light {
+.btn-light {
     background-color: rgba(85, 119, 123);
     border: none;
     color: rgb(230, 220, 201);
@@ -69,7 +69,7 @@
     width: 100%; 
 }
 
-.custom-deselected-btn {
+.deselected-btn {
     background: transparent;
     border-width: 1px;
     border-color: rgb(230, 220, 201);
@@ -77,7 +77,7 @@
     height: 40px;  
 }
 
-.custom-selected-btn {
+.selected-btn {
     background-color: rgba(4, 101, 101);
     border-width: 1px;
     border-color: rgb(230, 220, 201);
@@ -85,7 +85,7 @@
     height: 40px; 
 }
 
-.custom-card {
+.card-transparent {
     background: transparent;
     color: rgb(230, 220, 201);
     border-radius: 0 !important;
@@ -98,14 +98,9 @@
     margin-right: auto;
 }
 
-.custom-navbar {
+.navbar {
     background-color: rgba(4, 101, 101);
     color: rgb(230, 220, 201);
-}
-
-.custom-navbar-toggler {
-    border: transparent;
-    background: transparent;
 }
 
 .dropdown-menu {
