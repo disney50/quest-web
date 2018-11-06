@@ -128,3 +128,14 @@
 .dropdown-item {
     color: white;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(230, 220, 201);
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgb(230, 220, 201);
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgb(230, 220, 201);
+}
