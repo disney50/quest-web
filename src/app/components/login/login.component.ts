@@ -7,7 +7,6 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
 import * as actions from '../../store/actions';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { Planet } from 'src/app/models/planet';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +22,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, 
     private store: Store<AppState>, 
-    private globalService: GlobalService) {}
+    private globalService: GlobalService,
+    private angularFirestore: AngularFirestore) {}
 
   ngOnInit() {}
 
@@ -44,8 +44,19 @@ export class LoginComponent implements OnInit {
     }
     else {
       this.globalService.setEmailAndPassword(this.existingUser);
-      this.signInExistingUser();
+      this.checkUserExists();
     }
+  }
+
+  checkUserExists() {
+    this.angularFirestore.collection('users', ref => ref.where('email', "==", this.existingUser.email).where('password', '==', this.existingUser.password)).stateChanges().forEach(res => {
+      if (res.length > 0) {
+        this.signInExistingUser();
+      }
+      else {
+      this.message = "Incorrect email or password entered"
+      }
+  });
   }
 
   signInExistingUser() {
