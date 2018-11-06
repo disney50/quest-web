@@ -29,7 +29,7 @@ export class UserEffects {
 
     @Effect()
     GetExistingUser$ = this.actions$.ofType(actions.REQUEST_GET_EXISTING_USER).pipe(
-        switchMap(action => {                        
+        switchMap(action => {                      
             return this.angularFirestore.collection("users", ref => ref.where('email', '==', this.globalService.email).where('password', '==', this.globalService.password).limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
@@ -43,7 +43,7 @@ export class UserEffects {
 
     @Effect()
     LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
-        switchMap(action => {                        
+        switchMap(action => {                                   
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),

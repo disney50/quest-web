@@ -7,6 +7,7 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
 import * as actions from '../../store/actions';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { Planet } from 'src/app/models/planet';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +59,8 @@ export class LoginComponent implements OnInit {
           this.existingUser.password = userState.signedInUser.password;
           this.existingUser.surname = userState.signedInUser.surname;
           this.existingUser.userId = userState.signedInUser.userId;
-          this.globalService.setSignedInUser(this.existingUser);
+          this.globalService.signedInUser = this.existingUser;
+          
           this.getExistingUserPlanet();
         }
         else {
@@ -70,12 +72,29 @@ export class LoginComponent implements OnInit {
   getExistingUserPlanet() {
     this.store.dispatch(new actions.RequestGetUserPlanet);
 
-    this.store.select("planet").subscribe(planetState => {
-      this.existingUserPlanet = planetState.currentPlanet;
-      this.globalService.setCurrentPlanet(this.existingUserPlanet);
+    this.store.select("planet").subscribe(planetState => {      
+      this.existingUserPlanet.name = planetState.currentPlanet.name;
+      this.existingUserPlanet.description = planetState.currentPlanet.description;
+
+      this.globalService.currentPlanet = this.existingUserPlanet;      
     });
 
-    this.navigateDashboard(); 
+    this.getPlanetExlorer(); 
+  }
+
+  getPlanetExlorer() {
+    this.store.dispatch(new actions.RequestGetCurrentExplorer);
+
+    this.store.select("explorer").subscribe(explorerState => {
+      console.log("select", explorerState.currentExplorer);
+      
+      this.globalService.currentExplorer.name = explorerState.currentExplorer.name;
+      this.globalService.currentExplorer.surname = explorerState.currentExplorer.surname;      
+      this.globalService.currentExplorer.xp = explorerState.currentExplorer.xp;      
+      this.globalService.currentExplorer.userId = explorerState.currentExplorer.userId;
+    });
+
+    this.navigateDashboard();
   }
 
 }

@@ -6,7 +6,7 @@ export function planetReducer(state = initialPlanetState, action: actions.Planet
 
     switch(action.type) {
         case actions.REQUEST_GET_PLANETS:
-            newState.planets = [];
+            newState.allPlanets = [];
             return newState;
         case actions.REQUEST_GET_CURRENT_PLANET:
             newState.currentPlanet = {} as Planet;
@@ -16,7 +16,7 @@ export function planetReducer(state = initialPlanetState, action: actions.Planet
             return newState;
         case actions.GET_PLANETS_SUCCESS:
             const getPlanetsSuccessAction = action as actions.GetPlanetsSuccess;
-            newState.planets = [...newState.planets, getPlanetsSuccessAction.payload];
+            newState.allPlanets = [...newState.allPlanets, getPlanetsSuccessAction.payload];
             return newState;            
         case actions.GET_PLANET_SUCCESS:
             const getPlanetSuccessAction = action as actions.GetPlanetSuccess;
@@ -28,6 +28,6 @@ export function planetReducer(state = initialPlanetState, action: actions.Planet
 }
 
 export const initialPlanetState = {
-    planets: [],
+    allPlanets: [],
     currentPlanet: {} as Planet
 }

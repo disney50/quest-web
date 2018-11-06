@@ -43,7 +43,7 @@ export class PlanetEffects {
 
     @Effect()
     GetUserPlanet$ = this.actions$.ofType(actions.REQUEST_GET_USER_PLANET).pipe(
-        switchMap(action => {
+        switchMap(action => {            
             return this.angularFirestore.collection("users/" + this.globalService.signedInUser.userId + "/planets", ref => ref.limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
