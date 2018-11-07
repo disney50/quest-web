@@ -30,7 +30,7 @@ export class UserEffects {
     @Effect()
     GetExistingUser$ = this.actions$.ofType(actions.REQUEST_GET_EXISTING_USER).pipe(
         switchMap(action => {                      
-            return this.angularFirestore.collection("users", ref => ref.where('email', '==', this.globalService.email).where('password', '==', this.globalService.password).limit(1)).stateChanges();
+            return this.angularFirestore.collection("users", ref => ref.where('email', '==', this.globalService.userEmail).where('password', '==', this.globalService.userPassword).limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {

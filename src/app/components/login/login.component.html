@@ -21,18 +21,18 @@
 
             <div class="row justify-content-center align-items-center">
               <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="existingUser.email" class="input border mb-3" 
+                <input #email class="input border mb-3" 
                   type="email" placeholder="enter email...">
               </div>
 
               <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="existingUser.password" class="input border mb-3" 
+                <input #password class="input border mb-3" 
                   type="password" placeholder="enter password...">
               </div>
             </div>
 
             <div class="row justify-content-center align-items-center">
-              <button class="btn-dark mr-3 ml-3 mb-3" (click)="checkEmailAndPassWordFields()">
+              <button class="btn-dark mr-3 ml-3 mb-3" (click)="signInClicked(email.value, password.value)">
                 Sign In
               </button>
             </div>
