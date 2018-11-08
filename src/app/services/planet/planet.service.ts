@@ -42,6 +42,8 @@ export class PlanetService {
   }
 
   addNewUserPlanet(planet: Planet) {
+    console.log("addNewUserPlanet in planet.service", this.globalService.signedInUser);
+    
     this.angularFirestore.collection<Planet>("users/" + this.globalService.signedInUser.userId + "/planets")
     .doc(planet.name).set(planet);
     // this.userPlanetCollection.doc(planet.name).set(Object.assign({}, planet));
@@ -55,6 +57,18 @@ export class PlanetService {
     this.store.dispatch(new actions.RequestGetCurrentPlanet);
 
     this.store.select("planet").subscribe(planetState => {
+      this.globalService.setCurrentPlanet(planetState.currentPlanet);
+    });
+  }
+
+  getUserPlanet() {
+    console.log("getUserPlanet() in planet.service");
+        
+    this.store.dispatch(new actions.RequestGetUserPlanet);
+
+    this.store.select("planet").subscribe(planetState => {
+      console.log("planetState.currentPlanet", planetState.currentPlanet);
+            
       this.globalService.setCurrentPlanet(planetState.currentPlanet);
     });
   }

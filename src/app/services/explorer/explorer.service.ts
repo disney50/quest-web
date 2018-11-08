@@ -22,6 +22,8 @@ export class ExplorerService {
   }
 
   createNewExplorer() {
+    console.log("createNewExplorer in explorer.service", this.globalService.signedInUser);
+
     this.newExplorer.name = this.globalService.signedInUser.name;
     this.newExplorer.surname = this.globalService.signedInUser.surname;
     this.newExplorer.xp = "0";

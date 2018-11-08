@@ -15,7 +15,9 @@ export class UserEffects {
 
     @Effect()
     GetNewUser$ = this.actions$.ofType(actions.REQUEST_GET_NEW_USER).pipe(
-        switchMap(action => {                        
+        switchMap(action => {
+            console.log("GetNewUser$ in user.effects", this.globalService.signedInUser);
+
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),
@@ -43,7 +45,9 @@ export class UserEffects {
 
     @Effect()
     LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
-        switchMap(action => {                                   
+        switchMap(action => {
+            console.log("LogOutUser$ in user.effects", this.globalService.signedInUser);
+                                               
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),
