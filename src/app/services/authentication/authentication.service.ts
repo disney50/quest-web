@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as actions from '../../store/actions';
-import { AngularFirestoreCollection, AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
-import { User } from 'src/app/models/user';
-import { Planet } from 'src/app/models/planet';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { GlobalService } from '../global/global.service';
@@ -13,10 +11,6 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  userCollection: AngularFirestoreCollection;
-  users: User[];
-  existingUserPlanet: Planet = {} as Planet;
 
   constructor(private store: Store<AppState>, 
     private globalService: GlobalService,
@@ -37,8 +31,7 @@ export class AuthenticationService {
   signInExistingUser() {
       this.store.dispatch(new actions.RequestGetExistingUser);
 
-      this.store.select("user").subscribe(userState =>{                
-        if(userState.signedInUser != {} as User) {                    
+      this.store.select("user").subscribe(userState => {                
           this.globalService.signedInUser.email = userState.signedInUser.email;
           this.globalService.signedInUser.gender = userState.signedInUser.gender;
           this.globalService.signedInUser.name = userState.signedInUser.name;
@@ -46,19 +39,17 @@ export class AuthenticationService {
           this.globalService.signedInUser.surname = userState.signedInUser.surname;
           this.globalService.signedInUser.userId = userState.signedInUser.userId;
           
-          this.getExistingUserPlanet();
-        }
+          this.getUserPlanet();
       });    
   }
 
-  getExistingUserPlanet() {    
+  getUserPlanet() {    
     this.store.dispatch(new actions.RequestGetUserPlanet);
 
     this.store.select("planet").subscribe(planetState => {      
-      this.existingUserPlanet.name = planetState.currentPlanet.name;
-      this.existingUserPlanet.description = planetState.currentPlanet.description;
+      this.globalService.currentPlanet.name = planetState.currentPlanet.name;
+      this.globalService.currentPlanet.description = planetState.currentPlanet.description;
 
-      this.globalService.currentPlanet = this.existingUserPlanet;   
       this.getPlanetExlorer();    
     });
   }
@@ -66,19 +57,22 @@ export class AuthenticationService {
   getPlanetExlorer() {
     this.store.dispatch(new actions.RequestGetCurrentExplorer);
 
-    this.store.select("explorer").subscribe(explorerState => {
-      console.log("select", explorerState.currentExplorer);
-      
+    this.store.select("explorer").subscribe(explorerState => {      
       this.globalService.currentExplorer.name = explorerState.currentExplorer.name;
       this.globalService.currentExplorer.surname = explorerState.currentExplorer.surname;      
       this.globalService.currentExplorer.xp = explorerState.currentExplorer.xp;      
       this.globalService.currentExplorer.userId = explorerState.currentExplorer.userId;
+
+      this.navigateDashboard();
     });
 
-    this.navigateDashboard();
   }
 
   navigateDashboard() {
     this.router.navigateByUrl("dashboard");
+  }
+
+  logOutUser() {
+    this.store.dispatch(new actions.LogOutUser);
   }
 }

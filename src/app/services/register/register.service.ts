@@ -4,15 +4,20 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/fire
 import { User, UserData } from 'src/app/models/user';
 import { map } from 'rxjs/operators';
 import { GlobalService } from '../global/global.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as actions from '../../store/actions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RegisterService {
   users$: Observable<any>;
   userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private angularFirestore: AngularFirestore, private globalService: GlobalService) {
+  constructor(private angularFirestore: AngularFirestore, 
+    private globalService: GlobalService, 
+    private store: Store<AppState>) {
     this.userCollection = angularFirestore.collection<User>("users");
 
     this.users$ = angularFirestore.collection("users").snapshotChanges().pipe(
@@ -22,14 +27,24 @@ export class UserService {
     )
   }
 
-  createNewUserId(newUser: User) {
+  createNewUserId(): string {
     const newUserId = this.angularFirestore.createId();
-    newUser.userId = newUserId;
-    return newUser;
+    return newUserId;
   }
 
   registerNewUser(newUser: User) {
     this.userCollection.doc(newUser.userId).set(newUser);
+
+    this.globalService.setSignedInUser(newUser);
+
+    this.signInNewUser();
   }
 
+  signInNewUser() {
+    this.store.dispatch(new actions.RequestGetNewUser);
+
+    this.store.select("user").subscribe(userState => {
+      this.globalService.setSignedInUser(userState.signedInUser);
+    });
+  }
 }

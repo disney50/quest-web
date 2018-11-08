@@ -3,6 +3,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,11 +14,11 @@ export class DashboardComponent implements OnInit {
   dropdownClicked: boolean = false;
 
   constructor(public globalService: GlobalService,
-    private store: Store<AppState>) {}
+    private authenticationService: AuthenticationService) {}
 
   ngOnInit() {}
 
-  logOutUser() {
-    this.store.dispatch(new actions.LogOutUser);
+  logOutClicked() {
+    this.authenticationService.logOutUser();
   }
 }
