@@ -5,7 +5,9 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 import { User } from 'firebase';
-
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as actions from '../../store/actions/user.actions';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private globalService: GlobalService,
     private planetService: PlanetService,
-    private explorerService: ExplorerService) { }
+    private explorerService: ExplorerService,
+    private store: Store<AppState>) { }
 
   ngOnInit() { }
 
@@ -36,11 +39,12 @@ export class LoginComponent implements OnInit {
       this.message = "No password entered"
     }
     else {
-      this.authenticationService.getEnteredEmailAndPassword(email, password);
+     // this.authenticationService.getEnteredEmailAndPassword(email, password);
 
-      this.authenticationService.authenticateUser(email, password);
+   //   this.authenticationService.authenticateUser(email, password);
       
-      this.userAuthenticated();
+    //  this.userAuthenticated();
+    this.store.dispatch(new actions.RequestLoginUser({username: email, password: password}));
     }
   }
 

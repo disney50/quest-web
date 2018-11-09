@@ -13,6 +13,8 @@ export class UserEffects {
         private angularFirestore: AngularFirestore,
         private globalService: GlobalService) {}
 
+
+       
     @Effect()
     GetNewUser$ = this.actions$.ofType(actions.REQUEST_GET_NEW_USER).pipe(
         switchMap(action => {
