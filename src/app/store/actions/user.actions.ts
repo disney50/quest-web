@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user';
 export const REQUEST_GET_NEW_USER = "[user] REQUEST_GET_NEW_USER"
 export const REQUEST_GET_EXISTING_USER = "[user] REQUEST_GET_EXISTING_USER";
 export const GET_USER_SUCCESS = "[user] GET_USER_SUCCESS";
+export const REQUEST_LOGIN_USER = "[login] REQUEST_LOGIN_USER";
 export const LOG_OUT_USER = "[user] LOG_OUT_USER";
 export const UNIMPLEMENTED_ACTION = "[user] UNIMPLEMENTED_ACTION"
 
@@ -20,6 +21,11 @@ export class RequestGetExistingUser implements Action {
 export class GetUserSuccess implements Action {
     type = GET_USER_SUCCESS;
     constructor(public payload: User) {}
+}
+
+export class RequestLoginUser implements Action {
+    type = REQUEST_LOGIN_USER;
+    constructor(public payload: any) {}
 }
 
 export class LogOutUser implements Action {

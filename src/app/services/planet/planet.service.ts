@@ -27,17 +27,17 @@ export class PlanetService {
   }
 
   getAllPlanets(): Planet[] {
-    console.log("getAllPlanets() in planet.service");
+    console.log("2.getAllPlanets()");
     
     this.store.dispatch(new actions.RequestGetPlanets);
 
     this.store.select("planet").subscribe(planetState => {
-      console.log("planetState.allPlanets.length: " + planetState.allPlanets.length + " in planet.service");
+      console.log("2.1.planetState.allPlanets: ", planetState.allPlanets);
       
-      this.allPlanets = planetState.allPlanets;            
-    });
-    console.log("this.allPlanets.length: " + this.allPlanets.length + " in planet.service");
-    
+      this.allPlanets = planetState.allPlanets;
+      console.log("2.2.this.allPlanets: ", this.allPlanets);
+            
+    });    
     return this.allPlanets;
   }
 
@@ -62,14 +62,15 @@ export class PlanetService {
   }
 
   getUserPlanet() {
-    console.log("getUserPlanet() in planet.service");
+    console.log("7.getUserPlanet()");
         
     this.store.dispatch(new actions.RequestGetUserPlanet);
 
     this.store.select("planet").subscribe(planetState => {
-      console.log("planetState.currentPlanet", planetState.currentPlanet);
+      console.log("7.1.planetState.currentPlanet: ", planetState.currentPlanet);
             
       this.globalService.setCurrentPlanet(planetState.currentPlanet);
+      console.log("7.2.this.globalService.currentPlanet:", this.globalService.currentPlanet);
     });
   }
 }

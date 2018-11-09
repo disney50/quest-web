@@ -4,6 +4,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';
+import { User } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -17,19 +18,17 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private globalService: GlobalService,
     private planetService: PlanetService,
-    private explorerService: ExplorerService) {}
+    private explorerService: ExplorerService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   navigateRegister() {
-    console.log("navigateRegister()");
-    
     this.router.navigateByUrl("register");
   }
 
   signInClicked(email: string, password: string) {
-    console.log("signInClicked()");
-    
+    console.log("1.signInClicked()");
+
     if (!email) {
       this.message = "No email entered"
     }
@@ -39,24 +38,21 @@ export class LoginComponent implements OnInit {
     else {
       this.authenticationService.getEnteredEmailAndPassword(email, password);
 
-      this.authenticationService.authenticateUser(email, password).subscribe(res => {
-        if (res.length > 0) {      
-          this.globalService.userExists = true;
-        }
-        else {
-          this.globalService.userExists = false;
-        }
-        this.userAuthenticated();
-      });
+      this.authenticationService.authenticateUser(email, password);
+      
+      this.userAuthenticated();
     }
   }
 
   userAuthenticated() {
-    console.log("userAuthenticated()");
-                
+    console.log("4.userAuthenticated()");
+
     if (this.globalService.userExists == true) {
-      this.authenticationService.signInExistingUser();
-      this.getUserPlanet();
+      this.authenticationService.signInExistingUser().subscribe(userState => {
+        if (userState.signedInUser.name){
+          this.getUserPlanet();
+        }
+      });
     }
     else {
       this.message = "Incorrect email or password entered"
@@ -64,23 +60,24 @@ export class LoginComponent implements OnInit {
   }
 
   getUserPlanet() {
-    console.log("getUserPlanet() in login.component");
-    
+    console.log("6.getUserPlanet()");
+
     this.planetService.getUserPlanet();
 
-    // this.getCurrentExplorer();
+    this.getCurrentExplorer();
   }
 
   getCurrentExplorer() {
-    console.log("getCurrentExplorer()");
-    
+    console.log("8.getCurrentExplorer()");
+
     this.explorerService.getCurrentExplorer();
-    this.navigateDashboard();
+
+    // this.navigateDashboard();
   }
 
   navigateDashboard() {
-    console.log("navigateDashboard()");
-    
+    console.log("10.navigateDashboard()");
+
     this.router.navigateByUrl("dashboard");
   }
 

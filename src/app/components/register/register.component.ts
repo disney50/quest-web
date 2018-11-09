@@ -22,15 +22,15 @@ export class RegisterComponent implements OnInit {
     private planetService: PlanetService,
     private explorerService: ExplorerService) {
       this.getAllPlanets();
-    }
+  } 
 
   ngOnInit() {}
 
   getAllPlanets() {
-    console.log("getAllPlanets() in register.component");
+    console.log("1.getAllPlanets()");
         
     this.allPlanets = this.planetService.getAllPlanets();
-    console.log("this.allPlanets.length: " + this.allPlanets.length + " in register.component");
+    console.log("1.1.this.allPlanets: ", this.allPlanets);
     
   }
 
