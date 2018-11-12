@@ -46,7 +46,7 @@ export class UserEffects {
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetUserSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+                return new actions.LoginSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
             }
             return new actions.UnimplementedAction("");
         })

@@ -93,6 +93,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.sliceHasLoginFailed();
+    this.sliceHasLoginSucceeded();
    }
 
 }
