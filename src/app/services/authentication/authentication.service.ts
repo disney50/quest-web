@@ -42,8 +42,4 @@ export class AuthenticationService {
 
       return this.store.select("user");
   }
-
-  logOutUser() {
-    this.store.dispatch(new actions.LogOutUser);
-  }
 }

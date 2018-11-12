@@ -3,7 +3,8 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { User } from 'src/app/models/user';
+import * as selectors from '../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,14 +12,25 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  dropdownClicked: boolean = false;
+  signedInUser: User = {} as User;
 
   constructor(public globalService: GlobalService,
-    private authenticationService: AuthenticationService) {}
-
-  ngOnInit() {}
+    private store: Store<AppState>) {}
 
   logOutClicked() {
-    this.authenticationService.logOutUser();
+    this.store.dispatch(new actions.LogOutUser);
+  }
+
+  sliceSignedInUser() {
+    this.store.select(selectors.signedInUser).subscribe(signedInUser => {
+      if(signedInUser) {
+        console.log(signedInUser);
+        this.signedInUser = signedInUser;
+      }
+    })
+  }
+
+  ngOnInit() {
+    this.sliceSignedInUser();
   }
 }
