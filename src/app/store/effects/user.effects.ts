@@ -9,18 +9,27 @@ import { GlobalService } from "src/app/services/global/global.service";
 @Injectable()
 export class UserEffects {
 
-    constructor(private actions$: Actions, 
-        private angularFirestore: AngularFirestore,
-        private globalService: GlobalService) {}
+    constructor(private actions$: Actions,
+        private angularFirestore: AngularFirestore
+        ) {}
 
 
-       
     @Effect()
-    GetNewUser$ = this.actions$.ofType(actions.REQUEST_GET_NEW_USER).pipe(
-        switchMap(action => {
-            console.log("GetNewUser$ in user.effects", this.globalService.signedInUser);
+    RequestLogin$ = this.actions$.ofType(actions.REQUEST_LOGIN_USER_EXIST).pipe(
+      switchMap((action: actions.RequestLoginUser) => this.angularFirestore.collection('users', ref => ref.where('email', "==", action.payload.username).where('password', '==', action.payload.password)).get()),
+      map(snapShot => {
+          if(snapShot.size === 0) {
+            return new actions.LoginFailed();
+          }
 
-            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
+        return new actions.RequestGetUserByLoginDetails({username: snapShot.docs[0].data().email, password: snapShot.docs[0].data().password});
+      })
+    );
+
+    @Effect()
+    GetUserById$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_ID).pipe(
+        switchMap((action: actions.RequestGetUserById) => {
+            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', action.payload)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
@@ -32,9 +41,11 @@ export class UserEffects {
     )
 
     @Effect()
-    GetExistingUser$ = this.actions$.ofType(actions.REQUEST_GET_EXISTING_USER).pipe(
-        switchMap(action => {                      
-            return this.angularFirestore.collection("users", ref => ref.where('email', '==', this.globalService.userEmail).where('password', '==', this.globalService.userPassword).limit(1)).stateChanges();
+    GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGINDETAILS).pipe(
+        switchMap((action: actions.RequestGetUserByLoginDetails) => {
+            console.log(action.payload);
+
+            return this.angularFirestore.collection("users", ref => ref.where('email', '==', action.payload.username).where('password', '==', action.payload.password).limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
@@ -48,9 +59,9 @@ export class UserEffects {
     @Effect()
     LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
         switchMap(action => {
-            console.log("LogOutUser$ in user.effects", this.globalService.signedInUser);
-                                               
-            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
+           // console.log("LogOutUser$ in user.effects", this.globalService.signedInUser);
+
+            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', "AAAAAAAAAAA")).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {

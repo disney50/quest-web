@@ -11,8 +11,8 @@ export class User {
     this.name = data.name;
     this.surname = data.surname;
     this.userId = userId;
-    this.email = data.email; 
-    this.password = data.password
+    this.email = data.email;
+    this.password = data.password;
   }
 
   toData(): UserData {
@@ -23,7 +23,7 @@ export class User {
       email: this.email,
       password: this.email
     } as UserData;
-  } 
+  }
 }
 
 export class UserData {

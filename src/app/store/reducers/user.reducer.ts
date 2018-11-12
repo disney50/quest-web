@@ -5,25 +5,34 @@ export function userReducer(userState = initialUserState, action: actions.UserAc
 
     const newUserState = {...userState};
 
-    switch(action.type) {
-        case actions.REQUEST_GET_NEW_USER:
-            newUserState.signedInUser = {} as User;
+    switch (action.type) {
+        case actions.REQUEST_LOGIN_USER_EXIST:
+            newUserState.loginFailed = false;
             return newUserState;
-        case actions.REQUEST_GET_EXISTING_USER:
-            newUserState.signedInUser = {} as User;
-            return newUserState; 
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
-            newUserState.signedInUser = getUserSuccessAction.payload;            
-            return newUserState;   
+            newUserState.signedInUser = getUserSuccessAction.payload;
+            return newUserState;
+        case actions.LOGIN_SUCCESS:
+          newUserState.signedInUser = (action as actions.LoginSuccess).payload;
+          newUserState.signedIn = true;
+          newUserState.loginFailed = false;
+          return newUserState;
+        case actions.LOGIN_FAILED:
+          newUserState.signedInUser = {} as User;
+          newUserState.loginFailed = true;
+          return newUserState;
         case actions.LOG_OUT_USER:
             newUserState.signedInUser = {} as User;
-            return newUserState;    
+            newUserState.signedIn = false;
+            return newUserState;
         default:
-            return userState;        
+            return userState;
     }
 }
 
 export const initialUserState = {
-    signedInUser: {} as User
-}
+    signedInUser: {} as User,
+    signedIn: false,
+    loginFailed: false
+};

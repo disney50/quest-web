@@ -11,20 +11,20 @@ import { Observable } from 'rxjs';
 })
 export class AuthenticationService {
 
-  constructor(private store: Store<AppState>, 
+  constructor(private store: Store<AppState>,
     private globalService: GlobalService,
     private angularFirestore: AngularFirestore) {}
 
   getEnteredEmailAndPassword(email: string, password: string) {
     console.log("2.getEnteredEmailAndPassword()");
-    
+
       this.globalService.setEmail(email);
       this.globalService.setPassword(password);
-  }  
+  }
 
   authenticateUser(email: string, password: string) {
     console.log("3.authenticateUser()");
-     
+
     return this.angularFirestore
     .collection('users', ref => ref.where('email', "==", email).where('password', '==', password))
     .stateChanges().subscribe(res => {
@@ -40,11 +40,11 @@ export class AuthenticationService {
   signInExistingUser() {
     console.log("5.signInExistingUser()");
 
-      this.store.dispatch(new actions.RequestGetExistingUser);
+   //   this.store.dispatch(new actions.RequestGetExistingUser);
 
       this.store.select("user").subscribe(userState => {
         console.log("5.1.userState.signedInUser: ", userState.signedInUser);
-        
+
         this.globalService.setSignedInUser(userState.signedInUser);
         console.log("5.2.this.globalService.signedInUser: ", this.globalService.signedInUser);
       });

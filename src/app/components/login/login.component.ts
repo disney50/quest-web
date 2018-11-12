@@ -8,6 +8,9 @@ import { User } from 'firebase';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions/user.actions';
+import * as selectors from '../../store/selectors/user.selector';
+import { LoginDetails } from 'src/app/models/login-details';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,7 +26,6 @@ export class LoginComponent implements OnInit {
     private explorerService: ExplorerService,
     private store: Store<AppState>) { }
 
-  ngOnInit() { }
 
   navigateRegister() {
     this.router.navigateByUrl("register");
@@ -39,12 +41,7 @@ export class LoginComponent implements OnInit {
       this.message = "No password entered"
     }
     else {
-     // this.authenticationService.getEnteredEmailAndPassword(email, password);
-
-   //   this.authenticationService.authenticateUser(email, password);
-      
-    //  this.userAuthenticated();
-    this.store.dispatch(new actions.RequestLoginUser({username: email, password: password}));
+        this.store.dispatch(new actions.RequestLoginUser({username: email, password: password} as LoginDetails));
     }
   }
 
@@ -84,5 +81,16 @@ export class LoginComponent implements OnInit {
 
     this.router.navigateByUrl("dashboard");
   }
+
+  sliceHasLoginFailed() {
+    this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
+      if(hasFailed)
+        alert("FAILED");
+    });
+  }
+
+  ngOnInit() {
+    this.sliceHasLoginFailed();
+   }
 
 }

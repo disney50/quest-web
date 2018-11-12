@@ -15,16 +15,16 @@ export class RegisterService {
   users$: Observable<any>;
   userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private angularFirestore: AngularFirestore, 
-    private globalService: GlobalService, 
+  constructor(private angularFirestore: AngularFirestore,
+    private globalService: GlobalService,
     private store: Store<AppState>) {
-    this.userCollection = angularFirestore.collection<User>("users");
+    // this.userCollection = angularFirestore.collection<User>("users");
 
-    this.users$ = angularFirestore.collection("users").snapshotChanges().pipe(
+   /* this.users$ = angularFirestore.collection("users").snapshotChanges().pipe(
       map(actions => {
         return actions.map(action => new User(action.payload.doc.id, action.payload.doc.data() as UserData));
       })
-    )
+    )*/
   }
 
   createNewUserId(): string {
@@ -41,9 +41,9 @@ export class RegisterService {
   }
 
   signInNewUser() {
-    this.store.dispatch(new actions.RequestGetNewUser);
+   // this.store.dispatch(new actions.RequestGetUserById);
 
-    this.store.select("user").subscribe(userState => {
+      this.store.select('user').subscribe(userState => {
       this.globalService.setSignedInUser(userState.signedInUser);
     });
   }
