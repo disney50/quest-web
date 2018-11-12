@@ -16,7 +16,6 @@ export class ExplorerEffects {
     @Effect()
     GetCurrentExplorer$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_EXPLORER).pipe(
         switchMap(action => {
-            console.log("GetCurrentExplorer$ in explorer.effects", this.globalService.signedInUser);
                                                             
             return this.angularFirestore.collection(this.globalService.currentPlanet.name + "/explorers/entries", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
         }),

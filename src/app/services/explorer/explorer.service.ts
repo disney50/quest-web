@@ -22,8 +22,6 @@ export class ExplorerService {
   }
 
   createNewExplorer() {
-    console.log("createNewExplorer in explorer.service", this.globalService.signedInUser);
-
     this.newExplorer.name = this.globalService.signedInUser.name;
     this.newExplorer.surname = this.globalService.signedInUser.surname;
     this.newExplorer.xp = "0";
@@ -41,16 +39,10 @@ export class ExplorerService {
   }
 
   getCurrentExplorer() {
-    console.log("9.getCurrentExplorer()");
-
     this.store.dispatch(new actions.RequestGetCurrentExplorer);
 
     this.store.select("explorer").subscribe(explorerState => {
-      console.log("9.1.explorerState.currentExplorer: ", explorerState.currentExplorer);
-
       this.globalService.setCurrentExplorer(explorerState.currentExplorer);
-      console.log("9.2.this.globalService.currentExplorer: ", this.globalService.currentExplorer);
-
     });
   }
 }

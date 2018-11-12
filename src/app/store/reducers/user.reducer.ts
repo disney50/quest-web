@@ -12,6 +12,8 @@ export function userReducer(userState = initialUserState, action: actions.UserAc
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
             newUserState.signedInUser = getUserSuccessAction.payload;
+            newUserState.signedIn = true;
+            newUserState.loginFailed = false;
             return newUserState;
         case actions.LOGIN_SUCCESS:
           newUserState.signedInUser = (action as actions.LoginSuccess).payload;

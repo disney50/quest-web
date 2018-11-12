@@ -26,23 +26,18 @@ export class PlanetService {
     // );
   }
 
-  getAllPlanets(): Planet[] {
-    console.log("2.getAllPlanets()");
-    
+  getAllPlanets(): Planet[] {    
     this.store.dispatch(new actions.RequestGetPlanets);
 
     this.store.select("planet").subscribe(planetState => {
-      console.log("2.1.planetState.allPlanets: ", planetState.allPlanets);
       
       this.allPlanets = planetState.allPlanets;
-      console.log("2.2.this.allPlanets: ", this.allPlanets);
             
     });    
     return this.allPlanets;
   }
 
   addNewUserPlanet(planet: Planet) {
-    console.log("addNewUserPlanet in planet.service", this.globalService.signedInUser);
     
     this.angularFirestore.collection<Planet>("users/" + this.globalService.signedInUser.userId + "/planets")
     .doc(planet.name).set(planet);
@@ -62,15 +57,12 @@ export class PlanetService {
   }
 
   getUserPlanet() {
-    console.log("7.getUserPlanet()");
         
     this.store.dispatch(new actions.RequestGetUserPlanet);
 
     this.store.select("planet").subscribe(planetState => {
-      console.log("7.1.planetState.currentPlanet: ", planetState.currentPlanet);
             
-      this.globalService.setCurrentPlanet(planetState.currentPlanet);
-      console.log("7.2.this.globalService.currentPlanet:", this.globalService.currentPlanet);
+    this.globalService.setCurrentPlanet(planetState.currentPlanet);
     });
   }
 }

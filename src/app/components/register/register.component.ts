@@ -26,12 +26,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  getAllPlanets() {
-    console.log("1.getAllPlanets()");
-        
-    this.allPlanets = this.planetService.getAllPlanets();
-    console.log("1.1.this.allPlanets: ", this.allPlanets);
-    
+  getAllPlanets() {        
+    this.allPlanets = this.planetService.getAllPlanets();    
   }
 
   maleClickEvent() {

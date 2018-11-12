@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   signInClicked(email: string, password: string) {
-    console.log("1.signInClicked()");
 
     if (!email) {
       this.message = "No email entered"
@@ -41,12 +40,11 @@ export class LoginComponent implements OnInit {
       this.message = "No password entered"
     }
     else {
-        this.store.dispatch(new actions.RequestLoginUser({username: email, password: password} as LoginDetails));
+        this.store.dispatch(new actions.RequestLoginUserExist({username: email, password: password} as LoginDetails));
     }
   }
 
   userAuthenticated() {
-    console.log("4.userAuthenticated()");
 
     if (this.globalService.userExists == true) {
       this.authenticationService.signInExistingUser().subscribe(userState => {
@@ -61,7 +59,6 @@ export class LoginComponent implements OnInit {
   }
 
   getUserPlanet() {
-    console.log("6.getUserPlanet()");
 
     this.planetService.getUserPlanet();
 
@@ -69,7 +66,6 @@ export class LoginComponent implements OnInit {
   }
 
   getCurrentExplorer() {
-    console.log("8.getCurrentExplorer()");
 
     this.explorerService.getCurrentExplorer();
 
@@ -77,8 +73,6 @@ export class LoginComponent implements OnInit {
   }
 
   navigateDashboard() {
-    console.log("10.navigateDashboard()");
-
     this.router.navigateByUrl("dashboard");
   }
 
@@ -87,6 +81,14 @@ export class LoginComponent implements OnInit {
       if(hasFailed)
         alert("FAILED");
     });
+  }
+
+  sliceHasLoginSucceeded() {
+    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+      if(signedIn) {
+        this.navigateDashboard();
+      }
+    })
   }
 
   ngOnInit() {
