@@ -4,6 +4,10 @@ import { Planet } from 'src/app/models/planet';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';import { Router } from '@angular/router';
 import { RegisterService } from 'src/app/services/register/register.service';
+import * as selectors from '../../store/selectors';
+import * as actions from '../../store/actions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
 
 @Component({
   selector: 'app-register',
@@ -20,15 +24,9 @@ export class RegisterComponent implements OnInit {
   constructor(private registerService: RegisterService,
     private router: Router,
     private planetService: PlanetService,
-    private explorerService: ExplorerService) {
-      this.getAllPlanets();
+    private explorerService: ExplorerService,
+    private store: Store<AppState>) {
   } 
-
-  ngOnInit() {}
-
-  getAllPlanets() {        
-    this.allPlanets = this.planetService.getAllPlanets();    
-  }
 
   maleClickEvent() {
     this.maleStatus = true;
@@ -78,5 +76,18 @@ export class RegisterComponent implements OnInit {
 
   navigateDashboard() {
     this.router.navigateByUrl("dashboard");
+  }
+
+  sliceAllPlanets() {
+    this.store.select(selectors.allPlanets).subscribe(allPlanets => {
+      if(allPlanets) {
+        this.allPlanets = allPlanets;
+      }
+    })
+  }
+
+  ngOnInit() {
+    this.store.dispatch(new actions.RequestGetAllPlanets);
+    this.sliceAllPlanets();
   }
 }

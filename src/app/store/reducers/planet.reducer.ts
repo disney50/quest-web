@@ -5,11 +5,11 @@ export function planetReducer(state = initialPlanetState, action: actions.Planet
     const newState = {...state};
 
     switch(action.type) {
-        case actions.REQUEST_GET_PLANETS:
+        case actions.REQUEST_GET_ALL_PLANETS:
             newState.allPlanets = [];
             return newState;
-        case actions.GET_PLANETS_SUCCESS:
-            const getPlanetsSuccessAction = action as actions.GetPlanetsSuccess;
+        case actions.GET_ALL_PLANETS_SUCCESS:
+            const getPlanetsSuccessAction = action as actions.GetAllPlanetsSuccess;
             newState.allPlanets = [...newState.allPlanets, getPlanetsSuccessAction.payload];
             return newState;     
         case actions.REQUEST_GET_SELECTED_PLANET:

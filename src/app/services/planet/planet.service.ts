@@ -27,7 +27,7 @@ export class PlanetService {
   }
 
   getAllPlanets(): Planet[] {    
-    this.store.dispatch(new actions.RequestGetPlanets);
+    this.store.dispatch(new actions.RequestGetAllPlanets);
 
     this.store.select("planet").subscribe(planetState => {
       
