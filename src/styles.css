@@ -62,7 +62,7 @@
     color: rgb(230, 220, 201);
     height: 40px;  
     width: 100%;
-    cursor:default !important;  
+    cursor: pointer; 
 }
 
 .btn-light {
@@ -71,7 +71,7 @@
     color: rgb(230, 220, 201);
     height: 40px;  
     width: 100%; 
-    cursor:default !important;
+    cursor: pointer;
 }
 
 .btn-transparent {
@@ -80,6 +80,15 @@
     color: rgb(230, 220, 201);
     height: 40px;  
     width: 100%;
+    cursor: pointer;
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: rgb(230, 220, 201);
+    height: 30px;  
+    cursor: pointer;
 }
 
 .btn-dark:hover {
@@ -97,8 +106,40 @@
     color: rgb(230, 220, 201);
 }
 
+.btn-close:hover {
+    background: transparent;
+    color: rgb(230, 220, 201);
+}
+
+.btn-dark:active {
+    border: none;
+    outline: none;
+}
+
+.btn-light:active {
+    border: none;
+    outline: none;
+}
+
+.btn-transparent:active {
+    border: none;
+    outline: none;
+}
+
+.btn-close:active {
+    border: none;
+    outline: none;
+}
+
 .modal {
-    background-color: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+    background: rgb(4, 101, 101, 0.9);
+    color: rgb(230, 220, 201);
+    border-radius: 0% !important;
+    padding: 0% 1% 30px 1%;
 }
 
 .card-transparent {
