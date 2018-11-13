@@ -39,7 +39,7 @@ export class ExplorerService {
   }
 
   getCurrentExplorer() {
-    this.store.dispatch(new actions.RequestGetCurrentExplorer);
+    this.store.dispatch(new actions.RequestGetExplorer);
 
     this.store.select("explorer").subscribe(explorerState => {
       this.globalService.setCurrentExplorer(explorerState.currentExplorer);

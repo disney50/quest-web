@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
       if(currentPlanet) {               
         this.currentPlanet = currentPlanet;
         this.globalService.setCurrentPlanet(this.currentPlanet);
-        this.store.dispatch(new actions.RequestGetCurrentExplorer);
+        this.store.dispatch(new actions.RequestGetExplorer);
       }
     })
   }

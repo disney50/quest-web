@@ -5,7 +5,7 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
     const newState = {...state};
 
     switch(action.type) {
-        case actions.REQUEST_GET_CURRENT_EXPLORER:
+        case actions.REQUEST_GET_EXPLORER:
             newState.currentExplorer = {} as Explorer;
             return newState;
         case actions.GET_EXPLORER_SUCCESS:
