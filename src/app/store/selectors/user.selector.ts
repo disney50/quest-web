@@ -1,9 +1,9 @@
 import { AppState } from '../app-state';
 
-export const base = (state: AppState) => state.userState;
+export const userBase = (state: AppState) => state.userState;
 
-export const hasLoginFailed = (state: AppState) =>  base(state).loginFailed;
+export const hasLoginFailed = (state: AppState) =>  userBase(state).loginFailed;
 
-export const hasLoginSucceeded = (state: AppState) => base(state).signedIn;
+export const hasLoginSucceeded = (state: AppState) => userBase(state).signedIn;
 
-export const signedInUser = (state: AppState) => base(state).signedInUser;
+export const signedInUser = (state: AppState) => userBase(state).signedInUser;

@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
 import { User } from 'src/app/models/user';
-import * as selectors from '../../store/selectors/user.selector';
+import * as selectors from '../../store/selectors';
+import { Planet } from 'src/app/models/planet';
+import { Explorer } from 'src/app/models/explorer';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +15,9 @@ import * as selectors from '../../store/selectors/user.selector';
 })
 export class DashboardComponent implements OnInit {
   signedInUser: User = {} as User;
+  currentPlanet: Planet = {} as Planet;
+  currentExplorer: Explorer = {} as Explorer;
+
 
   constructor(public globalService: GlobalService,
     private store: Store<AppState>) {}
@@ -24,13 +29,36 @@ export class DashboardComponent implements OnInit {
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       if(signedInUser) {
-        console.log(signedInUser);
         this.signedInUser = signedInUser;
+        this.globalService.setSignedInUser(this.signedInUser);
+        this.store.dispatch(new actions.RequestGetDefaultPlanet);
+      }
+    })
+  }
+
+  sliceCurrentPlanet() {
+    this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
+      if(currentPlanet) {               
+        this.currentPlanet = currentPlanet;
+        this.globalService.setCurrentPlanet(this.currentPlanet);
+        this.store.dispatch(new actions.RequestGetCurrentExplorer);
+      }
+    })
+  }
+
+  sliceCurrentExplorer() {
+    this.store.select(selectors.currentExplorer).subscribe(currentExplorer => {
+      if(currentExplorer) {
+        console.log(currentExplorer);
+
+        this.currentExplorer = currentExplorer;        
       }
     })
   }
 
   ngOnInit() {
     this.sliceSignedInUser();
+    this.sliceCurrentPlanet();
+    this.sliceCurrentExplorer();
   }
 }

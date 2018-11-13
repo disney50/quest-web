@@ -7,8 +7,8 @@ import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 import { User } from 'firebase';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
-import * as actions from '../../store/actions/user.actions';
-import * as selectors from '../../store/selectors/user.selector';
+import * as actions from '../../store/actions/';
+import * as selectors from '../../store/selectors/';
 import { LoginDetails } from 'src/app/models/login-details';
 
 @Component({
@@ -20,8 +20,6 @@ export class LoginComponent implements OnInit {
   message: string = null;
 
   constructor(private router: Router,
-    private authenticationService: AuthenticationService,
-    private globalService: GlobalService,
     private planetService: PlanetService,
     private explorerService: ExplorerService,
     private store: Store<AppState>) { }
@@ -44,33 +42,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  userAuthenticated() {
+  // getUserPlanet() {
 
-    if (this.globalService.userExists == true) {
-      this.authenticationService.signInExistingUser().subscribe(userState => {
-        if (userState.signedInUser.name){
-          this.getUserPlanet();
-        }
-      });
-    }
-    else {
-      this.message = "Incorrect email or password entered"
-    }
-  }
+  //   this.planetService.getUserPlanet();
 
-  getUserPlanet() {
+  //   this.getCurrentExplorer();
+  // }
 
-    this.planetService.getUserPlanet();
+  // getCurrentExplorer() {
 
-    this.getCurrentExplorer();
-  }
+  //   this.explorerService.getCurrentExplorer();
 
-  getCurrentExplorer() {
-
-    this.explorerService.getCurrentExplorer();
-
-    // this.navigateDashboard();
-  }
+  // }
 
   navigateDashboard() {
     this.router.navigateByUrl("dashboard");
@@ -79,7 +62,6 @@ export class LoginComponent implements OnInit {
   sliceHasLoginFailed() {
     this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
       if(hasFailed)
-        // alert("FAILED");
         this.message = "Incorrect email or password entered";
     });
   }

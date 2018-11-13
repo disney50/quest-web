@@ -49,7 +49,7 @@ export class PlanetService {
   }
 
   getCurrentPlanet() {
-    this.store.dispatch(new actions.RequestGetCurrentPlanet);
+    this.store.dispatch(new actions.RequestGetSelectedPlanet);
 
     this.store.select("planet").subscribe(planetState => {
       this.globalService.setCurrentPlanet(planetState.currentPlanet);
@@ -58,7 +58,7 @@ export class PlanetService {
 
   getUserPlanet() {
         
-    this.store.dispatch(new actions.RequestGetUserPlanet);
+    this.store.dispatch(new actions.RequestGetDefaultPlanet);
 
     this.store.select("planet").subscribe(planetState => {
             
