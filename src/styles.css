@@ -97,6 +97,10 @@
     color: rgb(230, 220, 201);
 }
 
+.modal {
+    background-color: rgba(0,0,0,0.9);
+}
+
 .card-transparent {
     background: transparent;
     color: rgb(230, 220, 201);

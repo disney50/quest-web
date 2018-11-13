@@ -34,13 +34,13 @@ export class LoginComponent implements OnInit {
   signInClicked(email: string, password: string) {
 
     if (!email) {
-      this.message = "No email entered"
+      this.message = "No email entered";
     }
     else if (!password) {
-      this.message = "No password entered"
+      this.message = "No password entered";
     }
     else {
-        this.store.dispatch(new actions.RequestLoginUserExist({username: email, password: password} as LoginDetails));
+      this.store.dispatch(new actions.RequestLoginUserExist({username: email, password: password} as LoginDetails));
     }
   }
 
@@ -79,7 +79,8 @@ export class LoginComponent implements OnInit {
   sliceHasLoginFailed() {
     this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
       if(hasFailed)
-        alert("FAILED");
+        // alert("FAILED");
+        this.message = "Incorrect email or password entered";
     });
   }
 
