@@ -31,11 +31,8 @@ export class LoginComponent implements OnInit {
 
   signInClicked(email: string, password: string) {
 
-    if (!email) {
-      this.message = "No email entered";
-    }
-    else if (!password) {
-      this.message = "No password entered";
+    if (!email || !password) {
+      this.message = "You forgot to fill in some fields";
     }
     else {
       this.store.dispatch(new actions.RequestLoginUserExist({username: email, password: password} as LoginDetails));

@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   newUser: User = {} as User;
   allPlanets: Planet[];
   selectedPlanet: Planet = {} as Planet;
+  message: string = null;
 
   constructor(private registerService: RegisterService,
     private router: Router,
@@ -41,8 +42,13 @@ export class RegisterComponent implements OnInit {
   }
 
   registerClicked(selectedPlanet: Planet) {
-    this.selectedPlanet = selectedPlanet;
-    this.getNewUserId();
+    if (!this.newUser.email || !this.newUser.name || !this.newUser.password || !this.newUser.surname) {
+      this.message  = "You forgot to fill in some fields"
+    }
+    else {
+      this.selectedPlanet = selectedPlanet;
+      this.getNewUserId();
+    }
   }
 
   getNewUserId() {
