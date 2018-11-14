@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';import { Router } from '@angular/router';
-import { RegisterService } from 'src/app/services/register/register.service';
+import { UserService } from 'src/app/services/user/user.service';
 import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   selectedPlanet: Planet = {} as Planet;
   message: string = null;
 
-  constructor(private registerService: RegisterService,
+  constructor(private userService: UserService,
     private router: Router,
     private planetService: PlanetService,
     private explorerService: ExplorerService,
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
   }
 
   getNewUserId() {
-    this.newUser.userId = this.registerService.createNewUserId();
+    this.newUser.userId = this.userService.createNewUserId();
     this.getNewUserGender();
   }
 
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerNewUser() {
-    this.registerService.registerNewUser(this.newUser);
+    this.userService.registerNewUser(this.newUser);
     this.signInUser();
   }
 

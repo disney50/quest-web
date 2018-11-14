@@ -6,7 +6,7 @@ import { User } from 'src/app/models/user';
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService {
+export class UserService {
   users$: Observable<any>;
   userCollection: AngularFirestoreCollection<User>;
 
