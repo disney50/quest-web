@@ -1,24 +1,37 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect } from '@ngrx/effects';
 import * as actions from '../actions';
+import * as selectors from '../selectors';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
 import { AngularFirestore } from "@angular/fire/firestore";
-import { GlobalService } from "src/app/services/global/global.service";
 import { Explorer, ExplorerData } from "src/app/models/explorer";
+import { Store } from "@ngrx/store";
+import { AppState } from "../app-state";
+import { User } from "src/app/models/user";
+import { Planet } from "src/app/models/planet";
 
 @Injectable()
 export class ExplorerEffects {
 
-    constructor(private actions$: Actions, 
-        private angularFirestore: AngularFirestore, 
-        private globalService: GlobalService) {}
+    constructor(private actions$: Actions,
+        private store$: Store<AppState>, 
+        private angularFirestore: AngularFirestore) {}
+    
+    signedInUser: User;
+    currentPlanet: Planet;
 
     @Effect()
     GetCurrentExplorer$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
-        switchMap(action => {
-            console.log(this.globalService.currentPlanet.name, this.globalService.currentPlanet.name);
+        switchMap((action: actions.RequestGetExplorer) => {
+            this.store$.select(selectors.signedInUser).subscribe(signedInUser => {
+                this.signedInUser = signedInUser;
+            })
+
+            this.store$.select(selectors.currentPlanet).subscribe(currentPlanet => {
+                this.currentPlanet = currentPlanet;
+            })
                                                                         
-            return this.angularFirestore.collection(this.globalService.currentPlanet.name + "/explorers/entries", ref => ref.where('userId', '==', this.globalService.signedInUser.userId)).stateChanges();
+            return this.angularFirestore.collection(this.currentPlanet.name + "/explorers/entries", ref => ref.where('userId', '==', this.signedInUser.userId)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {

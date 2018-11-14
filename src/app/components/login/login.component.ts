@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalService } from 'src/app/services/global/global.service';
-import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { PlanetService } from 'src/app/services/planet/planet.service';
-import { ExplorerService } from 'src/app/services/explorer/explorer.service';
-import { User } from 'firebase';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions/';
@@ -20,8 +15,6 @@ export class LoginComponent implements OnInit {
   message: string = null;
 
   constructor(private router: Router,
-    private planetService: PlanetService,
-    private explorerService: ExplorerService,
     private store: Store<AppState>) { }
 
 

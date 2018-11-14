@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalService } from 'src/app/services/global/global.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
@@ -19,8 +18,7 @@ export class DashboardComponent implements OnInit {
   currentExplorer: Explorer = {} as Explorer;
 
 
-  constructor(public globalService: GlobalService,
-    private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
@@ -30,7 +28,6 @@ export class DashboardComponent implements OnInit {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       if(signedInUser) {
         this.signedInUser = signedInUser;
-        this.globalService.setSignedInUser(this.signedInUser);
         this.store.dispatch(new actions.RequestGetDefaultPlanet);
       }
     })
@@ -40,7 +37,6 @@ export class DashboardComponent implements OnInit {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(currentPlanet) {               
         this.currentPlanet = currentPlanet;
-        this.globalService.setCurrentPlanet(this.currentPlanet);
         this.store.dispatch(new actions.RequestGetExplorer);
       }
     })
