@@ -8,6 +8,7 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-register',
@@ -19,27 +20,28 @@ export class RegisterComponent implements OnInit {
   femaleStatus: boolean = false;
   newUser: User = {} as User;
   allPlanets: Planet[];
-  newUserPlanet: Planet = {} as Planet;
+  selectedPlanet: Planet = {} as Planet;
 
   constructor(private registerService: RegisterService,
     private router: Router,
     private planetService: PlanetService,
     private explorerService: ExplorerService,
+    private globalService: GlobalService,
     private store: Store<AppState>) {
   } 
 
-  maleClickEvent() {
+  maleClicked() {
     this.maleStatus = true;
     this.femaleStatus = false;  
   }
 
-  femaleClickEvent() {
+  femaleClicked() {
     this.maleStatus = false;
     this.femaleStatus = true;
   }
 
-  registerClicked(newUserPlanet: Planet) {
-    this.newUserPlanet = newUserPlanet;
+  registerClicked(selectedPlanet: Planet) {
+    this.selectedPlanet = selectedPlanet;
     this.getNewUserId();
   }
 
@@ -61,15 +63,22 @@ export class RegisterComponent implements OnInit {
 
   registerNewUser() {
     this.registerService.registerNewUser(this.newUser);
+    this.signInUser();
+  }
+
+  signInUser() {
+    this.store.dispatch(new actions.RequestGetUserById(this.newUser.userId));
+    this.globalService.setSignedInUser(this.newUser);    
     this.addNewUserPlanet();
   }
 
   addNewUserPlanet() {
-    this.planetService.addNewUserPlanet(this.newUserPlanet);
+    this.planetService.addSelectedPlanet(this.selectedPlanet);
+    this.globalService.setCurrentPlanet(this.selectedPlanet);    
     this.createNewExplorer();
   }
 
-  createNewExplorer() {
+  createNewExplorer() {    
     this.explorerService.createNewExplorer();
     this.navigateDashboard();
   }

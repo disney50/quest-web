@@ -49,8 +49,6 @@ export class DashboardComponent implements OnInit {
   sliceCurrentExplorer() {
     this.store.select(selectors.currentExplorer).subscribe(currentExplorer => {
       if(currentExplorer) {
-        console.log(currentExplorer);
-
         this.currentExplorer = currentExplorer;        
       }
     })

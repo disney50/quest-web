@@ -33,10 +33,10 @@
         
         <div class="row justify-content-center align-items-center">
           <div class="col-12">
-            <button class="btn-dark border mb-3" style="width: 50%" (click)="maleClickEvent()" 
+            <button class="btn-dark border mb-3" style="width: 50%" (click)="maleClicked()" 
               [ngClass]="maleStatus ? 'btn-dark border' : 'btn-transparent border'">Male</button>
         
-            <button class="btn-dark border mb-3" style="width: 50%" (click)="femaleClickEvent()" 
+            <button class="btn-dark border mb-3" style="width: 50%" (click)="femaleClicked()" 
               [ngClass]="femaleStatus ? 'btn-dark border' : 'btn-transparent border'">Female</button>
           </div>
         </div>
@@ -54,7 +54,7 @@
                 <h4 class="text-center">{{planet.name}}</h4>
                 <div class="text-center">{{planet.description}}</div>
               </div>
-              <button class="btn-dark" (click)="createNewUser(); addNewUserPlanet(planet)">
+              <button class="btn-dark" (click)="registerClicked(planet)">
                 Register
               </button> 
             </div> 

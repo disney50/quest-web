@@ -42,19 +42,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // getUserPlanet() {
-
-  //   this.planetService.getUserPlanet();
-
-  //   this.getCurrentExplorer();
-  // }
-
-  // getCurrentExplorer() {
-
-  //   this.explorerService.getCurrentExplorer();
-
-  // }
-
   navigateDashboard() {
     this.router.navigateByUrl("dashboard");
   }
