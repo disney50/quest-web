@@ -8,7 +8,6 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
-import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +26,6 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private planetService: PlanetService,
     private explorerService: ExplorerService,
-    private globalService: GlobalService,
     private store: Store<AppState>) {
   } 
 
@@ -74,13 +72,11 @@ export class RegisterComponent implements OnInit {
 
   signInUser() {
     this.store.dispatch(new actions.RequestGetUserById(this.newUser.userId));
-    this.globalService.setSignedInUser(this.newUser);    
     this.addNewUserPlanet();
   }
 
   addNewUserPlanet() {
     this.planetService.addSelectedPlanet(this.selectedPlanet);
-    this.globalService.setCurrentPlanet(this.selectedPlanet);    
     this.createNewExplorer();
   }
 

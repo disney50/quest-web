@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Planet } from 'src/app/models/planet';
-import { GlobalService } from '../global/global.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as selectors from '../../store/selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +11,16 @@ import { GlobalService } from '../global/global.service';
 export class PlanetService {
   selectedPlanet: Planet =  {} as Planet;
 
-  constructor(private angularFirestore: AngularFirestore,
-    private globalService: GlobalService) {
+  constructor(private angularFirestore: AngularFirestore, 
+    private store: Store<AppState>) {
   }
 
   addSelectedPlanet(selectedPlanet: Planet) {
     this.selectedPlanet.name = selectedPlanet.name;
     this.selectedPlanet.description = selectedPlanet.description;
-    
-    this.angularFirestore.collection("users/" + this.globalService.signedInUser.userId + "/planets").doc(selectedPlanet.name).set(this.selectedPlanet);
+
+    this.store.select(selectors.signedInUser).subscribe(signedInUser => {
+      this.angularFirestore.collection("users/" + signedInUser.userId + "/planets").doc(selectedPlanet.name).set(this.selectedPlanet);
+    })
   }
 }

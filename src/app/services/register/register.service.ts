@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/models/user';
-import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +10,7 @@ export class RegisterService {
   users$: Observable<any>;
   userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private angularFirestore: AngularFirestore,
-    private globalService: GlobalService) {
+  constructor(private angularFirestore: AngularFirestore) {
   }
 
   createNewUserId(): string {
@@ -22,7 +20,5 @@ export class RegisterService {
 
   registerNewUser(newUser: User) {
     this.angularFirestore.collection("users").doc(newUser.userId).set(newUser);
-
-    this.globalService.setSignedInUser(newUser);
   }
 }

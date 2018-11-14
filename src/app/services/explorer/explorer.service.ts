@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Explorer } from 'src/app/models/explorer';
-import { GlobalService } from '../global/global.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as selectors from '../../store/selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +13,22 @@ export class ExplorerService {
 
 
   constructor(private angularFirestore: AngularFirestore, 
-    private globalService: GlobalService) {
+    private store: Store<AppState>) { 
   }
 
-  createNewExplorer() {    
-    this.newExplorer.name = this.globalService.signedInUser.name;
-    this.newExplorer.surname = this.globalService.signedInUser.surname;
-    this.newExplorer.xp = "0";
-    this.newExplorer.userId = this.globalService.signedInUser.userId;
+  createNewExplorer() {
+    this.store.select(selectors.signedInUser).subscribe(signedInUser => {
+      this.newExplorer.name = signedInUser.name;
+      this.newExplorer.surname = signedInUser.surname;
+      this.newExplorer.xp = "0";
+      this.newExplorer.userId = signedInUser.userId;
+    })
     this.addNewExplorer();
   }
 
   addNewExplorer() {
-    this.angularFirestore.collection(this.globalService.currentPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
+    this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
+      this.angularFirestore.collection(currentPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
+    })
   }
 }

@@ -32,21 +32,6 @@ export class PlanetEffects {
         })
     );
 
-    // @Effect()
-    // GetSelectedPlanet$ = this.actions$.ofType(actions.REQUEST_GET_SELECTED_PLANET).pipe(
-    //     switchMap(action => {
-
-    //         return this.angularFirestore.collection("users/" + this.globalService.signedInUser.userId + "/planets", ref => ref.where('name', '==', this.globalService.currentPlanet.name)).stateChanges();
-    //     }),
-    //     mergeMap(actions => actions),
-    //     map(action => {
-    //         if(action.type === "added") {
-    //             return new actions.GetPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
-    //         }
-    //         return new actions.UnimplementedAction("");
-    //     })
-    // )
-
     @Effect()
     GetDefaultPlanet$ = this.actions$.ofType(actions.REQUEST_GET_DEFAULT_PLANET).pipe(
         switchMap((action: actions.RequestGetDefaultPlanet) => {
