@@ -11,24 +11,25 @@ import * as selectors from '../../store/selectors';
 export class ExplorerService {
   newExplorer: Explorer = {} as Explorer;
 
-
   constructor(private angularFirestore: AngularFirestore, 
     private store: Store<AppState>) { 
+
   }
 
-  createNewExplorer() {
+  createExplorer() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       this.newExplorer.name = signedInUser.name;
       this.newExplorer.surname = signedInUser.surname;
       this.newExplorer.xp = "0";
       this.newExplorer.userId = signedInUser.userId;
-    })
-    this.addNewExplorer();
+    });
+
+    this.addExplorerToPlanet();
   }
 
-  addNewExplorer() {
+  addExplorerToPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       this.angularFirestore.collection(currentPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
-    })
+    });
   }
 }

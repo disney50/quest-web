@@ -13,14 +13,15 @@ export class PlanetService {
 
   constructor(private angularFirestore: AngularFirestore, 
     private store: Store<AppState>) {
+
   }
 
-  addSelectedPlanet(selectedPlanet: Planet) {
+  addPlanetToUser(selectedPlanet: Planet) {
     this.selectedPlanet.name = selectedPlanet.name;
     this.selectedPlanet.description = selectedPlanet.description;
 
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       this.angularFirestore.collection("users/" + signedInUser.userId + "/planets").doc(selectedPlanet.name).set(this.selectedPlanet);
-    })
+    });
   }
 }
