@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       if(signedInUser) {
         this.signedInUser = signedInUser;
-        this.store.dispatch(new actions.RequestGetDefaultPlanet);
+        this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
       }
     })
   }
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(currentPlanet) {               
         this.currentPlanet = currentPlanet;
-        this.store.dispatch(new actions.RequestGetExplorer);
+        this.store.dispatch(new actions.RequestGetExplorer(this.currentPlanet.name, this.signedInUser.userId));
       }
     })
   }

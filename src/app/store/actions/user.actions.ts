@@ -21,13 +21,14 @@ export class RequestGetUserById implements Action {
     constructor(public payload: string) {}
 }
 
-export class RequestGetUserByLoginDetails implements Action {
-  type = REQUEST_GET_USER_BY_LOGIN_DETAILS;
-  constructor(public payload: LoginDetails) {}
-}
 export class GetUserSuccess implements Action {
     type = GET_USER_SUCCESS;
     constructor(public payload: User) {}
+}
+
+export class RequestGetUserByLoginDetails implements Action {
+  type = REQUEST_GET_USER_BY_LOGIN_DETAILS;
+  constructor(public payload: LoginDetails) {}
 }
 
 export class LoginSuccess implements Action {

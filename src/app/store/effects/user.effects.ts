@@ -24,6 +24,20 @@ export class UserEffects {
     );
 
     @Effect()
+    GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
+        switchMap((action: actions.RequestGetUserByLoginDetails) => {
+            return this.angularFirestore.collection("users", ref => ref.where('email', '==', action.payload.username).where('password', '==', action.payload.password).limit(1)).stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            if(action.type === "added") {
+                return new actions.LoginSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+            }
+            return new actions.UnimplementedAction("");
+        })
+    );
+
+    @Effect()
     GetUserById$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_ID).pipe(
         switchMap((action: actions.RequestGetUserById) => {
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', action.payload)).stateChanges();
@@ -35,32 +49,16 @@ export class UserEffects {
             }
             return new actions.UnimplementedAction("");
         })
-    )
-
-    @Effect()
-    GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
-        switchMap((action: actions.RequestGetUserByLoginDetails) => {
-
-            return this.angularFirestore.collection("users", ref => ref.where('email', '==', action.payload.username).where('password', '==', action.payload.password).limit(1)).stateChanges();
-        }),
-        mergeMap(actions => actions),
-        map(action => {
-            if(action.type === "added") {
-                return new actions.LoginSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
-            }
-            return new actions.UnimplementedAction("");
-        })
-    )
+    );
 
     @Effect()
     LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
         switchMap(action => {
-
             return this.angularFirestore.collection("users", ref => ref.where('userId', '==', "AAAAAAAAAAA")).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
             return new actions.LogOutUser();
         })
-    )
+    );
 }

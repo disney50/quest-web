@@ -9,21 +9,21 @@ export function userReducer(userState = initialUserState, action: actions.UserAc
         case actions.REQUEST_LOGIN_USER_EXIST:
             newUserState.loginFailed = false;
             return newUserState;
+        case actions.LOGIN_SUCCESS:
+            newUserState.signedInUser = (action as actions.LoginSuccess).payload;
+            newUserState.signedIn = true;
+            newUserState.loginFailed = false;
+            return newUserState;
+        case actions.LOGIN_FAILED:
+            newUserState.signedInUser = {} as User;
+            newUserState.loginFailed = true;
+            return newUserState;    
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
             newUserState.signedInUser = getUserSuccessAction.payload;
             newUserState.signedIn = true;
             newUserState.loginFailed = false;
             return newUserState;
-        case actions.LOGIN_SUCCESS:
-          newUserState.signedInUser = (action as actions.LoginSuccess).payload;
-          newUserState.signedIn = true;
-          newUserState.loginFailed = false;
-          return newUserState;
-        case actions.LOGIN_FAILED:
-          newUserState.signedInUser = {} as User;
-          newUserState.loginFailed = true;
-          return newUserState;
         case actions.LOG_OUT_USER:
             newUserState.signedInUser = {} as User;
             newUserState.signedIn = false;

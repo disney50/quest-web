@@ -6,7 +6,7 @@ export const GET_EXPLORER_SUCCESS = "[explorer] GET_EXPLORER_SUCCESS";
 
 export class RequestGetExplorer implements Action {
     type = REQUEST_GET_EXPLORER
-    constructor() {}
+    constructor(public planetNamePayload: string, public userIdPayload: string) {}
 }
 
 export class GetExplorerSuccess implements Action {
