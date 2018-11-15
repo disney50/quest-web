@@ -13,7 +13,7 @@ export class ExplorerEffects {
 
     @Effect()
     GetCurrentExplorer$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
-        switchMap((action: actions.RequestGetExplorer) => {                                                                        
+        switchMap((action: actions.RequestGetExplorer) => {                                     
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries", ref => ref.where('userId', '==', action.userIdPayload)).stateChanges();
         }),
         mergeMap(actions => actions),

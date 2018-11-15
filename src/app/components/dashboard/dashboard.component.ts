@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
   currentExplorer: Explorer = {} as Explorer;
-
+  message: string;
 
   constructor(private store: Store<AppState>) {
     

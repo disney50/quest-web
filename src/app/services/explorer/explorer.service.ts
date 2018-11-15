@@ -4,6 +4,8 @@ import { Explorer } from 'src/app/models/explorer';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import * as selectors from '../../store/selectors';
+import { User } from 'src/app/models/user';
+import { Planet } from 'src/app/models/planet';
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +13,20 @@ import * as selectors from '../../store/selectors';
 export class ExplorerService {
   newExplorer: Explorer = {} as Explorer;
 
-  constructor(private angularFirestore: AngularFirestore, 
-    private store: Store<AppState>) { 
+  constructor(private angularFirestore: AngularFirestore) { 
 
   }
 
-  createNewExplorer() {
-    this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      this.newExplorer.name = signedInUser.name;
-      this.newExplorer.surname = signedInUser.surname;
-      this.newExplorer.xp = "0";
-      this.newExplorer.userId = signedInUser.userId;
-    });
+  createNewExplorer(selectedPlanet: Planet, newUser: User) {      
+    this.newExplorer.name = newUser.name;
+    this.newExplorer.surname = newUser.surname;
+    this.newExplorer.xp = "0";
+    this.newExplorer.userId = newUser.userId;
 
-    this.addNewExplorerToPlanet();
+    this.addNewExplorerToPlanet(selectedPlanet);
   }
 
-  addNewExplorerToPlanet() {
-    this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      this.angularFirestore.collection(currentPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
-    });
+  addNewExplorerToPlanet(selectedPlanet: Planet) {      
+    this.angularFirestore.collection(selectedPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
   }
 }

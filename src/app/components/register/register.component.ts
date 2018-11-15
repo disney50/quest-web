@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
     this.femaleStatus = true;
   }
 
-  registerClicked(selectedPlanet: Planet) {
+  registerClicked(selectedPlanet: Planet) {    
     if (!this.newUser.email || !this.newUser.name || !this.newUser.password || !this.newUser.surname) {
       this.message  = "You forgot to fill in some fields"
     }
@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
     this.getNewUserGender();
   }
 
-  getNewUserGender() {
+  getNewUserGender() {    
     if(this.maleStatus == true) {
       this.newUser.gender = "MALE";
     }
@@ -68,27 +68,26 @@ export class RegisterComponent implements OnInit {
     this.registerNewUser();
   }
 
-  registerNewUser() {
+  registerNewUser() {    
     this.userService.registerNewUser(this.newUser);
     this.addSelectedPlanetToUser();
   }
 
-  addSelectedPlanetToUser() {
+  addSelectedPlanetToUser() {    
     this.planetService.addSelectedPlanetToUser(this.selectedPlanet);
     this.createNewExplorer();
   }
 
-  createNewExplorer() {    
-    this.explorerService.createNewExplorer();
+  createNewExplorer() {        
+    this.explorerService.createNewExplorer(this.selectedPlanet, this.newUser);
     this.signInUser();
   }
 
-  signInUser() {
+  signInUser() {    
     this.store.dispatch(new actions.RequestLoginUserExist({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
-    this.navigateDashboard();
   }
 
-  navigateDashboard() {
+  navigateDashboard() {    
     this.router.navigateByUrl("dashboard");
   }
 
@@ -100,8 +99,17 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  sliceHasLoginSucceeded() {
+    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+      if(signedIn) {
+        this.navigateDashboard();
+      }
+    });
+  }
+
   ngOnInit() {
     this.store.dispatch(new actions.RequestGetAllPlanets);
     this.sliceAllPlanets();
+    this.sliceHasLoginSucceeded();
   }
 }

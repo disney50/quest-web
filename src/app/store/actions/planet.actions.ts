@@ -1,6 +1,5 @@
 import { Action } from "@ngrx/store";
 import { Planet } from "src/app/models/planet";
-import { User } from "src/app/models/user";
 
 export const REQUEST_GET_ALL_PLANETS = "[planet] REQUEST_GET_ALL_PLANETS";
 export const GET_ALL_PLANETS_SUCCESS = "[planet] GET_ALL_PLANETS_SUCCESS";

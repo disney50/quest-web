@@ -16,7 +16,7 @@ export class PlanetService {
 
   }
 
-  addSelectedPlanetToUser(selectedPlanet: Planet) {
+  addSelectedPlanetToUser(selectedPlanet: Planet) {    
     this.selectedPlanet.name = selectedPlanet.name;
     this.selectedPlanet.description = selectedPlanet.description;
 
