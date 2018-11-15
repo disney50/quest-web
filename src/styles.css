@@ -131,6 +131,21 @@
     outline: none;
 }
 
+.text-dark {
+    color: rgb(4, 101, 101);
+    font-size: 100%;
+}
+
+.text-light {
+    color: rgb(85, 119, 123);
+    font-size: 100%;
+}
+
+.text-standard {
+    color: rgb(230, 220, 201);
+    font-size: 100%;
+}
+
 .modal {
     background: rgba(0,0,0,0.9);
 }
