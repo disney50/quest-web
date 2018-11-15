@@ -16,7 +16,7 @@ export class ExplorerService {
 
   }
 
-  createExplorer() {
+  createNewExplorer() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       this.newExplorer.name = signedInUser.name;
       this.newExplorer.surname = signedInUser.surname;
@@ -24,10 +24,10 @@ export class ExplorerService {
       this.newExplorer.userId = signedInUser.userId;
     });
 
-    this.addExplorerToPlanet();
+    this.addNewExplorerToPlanet();
   }
 
-  addExplorerToPlanet() {
+  addNewExplorerToPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       this.angularFirestore.collection(currentPlanet.name + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
     });

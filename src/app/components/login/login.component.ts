@@ -15,8 +15,9 @@ export class LoginComponent implements OnInit {
   message: string = null;
 
   constructor(private router: Router,
-    private store: Store<AppState>) { }
+    private store: Store<AppState>) { 
 
+  }
 
   navigateRegister() {
     this.router.navigateByUrl("register");
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
       this.message = "You forgot to fill in some fields";
     }
     else {
-      this.store.dispatch(new actions.RequestLoginUserExist({username: email, password: password} as LoginDetails));
+      this.store.dispatch(new actions.RequestLoginUserExist({email: email, password: password} as LoginDetails));
     }
   }
 
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
   sliceHasLoginFailed() {
     this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
       if(hasFailed)
-        this.message = "Incorrect email or password entered";
+        this.message = "Incorrect email or password";
     });
   }
 

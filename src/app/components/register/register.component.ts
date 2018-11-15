@@ -8,12 +8,14 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
+import { LoginDetails } from 'src/app/models/login-details';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent implements OnInit {
   maleStatus: boolean = true;
   femaleStatus: boolean = false;
@@ -27,6 +29,7 @@ export class RegisterComponent implements OnInit {
     private planetService: PlanetService,
     private explorerService: ExplorerService,
     private store: Store<AppState>) {
+
   } 
 
   maleClicked() {
@@ -67,21 +70,21 @@ export class RegisterComponent implements OnInit {
 
   registerNewUser() {
     this.userService.registerNewUser(this.newUser);
-    this.signInUser();
+    this.addSelectedPlanetToUser();
   }
 
-  signInUser() {
-    this.store.dispatch(new actions.RequestGetUserById(this.newUser.userId));
-    this.addNewUserPlanet();
-  }
-
-  addNewUserPlanet() {
-    this.planetService.addPlanetToUser(this.selectedPlanet);
+  addSelectedPlanetToUser() {
+    this.planetService.addSelectedPlanetToUser(this.selectedPlanet);
     this.createNewExplorer();
   }
 
   createNewExplorer() {    
-    this.explorerService.createExplorer();
+    this.explorerService.createNewExplorer();
+    this.signInUser();
+  }
+
+  signInUser() {
+    this.store.dispatch(new actions.RequestLoginUserExist({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
     this.navigateDashboard();
   }
 

@@ -14,19 +14,21 @@ export class UserEffects {
 
     @Effect()
     RequestLogin$ = this.actions$.ofType(actions.REQUEST_LOGIN_USER_EXIST).pipe(
-        switchMap((action: actions.RequestLoginUserExist) => this.angularFirestore.collection('users', ref => ref.where('email', "==", action.payload.username).where('password', '==', action.payload.password)).get()),
+        switchMap((action: actions.RequestLoginUserExist) => {
+            return this.angularFirestore.collection('users', ref => ref.where('email', "==", action.payload.email).where('password', '==', action.payload.password)).get();
+        }),
         map(snapShot => {
           if(snapShot.size === 0) {
             return new actions.LoginFailed();
           }
-          return new actions.RequestGetUserByLoginDetails({username: snapShot.docs[0].data().email, password: snapShot.docs[0].data().password});
+          return new actions.RequestGetUserByLoginDetails({email: snapShot.docs[0].data().email, password: snapShot.docs[0].data().password});
         })
     );
 
     @Effect()
     GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
         switchMap((action: actions.RequestGetUserByLoginDetails) => {
-            return this.angularFirestore.collection("users", ref => ref.where('email', '==', action.payload.username).where('password', '==', action.payload.password).limit(1)).stateChanges();
+            return this.angularFirestore.collection("users", ref => ref.where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {

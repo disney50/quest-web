@@ -18,7 +18,9 @@ export class DashboardComponent implements OnInit {
   currentExplorer: Explorer = {} as Explorer;
 
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+    
+  }
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
