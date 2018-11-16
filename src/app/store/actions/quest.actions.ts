@@ -6,7 +6,7 @@ export const GET_QUEST_SUCCESS = "[quest] GET_QUEST_SUCCESS";
 
 export class RequestGetInProgressQuest implements Action {
     type = REQUEST_GET_IN_PROGRESS_QUEST;
-    constructor() {}
+    constructor(public planetNamePayload: string, public userIdPayload: string) {}
 }
 
 export class GetQuestSuccess implements Action {
