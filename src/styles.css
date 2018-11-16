@@ -17,6 +17,13 @@
     padding: 20px;
 }
 
+.full {
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    overflow-y: auto;
+}
+
 .img-responsive-large {
     width: 200px;
     height: 200px;
@@ -53,6 +60,15 @@
 .border {
     border-width: 1px;
     border-color: rgb(230, 220, 201);
+    border-style: solid;
+}
+
+.border-bottom {
+    border-width: 1px;
+    border-bottom-color: rgb(230, 220, 201);
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-left-color: transparent;
     border-style: solid;
 }
 
@@ -133,17 +149,14 @@
 
 .text-dark {
     color: rgb(4, 101, 101);
-    font-size: 100%;
 }
 
 .text-light {
     color: rgb(85, 119, 123);
-    font-size: 100%;
 }
 
 .text-standard {
     color: rgb(230, 220, 201);
-    font-size: 100%;
 }
 
 .modal {
