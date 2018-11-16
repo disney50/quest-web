@@ -12,10 +12,10 @@ export class QuestEffects {
         private angularFirestore: AngularFirestore) {}
 
     @Effect() 
-    GetInProgressQuest$ = this.actions$.ofType(actions.REQUEST_GET_IN_PROGRESS_QUEST).pipe(
-        switchMap((action: actions.RequestGetInProgressQuest) => {
+    GetCurrentQuest$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_QUEST).pipe(
+        switchMap((action: actions.RequestGetCurrentQuest) => {
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests", ref => ref
-                .where('status', '==', 'in_progress')).stateChanges();
+                .where('status', '==', 'in_progress' || 'moderating')).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
