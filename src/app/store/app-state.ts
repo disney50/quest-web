@@ -1,6 +1,7 @@
 import { User } from '../models/user';
 import { Planet } from '../models/planet';
 import { Explorer } from '../models/explorer';
+import { Quest } from '../models/quest';
 
 export interface AppState {
 
@@ -17,4 +18,8 @@ export interface AppState {
     explorerState: {
         currentExplorer: Explorer;
     };
+
+    questState: {
+        currentQuest: Quest;
+    }
 }
