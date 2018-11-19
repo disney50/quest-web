@@ -33,19 +33,18 @@
         </div>
         <div class="col-4">
           <div class="row justify-content-center align-items-center">
-            <b class="text-standard" style="font-size: 125%">Screen Shot</b>
+            <b class="text-standard" style="font-size: 125%">{{currentQuest.title}}</b>
           </div>
           <div class="row justify-content-center align-items-center text-center">
-              <p class="text-standard" style="font-size: 100%">asdasdoijij eafiiqjoiojoiiwjffojqoiwjf 
-                foqoiwffoijwi offiowjwefiojwiowofjfoii wwfifjfiiowffoiio</p>
+              <p class="text-standard" style="font-size: 100%">{{currentQuest.description}}</p>
           </div>
         </div>
         <div class="col-4">
           <div class="row justify-content-center align-items-end">
-            <img class="img-responsive-medium" src="../../../assets/ic_spaceship.png"/>
+            <img class="img-responsive-medium" src="../../../assets/{{currentQuest.status}}.png"/>
           </div>
           <div class="row justify-content-center align-items-end">
-            <b class="text-standard" style="font-size: 100%">IN PROGRESS</b>
+            <b class="text-standard" style="font-size: 100%">{{status}}</b>
           </div>
         </div>
       </div>

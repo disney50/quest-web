@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user';
 import * as selectors from '../../store/selectors';
 import { Planet } from 'src/app/models/planet';
 import { Explorer } from 'src/app/models/explorer';
+import { Quest } from 'src/app/models/quest';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,9 @@ export class DashboardComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
   currentExplorer: Explorer = {} as Explorer;
+  currentQuest: Quest = {} as Quest;
   message: string;
+  status: string;
 
   constructor(private store: Store<AppState>) {
     
@@ -52,9 +55,24 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  sliceCurrentQuest() {
+    this.store.select(selectors.currentQuest).subscribe(currentQuest => {
+      if(currentQuest) {
+        this.currentQuest = currentQuest;
+        if(this.currentQuest.status == "in_progress") {
+          this.status = "IN PROGRESS";
+        }
+        else if(this.currentQuest.status == "moderating") {
+          this.status = "MODERATING";
+        }
+      }
+    })
+  }
+
   ngOnInit() {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceCurrentExplorer();
+    this.sliceCurrentQuest();
   }
 }
