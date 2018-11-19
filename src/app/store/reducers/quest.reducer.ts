@@ -7,6 +7,8 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
     switch(action.type) {
         case actions.GET_QUEST_SUCCESS:
             const getQuestSuccessAction = action as actions.GetQuestSuccess;
+            console.log(getQuestSuccessAction.payload);
+            
             newState.currentQuest = getQuestSuccessAction.payload;
             return newState;
         default:
