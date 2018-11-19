@@ -13,15 +13,11 @@ export class QuestEffects {
 
         @Effect()
         GetCurrentQuest$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_QUEST).pipe(
-            switchMap((action: actions.RequestGetCurrentQuest) => {    
-                console.log("switchMap");
-                                                 
-                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests", ref => ref.where('status', '==', 'moderating')).stateChanges();
+            switchMap((action: actions.RequestGetCurrentQuest) => {                                                     
+                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests", ref => ref.where('status', '==', 'moderating' || 'in_progress')).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {
-                console.log("map");
-
                 if(action.type === "added") {
                     return new actions.GetQuestSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
                 }

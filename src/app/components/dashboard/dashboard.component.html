@@ -25,29 +25,48 @@
       </ul>
     </nav>
 
-    <div class="row justify-content-center align-items-center mx-auto w-100 mw-100 pt-3 pb-3">
-        <div class="col-4">
-          <div class="row justify-content-center align-items-start">
-            <img class="img-responsive-medium" src="../../../assets/codeez_logo.png"/>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="row justify-content-center align-items-center">
-            <b class="text-standard" style="font-size: 125%">{{currentQuest.title}}</b>
-          </div>
-          <div class="row justify-content-center align-items-center text-center">
-              <p class="text-standard" style="font-size: 100%">{{currentQuest.description}}</p>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="row justify-content-center align-items-end">
-            <img class="img-responsive-medium" src="../../../assets/{{currentQuest.status}}.png"/>
-          </div>
-          <div class="row justify-content-center align-items-end">
-            <b class="text-standard" style="font-size: 100%">{{status}}</b>
-          </div>
-        </div>
+    <div class="row justify-content-center align-items-center">
+      <div class="col-sm-12 col-lg-6">
+          <div class="card-transparent border">
+
+                <div class="card-body">
+                  <div class="row">
+
+                    <div class="col-4 my-auto">
+                      <div class="row justify-content-center align-items-center text-center">
+                        <img class="img-responsive-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
+                      </div>
+                    </div>
+
+                    <div class="col-4 my-auto">
+                      <div class="row justify-content-center align-items-center text-center my-auto">
+                        <b class="text-standard" style="font-size: 100%">{{currentQuest.title}}</b>
+                      </div>
+                      <div class="row justify-content-center align-items-center text-center">
+                        <p class="text-standard" style="font-size: 75%">{{currentQuest.level1.name}} | {{currentQuest.level2.name}}</p>
+                      </div>
+                    </div>
+
+                    <div class="col-4 my-auto">
+                      <div class="row justify-content-center align-items-center text-center mb-1 ml-1 mr-1">
+                        <img class="img-responsive-small" src="../../../assets/{{currentQuest.status}}.png"/>
+                      </div>
+                      <div class="row justify-content-center align-items-center text-center">
+                          <b class="text-standard" style="font-size: 75%">{{status}}</b>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                
+                <button class="btn-light">
+                  View
+                </button> 
+                
+        </div> 
       </div>
+    </div>
 
   </div>
 </div>
