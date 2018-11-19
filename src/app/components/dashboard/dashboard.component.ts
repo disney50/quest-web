@@ -50,7 +50,8 @@ export class DashboardComponent implements OnInit {
   sliceCurrentExplorer() {
     this.store.select(selectors.currentExplorer).subscribe(currentExplorer => {
       if(currentExplorer) {
-        this.currentExplorer = currentExplorer;        
+        this.currentExplorer = currentExplorer;      
+        this.store.dispatch(new actions.RequestGetCurrentQuest(this.currentPlanet.name, this.signedInUser.userId)); 
       }
     })
   }
