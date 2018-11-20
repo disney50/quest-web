@@ -10,11 +10,28 @@ export class QuestEffects {
 
     constructor(private actions$: Actions, 
         private angularFirestore: AngularFirestore) {}
+        planetName: string;
+        userId: string;
+
+        @Effect()
+        RequestInProgressQuestExists$ = this.actions$.ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS).pipe(
+            switchMap((action: actions.RequestInProgressQuestExists) => {
+                this.planetName = action.planetNamePayload;
+                this.userId = action.userIdPayload;
+                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'in_progress')).get();
+            }),
+            map(snapShot => {
+                if(snapShot.size === 0) {
+                    return new actions.NoCurrentQuest();
+                }
+                return new actions.RequestGetCurrentQuest();
+            })
+        );
 
         @Effect()
         GetCurrentQuest$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_QUEST).pipe(
             switchMap((action: actions.RequestGetCurrentQuest) => {                                                     
-                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests", ref => ref.where('status', '==', 'moderating' || 'in_progress')).stateChanges();
+                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'in_progress')).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {
@@ -23,5 +40,5 @@ export class QuestEffects {
                 }
                 return new actions.UnimplementedAction("");
             })
-        ) 
+        ); 
 }

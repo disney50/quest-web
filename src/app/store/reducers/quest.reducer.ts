@@ -8,6 +8,10 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
         case actions.GET_QUEST_SUCCESS:
             const getQuestSuccessAction = action as actions.GetQuestSuccess;            
             newState.currentQuest = getQuestSuccessAction.payload;
+            newState.noCurrentQuest = false;
+            return newState;
+        case actions.NO_CURRENT_QUEST:
+            newState.noCurrentQuest = true;    
             return newState;
         default:
             return state;    
@@ -15,5 +19,6 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
 }
 
 export const initialQuestState = {
-    currentQuest: {} as Quest
+    currentQuest: {} as Quest,
+    noCurrentQuest: false
 }

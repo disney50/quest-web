@@ -51,7 +51,18 @@ export class DashboardComponent implements OnInit {
     this.store.select(selectors.currentExplorer).subscribe(currentExplorer => {
       if(currentExplorer) {
         this.currentExplorer = currentExplorer;      
-        this.store.dispatch(new actions.RequestGetCurrentQuest(this.currentPlanet.name, this.signedInUser.userId)); 
+        this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId)); 
+      }
+    })
+  }
+
+  sliceCurrentQuestExists() {
+    this.store.select(selectors.noCurrentQuest).subscribe(noCurrentQuest => {
+      if(!noCurrentQuest) {
+        //  this.noCurrentQuest = false;
+      }
+      else if(noCurrentQuest) {
+        // this.noCurrentQuest = true;
       }
     })
   }
@@ -74,6 +85,7 @@ export class DashboardComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceCurrentExplorer();
+    this.sliceCurrentQuestExists();
     this.sliceCurrentQuest();
   }
 }
