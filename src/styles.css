@@ -63,11 +63,11 @@
     border-style: solid;
 }
 
-.border-bottom {
+.border-top {
     border-width: 1px;
-    border-bottom-color: rgb(230, 220, 201);
-    border-top-color: transparent;
+    border-top-color: rgb(230, 220, 201);
     border-right-color: transparent;
+    border-bottom-color: transparent;
     border-left-color: transparent;
     border-style: solid;
 }
@@ -172,6 +172,18 @@
 
 .card-transparent {
     background: transparent;
+    color: rgb(230, 220, 201);
+    border-radius: 0% !important;
+}
+
+.card-light {
+    background: rgb(85, 119, 123, 0.9);
+    color: rgb(230, 220, 201);
+    border-radius: 0% !important;
+}
+
+.card-dark {
+    background: rgb(4, 101, 101, 0.9);
     color: rgb(230, 220, 201);
     border-radius: 0% !important;
 }

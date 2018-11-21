@@ -30,40 +30,40 @@
 
         <div *ngIf="currentQuestExists" class="card-transparent border">
 
-                <div class="card-body">
-                  <div class="row">
+          <div class="card-body">
+            <div class="row">
 
-                    <div class="col-4 my-auto">
-                      <div class="row justify-content-center align-items-center text-center">
-                        <img class="img-responsive-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
-                      </div>
-                    </div>
-
-                    <div class="col-4 my-auto">
-                      <div class="row justify-content-center align-items-center text-center my-auto">
-                        <b class="text-standard" style="font-size: 100%">{{currentQuest.title}}</b>
-                      </div>
-                      <div class="row justify-content-center align-items-center text-center">
-                        <p class="text-standard" style="font-size: 75%">{{currentQuest.level1.name}} | {{currentQuest.level2.name}}</p>
-                      </div>
-                    </div>
-
-                    <div class="col-4 my-auto">
-                      <div class="row justify-content-center align-items-center text-center mb-1 ml-1 mr-1">
-                        <img class="img-responsive-small" src="../../../assets/{{currentQuest.status}}.png"/>
-                      </div>
-                      <div class="row justify-content-center align-items-center text-center">
-                          <b class="text-standard" style="font-size: 75%">{{status}}</b>
-                      </div>
-                    </div>
-
-                  </div>
+              <div class="col-4 my-auto">
+                <div class="row justify-content-center align-items-center text-center">
+                  <img class="img-responsive-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
                 </div>
+              </div>
+
+              <div class="col-4 my-auto">
+                <div class="row justify-content-center align-items-center text-center my-auto">
+                  <b class="text-standard" style="font-size: 100%">{{currentQuest.title}}</b>
+                </div>
+                <div class="row justify-content-center align-items-center text-center">
+                  <p class="text-standard" style="font-size: 75%">{{currentQuest.level1.name}} | {{currentQuest.level2.name}}</p>
+                </div>
+              </div>
+
+              <div class="col-4 my-auto">
+                <div class="row justify-content-center align-items-center text-center mb-1 ml-1 mr-1">
+                  <img class="img-responsive-small" src="../../../assets/{{currentQuest.status}}.png"/>
+                </div>
+                <div class="row justify-content-center align-items-center text-center">
+                  <b class="text-standard" style="font-size: 75%">{{status}}</b>
+                </div>
+              </div>
+
+            </div>
+          </div>
 
                 
-                <button class="btn-light">
-                  View
-                </button> 
+          <button class="btn-light" (click)="navigateQuest()">
+            View
+          </button> 
                 
         </div> 
 
@@ -80,9 +80,9 @@
             </div>
           </div>
 
-          <button class="btn-light">
+          <!-- <button class="btn-light">
             Explore
-          </button> 
+          </button>  -->
         </div> 
 
       </div>

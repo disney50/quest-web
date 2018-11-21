@@ -7,6 +7,7 @@ import * as selectors from '../../store/selectors';
 import { Planet } from 'src/app/models/planet';
 import { Explorer } from 'src/app/models/explorer';
 import { Quest } from 'src/app/models/quest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,12 +23,17 @@ export class DashboardComponent implements OnInit {
   message: string;
   status: string;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+    private router: Router) {
     
   }
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+  }
+
+  navigateQuest() {
+    this.router.navigateByUrl("quest");
   }
 
   sliceSignedInUser() {

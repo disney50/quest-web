@@ -16,13 +16,15 @@ import * as effects from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { RegisterComponent } from './components/register/register.component';
+import { QuestComponent } from './components/quest/quest.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
+    QuestComponent
   ],
   imports: [
     BrowserModule,
