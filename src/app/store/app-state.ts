@@ -21,6 +21,6 @@ export interface AppState {
 
     questState: {
         currentQuest: Quest;
-        noCurrentQuest: boolean;
+        currentQuestExists: boolean;
     }
 }

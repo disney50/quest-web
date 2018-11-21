@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   currentPlanet: Planet = {} as Planet;
   currentExplorer: Explorer = {} as Explorer;
   currentQuest: Quest = {} as Quest;
+  currentQuestExists: boolean = false;
   message: string;
   status: string;
 
@@ -57,12 +58,12 @@ export class DashboardComponent implements OnInit {
   }
 
   sliceCurrentQuestExists() {
-    this.store.select(selectors.noCurrentQuest).subscribe(noCurrentQuest => {
-      if(!noCurrentQuest) {
-        //  this.noCurrentQuest = false;
+    this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
+      if(currentQuestExists) {
+        this.currentQuestExists = true;
       }
-      else if(noCurrentQuest) {
-        // this.noCurrentQuest = true;
+      else if(!currentQuestExists) {
+        this.currentQuestExists = false;
       }
     })
   }

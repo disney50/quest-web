@@ -4,4 +4,4 @@ export const questBase = (state: AppState) => state.questState;
 
 export const currentQuest = (state: AppState)  => questBase(state).currentQuest;
 
-export const noCurrentQuest = (state: AppState) => questBase(state).noCurrentQuest;
+export const currentQuestExists = (state: AppState) => questBase(state).currentQuestExists;
