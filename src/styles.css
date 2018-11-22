@@ -24,7 +24,7 @@
     overflow-y: auto;
 }
 
-.img-responsive-large {
+.img-large {
     width: 200px;
     height: 200px;
     max-width: 100%;
@@ -32,7 +32,7 @@
     display: block;
 }
 
-.img-responsive-medium {
+.img-medium {
     width: 150px;
     height: 150px;
     max-width: 100%;
@@ -40,7 +40,7 @@
     display: block;
 }
 
-.img-responsive-small {
+.img-small {
     width: 100px;
     height: 100px;
     max-width: 100%;
@@ -50,7 +50,7 @@
 
 .input {
     background: transparent;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     height: 40px;
     width: 100%; 
     padding-left: 3%;
@@ -59,32 +59,38 @@
 
 .border {
     border-width: 1px;
-    border-color: rgb(230, 220, 201);
+    border-color: rgb(232,227,240);
+    border-style: solid;
+}
+
+.border-gothic {
+    border-width: 1px;
+    border-color: rgb(107,157,160);
     border-style: solid;
 }
 
 .border-top {
     border-width: 1px;
-    border-top-color: rgb(230, 220, 201);
+    border-top-color: rgb(232,227,240);
     border-right-color: transparent;
     border-bottom-color: transparent;
     border-left-color: transparent;
     border-style: solid;
 }
 
-.btn-dark {
+.btn-mosque {
     background: rgb(4, 101, 101, 0.9);
     border: none;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     height: 40px;  
     width: 100%;
     cursor: pointer; 
 }
 
-.btn-light {
-    background: rgb(85, 119, 123, 0.9);
+.btn-gothic {
+    background: rgb(107, 157, 160, 0.9);
     border: none;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     height: 40px;  
     width: 100%; 
     cursor: pointer;
@@ -93,7 +99,7 @@
 .btn-transparent {
     background: transparent;
     border: none;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     height: 40px;  
     width: 100%;
     cursor: pointer;
@@ -102,37 +108,37 @@
 .btn-close {
     background: transparent;
     border: none;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     height: 30px;  
     cursor: pointer;
 }
 
-.btn-dark:hover {
+.btn-mosque:hover {
     background: rgb(4, 101, 101, 0.9);
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
 }
 
-.btn-light:hover {
-    background: rgb(85, 119, 123, 0.9);
-    color: rgb(230, 220, 201);
+.btn-gothic:hover {
+    background: rgb(107, 157, 160, 0.9);
+    color: rgb(232,227,240);
 }
 
 .btn-transparent:hover {
     background: transparent;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
 }
 
 .btn-close:hover {
     background: transparent;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
 }
 
-.btn-dark:active {
+.btn-mosque:active {
     border: none;
     outline: none;
 }
 
-.btn-light:active {
+.btn-gothic:active {
     border: none;
     outline: none;
 }
@@ -147,16 +153,20 @@
     outline: none;
 }
 
-.text-dark {
-    color: rgb(4, 101, 101);
+.text-snuff {
+    color: rgb(232,227,240);
 }
 
-.text-light {
-    color: rgb(85, 119, 123);
+.text-large {
+    font-size: 125%;
 }
 
-.text-standard {
-    color: rgb(230, 220, 201);
+.text-medium {
+    font-size: 100%;
+}
+
+.text-small {
+    font-size: 75%;
 }
 
 .modal {
@@ -165,37 +175,38 @@
 
 .modal-content {
     background: rgb(4, 101, 101, 0.9);
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     border-radius: 0% !important;
     padding: 0% 1% 30px 1%;
 }
 
 .card-transparent {
     background: transparent;
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     border-radius: 0% !important;
 }
 
-.card-light {
+.card-cutty-sark {
     background: rgb(85, 119, 123, 0.9);
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     border-radius: 0% !important;
 }
 
-.card-dark {
-    background: rgb(4, 101, 101, 0.9);
-    color: rgb(230, 220, 201);
+.card-gothic {
+    background: rgb(107, 157, 160, 0.9);
+    color: rgb(232,227,240);
     border-radius: 0% !important;
 }
 
-.horizontal-center {
-    margin-left: auto;
-    margin-right: auto;
+.card-granny-smith {
+    background: rgb(141, 162, 164, 0.9);
+    color: rgb(232,227,240);
+    border-radius: 0% !important;
 }
 
 .navbar {
     background: rgb(4, 101, 101, 0.9);
-    color: rgb(230, 220, 201);
+    color: rgb(255,255,255);
 }
 
 .dropdown-menu {
@@ -204,7 +215,7 @@
 }
 
 .dropdown-menu:hover {
-    background: white;
+    background: rgb(255,255,255);
 }
 
 .dropdown-menu a:hover {
@@ -213,16 +224,16 @@
 }
 
 .dropdown-item {
-    color: white;
+    color: rgb(255,255,255);
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
     opacity: 1; /* Firefox */
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgb(230, 220, 201);
+    color: rgb(232,227,240);
 }

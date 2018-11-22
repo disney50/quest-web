@@ -6,13 +6,13 @@
         <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
       </a>
     
-      <a class="navbar-text text-white">
-        <b style="font-size: 125%">{{currentPlanet.name}}</b>
+      <a class="navbar-text text-snuff text-large">
+        <b>{{currentPlanet.name}}</b>
       </a>
     
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-          <a class="nav-link text-white" href="#" role="button" data-toggle="dropdown" style="font-size: 75%">
+          <a class="nav-link text-snuff text-small" href="#" role="button" data-toggle="dropdown">
             <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png"/>
               {{signedInUser.name}}
             <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png"/>
@@ -27,27 +27,27 @@
 
     <div class="row justify-content-center align-items-center text-center">
       <div class="col-sm-12 col-lg-4">
-        <div class="card-light">
+        <div class="card-cutty-sark border">
+          <div class="card-title text-uppercase pt-3">
+            <b class="text-standard text-large">currentQuest.title</b>
+          </div>
+
           <div class="card-body">
-
-            <div class="row justify-content-center align-items-center text-center">
-              <img class="img-responsive-small" src="../../../assets/checkmate.png"/>
-            </div>
-
-            <div class="row justify-content-center align-items-center text-center">
-              <b class="text-standard" style="font-size: 100%">currentQuest.title</b>
-            </div>
             
             <div class="row justify-content-center align-items-center text-center">
-              <p class="text-standard" style="font-size: 75%">currentQuest.level1.name | currentQuest.level2.name</p>
+              <b class="text-snuff text-medium">currentQuest.level1.name | currentQuest.level2.name</b>
             </div>
 
             <div class="row justify-content-center align-items-center text-center">
-              <p class="text-standard" style="font-size: 50%">currentQuest.description</p>
+              <p class="text-snuff text-medium">currentQuest.max_xp</p>
             </div>
 
             <div class="row justify-content-center align-items-center text-center">
-              <p class="text-standard" style="font-size: 50%">currentQuest.max_xp</p>
+              <p class="text-snuff text-small">currentQuest.description</p>
+            </div>
+
+            <div class="row justify-content-center align-items-center text-center">
+              <img class="img-small" src="../../../assets/checkmate.png"/>
             </div>
 
           </div>
@@ -55,12 +55,15 @@
       </div>
 
       <div class="col-sm-12 col-lg-4">
-        <div class="card-light">
-          <div class="card-body pb-2">
+        <div class="card-cutty-sark border">
+          <div class="card-title pt-3">
+            <b class="text-standard text-large">COMMENTS</b>
+          </div>
 
+          <div class="card-body">
             <div class="row">
               <div class="col-10">
-                <div class="card-dark">
+                <div class="card-granny-smith">
                   <p>See moderator comment here</p>
                 </div>
               </div>
@@ -72,39 +75,44 @@
               <div class="col-2"></div>
 
               <div class="col-10">
-                <div class="card-dark">
+                <div class="card-gothic">
                   <p>See explorer comment here</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="row border-top">
-              <div class="col-10 mt-3">
-                <input class="input border" type="text" placeholder="enter comment...">
-              </div>
-
-              <div class="col-2 mt-4">
-                <p>SEND</p>
-              </div>
-            </div>
-
+          <div class="card-footer border-top">
+              <div class="row">
+                  <div class="col-10">
+                    <input class="input border" type="text" placeholder="enter comment...">
+                  </div>
+    
+                  <div class="col-2 my-auto">
+                    <span>SEND</span>
+                  </div>
+                </div>
           </div>
         </div>
       </div>
 
       <div class="col-sm-12 col-lg-4">
-        <div class="card-transparent border">
+        <div class="card-cutty-sark border-gothic">
+          <div class="card-title pt-3">
+            <b class="text-standard text-large">UPLOADS</b>
+          </div>
+
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <div class="card-dark">
+                <div class="card-granny-smith">
                   <p>filename.png</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <button class="btn-light">
+          <button class="btn-gothic">
               UPLOAD
           </button> 
         </div>
@@ -112,7 +120,7 @@
 
     </div>
 
-    <button class="btn-dark fixed-bottom">
+    <button class="btn-mosque fixed-bottom">
       Submit
     </button>
     
