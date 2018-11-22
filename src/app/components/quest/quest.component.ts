@@ -52,16 +52,7 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(currentPlanet) {               
         this.currentPlanet = currentPlanet;
-        this.store.dispatch(new actions.RequestGetExplorer(this.currentPlanet.name, this.signedInUser.userId));
-      }
-    })
-  }
-
-  sliceCurrentExplorer() {
-    this.store.select(selectors.currentExplorer).subscribe(currentExplorer => {
-      if(currentExplorer) {
-        this.currentExplorer = currentExplorer;      
-        this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId)); 
+        this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
       }
     })
   }
@@ -78,7 +69,6 @@ export class QuestComponent implements OnInit {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
-    this.sliceCurrentExplorer();
     this.sliceCurrentQuest();
   }
 
