@@ -28,14 +28,14 @@
     <div class="row justify-content-center align-items-center">
       <div class="col-sm-12 col-lg-6">
 
-        <div *ngIf="currentQuestExists" class="card-transparent border">
+        <div *ngIf="currentQuestExists" class="card-cutty-sark border-gothic">
 
           <div class="card-body">
             <div class="row">
 
               <div class="col-4 my-auto">
                 <div class="row justify-content-center align-items-center text-center">
-                  <img class="img-responsive-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
+                  <img class="img-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
                 </div>
               </div>
 
@@ -50,7 +50,7 @@
 
               <div class="col-4 my-auto">
                 <div class="row justify-content-center align-items-center text-center mb-1 ml-1 mr-1">
-                  <img class="img-responsive-small" src="../../../assets/{{currentQuest.status}}.png"/>
+                  <img class="img-small" src="../../../assets/{{currentQuest.status}}.png"/>
                 </div>
                 <div class="row justify-content-center align-items-center text-center">
                   <b class="text-standard" style="font-size: 75%">{{status}}</b>
@@ -61,13 +61,13 @@
           </div>
 
                 
-          <button class="btn-light" (click)="navigateQuest()">
+          <button class="btn-gothic" (click)="navigateQuest()">
             View
           </button> 
                 
         </div> 
 
-        <div *ngIf="!currentQuestExists" class="card-transparent border">
+        <div *ngIf="!currentQuestExists" class="card-cutty-sark border-gothic">
           <div class="card-body">
             <div class="row">
 
@@ -80,7 +80,7 @@
             </div>
           </div>
 
-          <!-- <button class="btn-light">
+          <!-- <button class="btn-gothic">
             Explore
           </button>  -->
         </div> 
