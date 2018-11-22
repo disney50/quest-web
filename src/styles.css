@@ -78,6 +78,24 @@
     border-style: solid;
 }
 
+.border-bottom {
+    border-width: 1px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: rgb(232,227,240);
+    border-left-color: transparent;
+    border-style: solid;
+}
+
+.border-bottom-gothic {
+    border-width: 1px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: rgb(107,157,160);
+    border-left-color: transparent;
+    border-style: solid;
+}
+
 .btn-mosque {
     background: rgb(4, 101, 101, 0.9);
     border: none;
