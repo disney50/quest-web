@@ -7,6 +7,7 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quest',
@@ -19,10 +20,23 @@ export class QuestComponent implements OnInit {
   currentExplorer: Explorer = {} as Explorer;
   currentQuest: Quest = {} as Quest;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, 
+    private router: Router) { }
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+  }
+
+  navigateLogin() {
+    this.router.navigateByUrl("login");
+  }
+
+  sliceHasLoginSucceeded() {
+    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+      if(!signedIn) {
+        this.navigateLogin();
+      }
+    });
   }
 
   sliceSignedInUser() {
@@ -52,36 +66,19 @@ export class QuestComponent implements OnInit {
     })
   }
 
-  // sliceCurrentQuestExists() {
-  //   this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
-  //     if(currentQuestExists) {
-  //       this.currentQuestExists = true;
-  //     }
-  //     else if(!currentQuestExists) {
-  //       this.currentQuestExists = false;
-  //     }
-  //   })
-  // }
-
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
       if(currentQuest) {
         this.currentQuest = currentQuest;
-        // if(this.currentQuest.status == "in_progress") {
-        //   this.status = "IN PROGRESS";
-        // }
-        // else if(this.currentQuest.status == "moderating") {
-        //   this.status = "MODERATING";
-        // }
       }
     })
   }
 
   ngOnInit() {
+    this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceCurrentExplorer();
-    // this.sliceCurrentQuestExists();
     this.sliceCurrentQuest();
   }
 

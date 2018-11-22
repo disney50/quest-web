@@ -36,6 +36,18 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl("quest");
   }
 
+  navigateLogin() {
+    this.router.navigateByUrl("login");
+  }
+
+  sliceHasLoginSucceeded() {
+    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+      if(!signedIn) {
+        this.navigateLogin();
+      }
+    });
+  }
+
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       if(signedInUser) {
@@ -89,6 +101,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceCurrentExplorer();
