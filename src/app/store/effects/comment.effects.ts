@@ -15,12 +15,12 @@ export class CommentEffects {
 
     @Effect() 
     GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_ALL_COMMENTS).pipe(
-        switchMap((action: actions.RequestGetAllComments) => {
-            return this.angularFirestore.collection(action.questIdPayload + "/explorers/entries/" + action.userIdPayload + "/quests/" + action.questIdPayload + "/comments").stateChanges()
+        switchMap((action: actions.RequestGetAllComments) => {            
+            return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/" + action.questIdPayload + "/comments").stateChanges()
         }),
         mergeMap(actions => actions),
         map(action => {
-            if(action.type === "added") {
+            if(action.type === "added") {                
                 return new actions.GetCommentSuccess(new Comment(action.payload.doc.id, action.payload.doc.data() as CommentData));
             }
             return new actions.UnimplementedAction("");

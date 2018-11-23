@@ -60,32 +60,35 @@
             <b class="text-standard text-large">COMMENTS</b>
           </div>
 
-          <div *ngFor="let comment of allComments" class="card-body mb-0 pb-0">
-            <div class="row">
+          <div class="card-body mb-0 pb-0">
+            <div *ngFor="let comment of allComments"  class="row">
               <div class="col-12">
                   <div *ngIf="comment.isModerator" class="row pb-3">
-                      <div class="col-11">
-                        <div class="card-granny-smith">
-                          <div class="card-body">
-                            <div class="row">
-                              <p>See moderator comment here</p>
-                            </div>
-                          </div>
+                      <div class="col-10">
+                        <div class="row">
+                            <div class="card-granny-smith">
+                                <div class="card-header">
+                                    <p>{{comment.comment}}</p>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 offset-8 no-padding">
+                                <span class="font-italic-custom float-right ">{{comment.timestamp | date:"dd/MM/yyyy HH:mm"}}</span>
+                              </div>
                         </div>
                       </div>
         
-                      <div class="col-1"></div>
+                      <div class="col-2"></div>
                     </div>
         
                     <div *ngIf="!comment.isModerator" class="row pb-3">
-                      <div class="col-1"></div>
+                      <div class="col-2"></div>
         
-                      <div class="col-11">
+                      <div class="col-10">
                         <div class="card-gothic">
-                          <div class="card-body">
-                            <div class="row">
-                              <p>See explorer comment here</p>
-                            </div>
+                          <div class="card-header">
+                              <p>{{comment.comment}}</p>
                           </div>
                         </div>
                       </div>

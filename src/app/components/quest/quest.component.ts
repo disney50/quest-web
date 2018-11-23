@@ -63,6 +63,7 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
       if(currentQuest) {
         this.currentQuest = currentQuest;
+        this.store.dispatch(new actions.RequestGetAllComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
       }
     })
   }
@@ -70,9 +71,7 @@ export class QuestComponent implements OnInit {
   sliceAllComments() {
     this.store.select(selectors.allComments).subscribe(allComments => {
       if(allComments) {
-        this.allComments = allComments;
-        console.log(this.allComments);
-        
+        this.allComments = allComments;        
       }
     })
   }

@@ -4,9 +4,12 @@ export function commentReducer(state = initialCommentState, action: actions.Comm
     const newState = {...state};
 
     switch(action.type) {
-        case actions.GET_COMMENT_SUCCESS:
-            const getCommentSuccessAction = action as actions.GetCommentSuccess;
-            newState.allComments = [...newState.allComments, getCommentSuccessAction.payload];
+        case actions.REQUEST_GET_ALL_COMMENTS:
+            newState.allComments = [];
+            return newState;
+        case actions.GET_COMMENT_SUCCESS:            
+            const getCommentSuccessAction = action as actions.GetCommentSuccess;            
+            newState.allComments = [...newState.allComments, getCommentSuccessAction.payload];            
             return newState;
         default:
             return state;    
