@@ -2,6 +2,7 @@ import { User } from '../models/user';
 import { Planet } from '../models/planet';
 import { Explorer } from '../models/explorer';
 import { Quest } from '../models/quest';
+import { Comment } from '../models/comment';
 
 export interface AppState {
 

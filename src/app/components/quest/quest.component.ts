@@ -8,6 +8,7 @@ import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
+import { Comment } from 'src/app/models/comment';
 
 @Component({
   selector: 'app-quest',
@@ -19,6 +20,7 @@ export class QuestComponent implements OnInit {
   currentPlanet: Planet = {} as Planet;
   currentExplorer: Explorer = {} as Explorer;
   currentQuest: Quest = {} as Quest;
+  allComments: Comment[];
 
   constructor(private store: Store<AppState>, 
     private router: Router) { }
@@ -65,11 +67,20 @@ export class QuestComponent implements OnInit {
     })
   }
 
+  sliceAllComments() {
+    this.store.select(selectors.allComments).subscribe(allComments => {
+      if(allComments) {
+        this.allComments = allComments;
+      }
+    })
+  }
+
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceCurrentQuest();
+    this.sliceAllComments();
   }
 
 }
