@@ -22,5 +22,9 @@ export interface AppState {
     questState: {
         currentQuest: Quest;
         currentQuestExists: boolean;
-    }
+    };
+
+    commentState: {
+        allComments: Comment[];
+    };
 }
