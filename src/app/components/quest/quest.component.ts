@@ -71,6 +71,8 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.allComments).subscribe(allComments => {
       if(allComments) {
         this.allComments = allComments;
+        console.log(this.allComments);
+        
       }
     })
   }
