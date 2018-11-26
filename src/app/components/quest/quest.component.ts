@@ -21,6 +21,7 @@ export class QuestComponent implements OnInit {
   currentQuest: Quest = {} as Quest;
   allComments: Comment[];
   newComment: Comment = {} as Comment;
+  message: string = null;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
@@ -37,7 +38,12 @@ export class QuestComponent implements OnInit {
   }
 
   sendClicked(newComment: string) {
-    this.createComment(newComment);
+    if (!newComment) {
+      this.message = "You forgot to write a comment";
+    }
+    else {
+      this.createComment(newComment);
+    }
   }
 
   createComment(newComment: string) {

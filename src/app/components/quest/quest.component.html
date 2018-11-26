@@ -134,6 +134,30 @@
     <button class="btn-mosque fixed-bottom">
       Submit
     </button>
+
+    <div class="modal" role="dialog"
+      [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+      (click)="message = null">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-close float-right">
+                  <span><b>X</b></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center text-center">
+              <div class="col-12">
+                 <span><b>{{message}}</b></span>
+              </div>
+            </div>
+              
+        </div>
+      </div>
+    </div>
     
   </div>
 </div>
