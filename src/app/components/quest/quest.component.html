@@ -25,10 +25,10 @@
       </ul>
     </nav>
 
-    <div class="row justify-content-center align-items-center text-center pt-5 pb-5">
-      <div class="col-sm-12 col-lg-4 pt-5">
+    <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
-          <div class="card-header border-bottom text-uppercase pt-3">
+          <div class="card-header border-bottom text-uppercase">
             <b class="text-standard text-large">{{currentQuest.title}}</b>
           </div>
 
@@ -54,21 +54,19 @@
         </div>
       </div>
 
-      <div class="col-sm-12 col-lg-4 pt-4">
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
-          <div class="card-header border-bottom pt-3">
+          <div class="card-header border-bottom">
             <b class="text-standard text-large">COMMENTS</b>
           </div>
 
           <div class="card-body mb-0 pb-0">
             <div *ngFor="let comment of allComments"  class="row">
               <div class="col-12">
-                  <div *ngIf="comment.isModerator" class="row pb-3">
+                  <div *ngIf="comment.isModerator" class="row">
                       <div class="col-10">
-                        <div class="card-granny-smith">
-                          <div class="card-header">
-                            <p>{{comment.comment}}</p>
-                          </div>
+                        <div class="card-granny-smith p-2 text-left">
+                          <span>{{comment.comment}}</span>
                         </div>
                         <p class="float-left font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
                       </div>
@@ -76,14 +74,12 @@
                       <div class="col-2"></div>
                     </div>
         
-                    <div *ngIf="!comment.isModerator" class="row pb-3">
+                    <div *ngIf="!comment.isModerator" class="row">
                       <div class="col-2"></div>
         
                       <div class="col-10">
-                        <div class="card-gothic">
-                          <div class="card-header">
-                              <p>{{comment.comment}}</p>
-                          </div>
+                        <div class="card-gothic p-2 text-right">
+                          <span>{{comment.comment}}</span>
                         </div>
                         <p class="float-right font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
                       </div>
@@ -107,9 +103,9 @@
         </div>
       </div>
 
-      <div class="col-sm-12 col-lg-4 pt-4">
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border-gothic">
-          <div class="card-header border-bottom-gothic pt-3">
+          <div class="card-header border-bottom-gothic">
             <b class="text-standard text-large">UPLOADS</b>
           </div>
 
