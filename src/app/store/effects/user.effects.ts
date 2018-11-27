@@ -55,12 +55,10 @@ export class UserEffects {
 
     @Effect()
     LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
-        switchMap(action => {
-            return this.angularFirestore.collection("users", ref => ref.where('userId', '==', "AAAAAAAAAAA")).stateChanges();
-        }),
-        mergeMap(actions => actions),
-        map(action => {
-            return new actions.LogOutUser();
+        switchMap(action => {            
+            return [new actions.ClearUserState(), 
+                new actions.ClearPlanetState(),
+                new actions.ClearQuestState()];
         })
     );
 }

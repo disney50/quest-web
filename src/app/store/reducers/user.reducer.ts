@@ -24,9 +24,10 @@ export function userReducer(userState = initialUserState, action: actions.UserAc
             newUserState.signedIn = true;
             newUserState.loginFailed = false;
             return newUserState;
-        case actions.LOG_OUT_USER:
+        case actions.CLEAR_USER_STATE:
             newUserState.signedInUser = {} as User;
             newUserState.signedIn = false;
+            newUserState.loginFailed = false;
             return newUserState;
         default:
             return userState;

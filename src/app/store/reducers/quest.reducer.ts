@@ -13,6 +13,10 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
         case actions.NO_CURRENT_QUEST:
             newState.currentQuestExists = false;    
             return newState;
+        case actions.CLEAR_QUEST_STATE:                        
+            newState.currentQuest = {} as Quest;            
+            newState.currentQuestExists = false;  
+            return newState;  
         default:
             return state;    
     }

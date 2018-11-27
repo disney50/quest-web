@@ -9,6 +9,7 @@ export const GET_USER_SUCCESS = "[user] GET_USER_SUCCESS";
 export const LOGIN_SUCCESS = "[login] LOGIN_SUCCESS";
 export const LOGIN_FAILED = "[login] LOGIN_FAILED";
 export const LOG_OUT_USER = "[user] LOG_OUT_USER";
+export const CLEAR_USER_STATE = "[logout] CLEAR_USER_STATE";
 export const UNIMPLEMENTED_ACTION = "[user] UNIMPLEMENTED_ACTION"
 
 export class RequestLoginUserExist implements Action {
@@ -46,6 +47,11 @@ export class LogOutUser implements Action {
     constructor() {}
 }
 
+export class ClearUserState implements Action {
+    type = CLEAR_USER_STATE;
+    constructor() {}
+}
+
 export class UnimplementedAction implements Action {
     type = UNIMPLEMENTED_ACTION;
     constructor(public payload: string) {}
@@ -59,4 +65,5 @@ export type UserActions =
     | LoginSuccess
     | LoginFailed
     | LogOutUser
+    | ClearUserState
     | UnimplementedAction

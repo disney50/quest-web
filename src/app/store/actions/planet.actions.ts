@@ -6,6 +6,7 @@ export const GET_ALL_PLANETS_SUCCESS = "[planet] GET_ALL_PLANETS_SUCCESS";
 export const REQUEST_GET_SELECTED_PLANET = "[planet] REQUEST_GET_SELECTED_PLANET";
 export const REQUEST_GET_DEFAULT_PLANET = "[planet] REQUEST_GET_DEFAULT_PLANET";
 export const GET_PLANET_SUCCESS = "[planet] GET_PLANET_SUCCESS";
+export const CLEAR_PLANET_STATE = "[logout] CLEAR_PLANET_STATE";
 
 export class RequestGetAllPlanets implements Action {
     type = REQUEST_GET_ALL_PLANETS;
@@ -32,9 +33,15 @@ export class GetPlanetSuccess implements Action {
     constructor(public payload: Planet) {}
 }
 
+export class ClearPlanetState implements Action {
+    type = CLEAR_PLANET_STATE;
+    constructor() {}
+}
+
 export type PlanetActions =
     | RequestGetAllPlanets
     | GetAllPlanetsSuccess
     | RequestGetSelectedPlanet
     | RequestGetDefaultPlanet
     | GetPlanetSuccess
+    | ClearPlanetState

@@ -22,6 +22,10 @@ export function planetReducer(state = initialPlanetState, action: actions.Planet
             const getPlanetSuccessAction = action as actions.GetPlanetSuccess;
             newState.currentPlanet = getPlanetSuccessAction.payload;
             return newState;  
+        case actions.CLEAR_PLANET_STATE:
+            newState.allPlanets = [];
+            newState.currentPlanet = {} as Planet;
+            return newState;    
         default:
             return state;       
     }
