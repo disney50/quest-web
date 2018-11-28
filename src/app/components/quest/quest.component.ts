@@ -22,6 +22,7 @@ export class QuestComponent implements OnInit {
   allComments: Comment[];
   newComment: Comment = {} as Comment;
   message: string = null;
+  signedIn: boolean = false;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
@@ -58,41 +59,45 @@ export class QuestComponent implements OnInit {
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
       if(!signedIn) {
+        this.signedIn = false;
         this.navigateLogin();
+      }
+      else {
+        this.signedIn = true;
       }
     });
   }
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if(signedInUser) {
+      if(this.signedIn == true) {
         this.signedInUser = signedInUser;
         this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
-      }
+      }  
     })
   }
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(currentPlanet) {               
+      if(this.signedIn == true) {
         this.currentPlanet = currentPlanet;
         this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
-      }
+      }  
     })
   }
 
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
-      if(currentQuest) {
+      if(this.signedIn == true) {
         this.currentQuest = currentQuest;
         this.store.dispatch(new actions.RequestGetAllComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
-      }
+      } 
     })
   }
 
   sliceAllComments() {
     this.store.select(selectors.allComments).subscribe(allComments => {
-      if(allComments) {
+      if(this.signedIn == true) {
         this.allComments = allComments;        
       }
     })
