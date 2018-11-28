@@ -1,36 +1,58 @@
 import * as actions from '../actions';
 import { User } from 'src/app/models/user';
 
-export function userReducer(userState = initialUserState, action: actions.UserActions) {
+export function userReducer(state = initialUserState, action: actions.UserActions) {
 
-    const newUserState = {...userState};
+    const newState = {...state};
 
     switch (action.type) {
         case actions.REQUEST_LOGIN_USER_EXIST:
-            newUserState.loginFailed = false;
-            return newUserState;
+            newState.loginFailed = false;
+            console.log(newState);
+
+            return newState;
         case actions.LOGIN_SUCCESS:
-            newUserState.signedInUser = (action as actions.LoginSuccess).payload;
-            newUserState.signedIn = true;
-            newUserState.loginFailed = false;
-            return newUserState;
+            newState.signedInUser = (action as actions.LoginSuccess).payload;
+            newState.signedIn = true;
+            newState.loginFailed = false;
+            console.log(newState.loginFailed);
+            console.log(newState.signedIn);
+            console.log(newState.signedInUser);
+
+            return newState;
         case actions.LOGIN_FAILED:
-            newUserState.signedInUser = {} as User;
-            newUserState.loginFailed = true;
-            return newUserState;    
+            newState.signedInUser = {} as User;
+            newState.loginFailed = true;
+            console.log(newState.loginFailed);
+            console.log(newState.signedIn);
+            console.log(newState.signedInUser);
+
+            return newState;    
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
-            newUserState.signedInUser = getUserSuccessAction.payload;
-            newUserState.signedIn = true;
-            newUserState.loginFailed = false;
-            return newUserState;
+            newState.signedInUser = getUserSuccessAction.payload;
+            newState.signedIn = true;
+            newState.loginFailed = false;
+            console.log(newState.loginFailed);
+            console.log(newState.signedIn);
+            console.log(newState.signedInUser);
+
+            return newState;
         case actions.CLEAR_USER_STATE:
-            newUserState.signedInUser = {} as User;
-            newUserState.signedIn = false;
-            newUserState.loginFailed = false;
-            return newUserState;
+            newState.signedInUser = {} as User;
+            newState.signedIn = false;
+            newState.loginFailed = false;
+            console.log(newState.loginFailed);
+            console.log(newState.signedIn);
+            console.log(newState.signedInUser);
+
+            return newState;
         default:
-            return userState;
+            console.log(state.loginFailed);
+            console.log(state.signedIn);
+            console.log(state.signedInUser);
+
+            return state;
     }
 }
 

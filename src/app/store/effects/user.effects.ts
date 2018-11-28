@@ -58,7 +58,8 @@ export class UserEffects {
         switchMap(action => {            
             return [new actions.ClearUserState(), 
                 new actions.ClearPlanetState(),
-                new actions.ClearQuestState()];
+                new actions.ClearQuestState(),
+                new actions.ClearCommentState()];
         })
     );
 }
