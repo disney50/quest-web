@@ -9,6 +9,7 @@ import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
 import { Comment } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment/comment.service';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-quest',
@@ -26,7 +27,8 @@ export class QuestComponent implements OnInit {
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
-    private commentService: CommentService) { 
+    private commentService: CommentService,
+    private angularFireStorage: AngularFireStorage) { 
 
     }
 
