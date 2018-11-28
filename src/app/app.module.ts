@@ -17,6 +17,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { RegisterComponent } from './components/register/register.component';
 import { QuestComponent } from './components/quest/quest.component';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { QuestComponent } from './components/quest/quest.component';
     FormsModule,
     StoreModule.forRoot({userState: reducers.userReducer, planetState: reducers.planetReducer, explorerState: reducers.explorerReducer, questState: reducers.questReducer, commentState: reducers.commentReducer}),
     EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects, effects.ExplorerEffects, effects.QuestEffects, effects.CommentEffects]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    AngularFireStorageModule
   ],
   providers: [
     AngularFireAuth,
