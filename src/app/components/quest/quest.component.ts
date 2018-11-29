@@ -9,7 +9,7 @@ import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
 import { Comment } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment/comment.service';
-import { AngularFireStorage } from '@angular/fire/storage';
+import { UploadService } from 'src/app/services/upload/upload.service';
 
 @Component({
   selector: 'app-quest',
@@ -25,11 +25,12 @@ export class QuestComponent implements OnInit {
   message: string = null;
   signedIn: boolean = false;
   selectedFile: File = null;
+  filePath: string = null;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
     private commentService: CommentService,
-    private angularFireStorage: AngularFireStorage) { 
+    private uploadService: UploadService) { 
 
     }
 
@@ -61,11 +62,10 @@ export class QuestComponent implements OnInit {
 
   fileSelected(event) {
     this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
   }
 
   submitClicked() {
-
+    this.uploadService.uploadFile(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
   }
 
   sliceHasLoginSucceeded() {

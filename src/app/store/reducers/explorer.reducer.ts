@@ -7,23 +7,19 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
     switch(action.type) {
         case actions.REQUEST_GET_EXPLORER:
             newState.currentExplorer = {} as Explorer;
-            console.log(newState.currentExplorer);
 
             return newState;
         case actions.GET_EXPLORER_SUCCESS:
             const getExplorerSuccessAction = action as actions.GetExplorerSuccess;
             newState.currentExplorer = getExplorerSuccessAction.payload;
-            console.log(newState.currentExplorer);
 
             return newState;
         case actions.CLEAR_EXPLORER_STATE:
             newState.currentExplorer = {} as Explorer;
-            console.log(newState.currentExplorer);
 
             return newState;
                 
         default:
-            console.log(state.currentExplorer);
 
             return state;       
     }

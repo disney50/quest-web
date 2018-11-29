@@ -8,24 +8,17 @@ export function userReducer(state = initialUserState, action: actions.UserAction
     switch (action.type) {
         case actions.REQUEST_LOGIN_USER_EXIST:
             newState.loginFailed = false;
-            console.log(newState);
 
             return newState;
         case actions.LOGIN_SUCCESS:
             newState.signedInUser = (action as actions.LoginSuccess).payload;
             newState.signedIn = true;
             newState.loginFailed = false;
-            console.log(newState.loginFailed);
-            console.log(newState.signedIn);
-            console.log(newState.signedInUser);
 
             return newState;
         case actions.LOGIN_FAILED:
             newState.signedInUser = {} as User;
             newState.loginFailed = true;
-            console.log(newState.loginFailed);
-            console.log(newState.signedIn);
-            console.log(newState.signedInUser);
 
             return newState;    
         case actions.GET_USER_SUCCESS:
@@ -33,24 +26,15 @@ export function userReducer(state = initialUserState, action: actions.UserAction
             newState.signedInUser = getUserSuccessAction.payload;
             newState.signedIn = true;
             newState.loginFailed = false;
-            console.log(newState.loginFailed);
-            console.log(newState.signedIn);
-            console.log(newState.signedInUser);
 
             return newState;
         case actions.CLEAR_USER_STATE:
             newState.signedInUser = {} as User;
             newState.signedIn = false;
             newState.loginFailed = false;
-            console.log(newState.loginFailed);
-            console.log(newState.signedIn);
-            console.log(newState.signedInUser);
 
             return newState;
         default:
-            console.log(state.loginFailed);
-            console.log(state.signedIn);
-            console.log(state.signedInUser);
 
             return state;
     }
