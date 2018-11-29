@@ -24,7 +24,7 @@ export class QuestComponent implements OnInit {
   newComment: Comment = {} as Comment;
   message: string = null;
   signedIn: boolean = false;
-  file: File;
+  selectedFile: File = null;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
@@ -39,11 +39,6 @@ export class QuestComponent implements OnInit {
 
   navigateLogin() {
     this.router.navigateByUrl("login");
-  }
-
-  fileChange(file) {
-    this.file = file.target.files[0];
-    console.log(this.file);
   }
 
   sendClicked(newComment: string) {
@@ -62,6 +57,15 @@ export class QuestComponent implements OnInit {
 
   sendComment() {
     this.commentService.sendComment(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId, this.newComment);
+  }
+
+  fileSelected(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+  }
+
+  submitClicked() {
+
   }
 
   sliceHasLoginSucceeded() {
