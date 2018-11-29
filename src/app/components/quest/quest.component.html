@@ -113,20 +113,14 @@
             <div class="row">
               <div class="col-12">
                 <div class="card-granny-smith">
-                  <p>filename.png</p>
+                  <p>{{file.name}}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- <button class="btn-gothic">
-            <label>
-              UPLOAD
-              <input type="file" style="display: none" file-handler>
-            </label>
-          </button> -->
-
-          <!-- <input type="file" name="myFile"> -->
+          <input type="file" style="display: none" #file (change)="fileChange($event)"/>  
+          <button type="button" class="btn-gothic" (click)="file.click()"> Browse </button>
 
         </div>
       </div>
