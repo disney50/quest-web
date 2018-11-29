@@ -112,14 +112,18 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <div *ngIf="selectedFile != null" class="card-granny-smith">
-                  <p>{{selectedFile.name}}</p>
+                <div *ngIf="!selectedFile" class="card-granny-smith">
+                  <span>No File Chosen</span>
+                </div>
+
+                <div *ngIf="selectedFile" class="card-granny-smith">
+                  <span>{{selectedFile.name}}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <input type="file" style="display: none" #upload (change)="fileSelected($event)"/>  
+          <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)"/>  
           <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
 
         </div>

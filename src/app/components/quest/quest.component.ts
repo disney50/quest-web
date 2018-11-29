@@ -24,8 +24,7 @@ export class QuestComponent implements OnInit {
   newComment: Comment = {} as Comment;
   message: string = null;
   signedIn: boolean = false;
-  selectedFile: File = null;
-  filePath: string = null;
+  selectedFile: File;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
