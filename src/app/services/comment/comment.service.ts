@@ -13,14 +13,14 @@ export class CommentService {
 
   }
 
-  createComment(newComment: string): Comment {
+  createComment(planetName: string, userId: string, questId: string, newComment: string) {
     this.newComment.comment = newComment;
     this.newComment.isModerator = false;
     this.newComment.timestamp = firebase.firestore.Timestamp.now();
-    return this.newComment;
+    this.sendComment(planetName, userId, questId);
   }
 
-  sendComment(planetName: string, userId: string, questId: string, newComment: Comment) {
-    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/" + questId + "/comments").add(newComment);
+  sendComment(planetName: string, userId: string, questId: string) {
+    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/" + questId + "/comments").add(this.newComment);
   }
 }

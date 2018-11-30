@@ -52,17 +52,8 @@ export class QuestComponent implements OnInit {
       this.message = "You forgot to write a comment";
     }
     else {
-      this.createComment(newComment);
+      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId, newComment);
     }
-  }
-
-  createComment(newComment: string) {
-    this.newComment = this.commentService.createComment(newComment);
-    this.sendComment();
-  }
-
-  sendComment() {
-    this.commentService.sendComment(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId, this.newComment);
   }
 
   fileSelected(event) {
