@@ -12,7 +12,7 @@ export class ExplorerEffects {
         private angularFirestore: AngularFirestore) {}
 
     @Effect()
-    GetCurrentExplorer$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
+    GetExplorer$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
         switchMap((action: actions.RequestGetExplorer) => {                                     
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries", ref => ref.where('userId', '==', action.userIdPayload)).stateChanges();
         }),
@@ -23,5 +23,5 @@ export class ExplorerEffects {
             }
             return new actions.UnimplementedAction("");
         })
-    )
+    );
 }

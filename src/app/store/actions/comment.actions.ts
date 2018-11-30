@@ -1,12 +1,12 @@
 import { Action } from "@ngrx/store";
 import { Comment } from "src/app/models/comment";
 
-export const REQUEST_GET_ALL_COMMENTS = "[comment] REQUEST_GET_ALL_COMMENTS";
+export const REQUEST_GET_COMMENTS = "[comment] REQUEST_GET_COMMENTS";
 export const GET_COMMENT_SUCCESS = "[comment] GET_COMMENT_SUCCESS";
 export const CLEAR_COMMENT_STATE = "[logout] CLEAR_COMMENT_STATE";
 
-export class RequestGetAllComments implements Action {
-    type = REQUEST_GET_ALL_COMMENTS;
+export class RequestGetComments implements Action {
+    type = REQUEST_GET_COMMENTS;
     constructor(public planetNamePayload: string, public userIdPayload: string, public questIdPayload: string) {}
 }
 
@@ -21,6 +21,6 @@ export class ClearCommentState implements Action {
 }
 
 export type CommentActions = 
-    | RequestGetAllComments
+    | RequestGetComments
     | GetCommentSuccess
     | ClearCommentState

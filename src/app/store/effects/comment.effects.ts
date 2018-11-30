@@ -14,8 +14,8 @@ export class CommentEffects {
     }
 
     @Effect() 
-    GetAllComments$ = this.actions$.ofType(actions.REQUEST_GET_ALL_COMMENTS).pipe(
-        switchMap((action: actions.RequestGetAllComments) => {            
+    GetComments$ = this.actions$.ofType(actions.REQUEST_GET_COMMENTS).pipe(
+        switchMap((action: actions.RequestGetComments) => {            
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/" + action.questIdPayload + "/comments", ref => ref.orderBy('timestamp')).stateChanges();
         }),
         mergeMap(actions => actions),

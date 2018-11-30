@@ -4,7 +4,7 @@ export function commentReducer(state = initialCommentState, action: actions.Comm
     const newState = {...state};
 
     switch(action.type) {
-        case actions.REQUEST_GET_ALL_COMMENTS:
+        case actions.REQUEST_GET_COMMENTS:
             newState.allComments = [];
             return newState;
 

@@ -109,7 +109,7 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
       if(this.signedIn == true) {
         this.currentQuest = currentQuest;
-        this.store.dispatch(new actions.RequestGetAllComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+        this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
       } 
     })
   }
