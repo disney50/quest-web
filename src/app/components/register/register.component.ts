@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addSelectedPlanetToUser() {    
-    this.planetService.addSelectedPlanetToUser(this.selectedPlanet);
+    this.planetService.createPlanet(this.newUser.userId, this.selectedPlanet);
     this.createNewExplorer();
   }
 
