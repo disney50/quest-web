@@ -14,7 +14,7 @@ export class QuestEffects {
         userId: string;
 
         @Effect()
-        RequestInProgressQuestExists$ = this.actions$.ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS).pipe(
+        CheckInProgressQuestExists$ = this.actions$.ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS).pipe(
             switchMap((action: actions.RequestInProgressQuestExists) => {
                 this.planetName = action.planetNamePayload;
                 this.userId = action.userIdPayload;
@@ -22,15 +22,15 @@ export class QuestEffects {
             }),
             map(snapShot => {
                 if(snapShot.size === 0) {
-                    return new actions.NoCurrentQuest();
+                    return new actions.NoInProgressQuest();
                 }
-                return new actions.RequestGetCurrentQuest();
+                return new actions.RequestGetInProgressQuest();
             })
         );
 
         @Effect()
-        GetCurrentQuest$ = this.actions$.ofType(actions.REQUEST_GET_CURRENT_QUEST).pipe(
-            switchMap((action: actions.RequestGetCurrentQuest) => {                                                     
+        GetInProgressQuest$ = this.actions$.ofType(actions.REQUEST_GET_IN_PROGRESS_QUEST).pipe(
+            switchMap((action: actions.RequestGetInProgressQuest) => {                                                     
                 return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'in_progress')).stateChanges();
             }),
             mergeMap(actions => actions),

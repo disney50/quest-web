@@ -9,19 +9,18 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             const getQuestSuccessAction = action as actions.GetQuestSuccess;            
             newState.currentQuest = getQuestSuccessAction.payload;
             newState.currentQuestExists = true;
-
             return newState;
-        case actions.NO_CURRENT_QUEST:
+
+        case actions.NO_IN_PROGRESS_QUEST:
             newState.currentQuestExists = false;   
-
             return newState;
+
         case actions.CLEAR_QUEST_STATE:                        
             newState.currentQuest = {} as Quest;            
             newState.currentQuestExists = false;  
-
             return newState;  
-        default:
 
+        default:
             return state;    
     }
 }
