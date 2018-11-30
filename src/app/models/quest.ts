@@ -7,8 +7,8 @@ export class Quest {
   max_xp: string;
   order: number;
   prerequisites: string[];
-  level1: Level1;
-  level2: Level2;
+  level1: Level1 = {} as Level1;
+  level2: Level2 = {} as Level2;
   status: string;
   questId: string;
 
@@ -44,7 +44,7 @@ export class QuestData {
   max_xp: string;
   order: number;
   prerequisites: string[];
-  level1: Level1;
-  level2: Level2;
+  level1: Level1 = {} as Level1;
+  level2: Level2 = {} as Level2;
   status: string;
 }
