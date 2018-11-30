@@ -108,7 +108,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new actions.RequestGetAllPlanets);
+    this.store.dispatch(new actions.RequestGetPlanets);
     this.sliceAllPlanets();
     this.sliceHasLoginSucceeded();
   }

@@ -12,14 +12,14 @@ export class PlanetEffects {
         private angularFirestore: AngularFirestore) {}
 
     @Effect() 
-    GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_ALL_PLANETS).pipe(
-        switchMap((action: actions.RequestGetAllPlanets) => {
+    GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_PLANETS).pipe(
+        switchMap((action: actions.RequestGetPlanets) => {
             return this.angularFirestore.collection("planets").stateChanges()
         }),
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {
-                return new actions.GetAllPlanetsSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
+                return new actions.GetPlanetsSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
             }
             return new actions.UnimplementedAction("");
         })
