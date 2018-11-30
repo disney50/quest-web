@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
   }
 
   signInUser() {    
-    this.store.dispatch(new actions.RequestLoginUserExist({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
+    this.store.dispatch(new actions.RequestLoginUserExists({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
   }
 
   navigateDashboard() {    

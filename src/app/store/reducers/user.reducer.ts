@@ -6,36 +6,35 @@ export function userReducer(state = initialUserState, action: actions.UserAction
     const newState = {...state};
 
     switch (action.type) {
-        case actions.REQUEST_LOGIN_USER_EXIST:
+        case actions.REQUEST_LOGIN_USER_EXISTS:
             newState.loginFailed = false;
-
             return newState;
+
         case actions.LOGIN_SUCCESS:
             newState.signedInUser = (action as actions.LoginSuccess).payload;
             newState.signedIn = true;
             newState.loginFailed = false;
-
             return newState;
+
         case actions.LOGIN_FAILED:
             newState.signedInUser = {} as User;
             newState.loginFailed = true;
-
             return newState;    
+
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
             newState.signedInUser = getUserSuccessAction.payload;
             newState.signedIn = true;
             newState.loginFailed = false;
-
             return newState;
+
         case actions.CLEAR_USER_STATE:
             newState.signedInUser = {} as User;
             newState.signedIn = false;
             newState.loginFailed = false;
-
             return newState;
-        default:
 
+        default:
             return state;
     }
 }

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       this.message = "You forgot to fill in some fields";
     }
     else {
-      this.store.dispatch(new actions.RequestLoginUserExist({email: email, password: password} as LoginDetails));
+      this.store.dispatch(new actions.RequestLoginUserExists({email: email, password: password} as LoginDetails));
     }
   }
 
