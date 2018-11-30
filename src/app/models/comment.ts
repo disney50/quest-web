@@ -1,13 +1,11 @@
-import { FieldValue, Timestamp } from '@firebase/firestore-types';
+import { Timestamp } from '@firebase/firestore-types';
 
 export class Comment {
-    commentId: string;
     comment: string;
     isModerator: boolean;
     timestamp: Timestamp;
 
-    constructor(commentId: string, data: CommentData) {
-        this.commentId = commentId;;
+    constructor(data: CommentData) {
         this.comment = data.comment;
         this.isModerator = data.isModerator;
         this.timestamp = data.timestamp;

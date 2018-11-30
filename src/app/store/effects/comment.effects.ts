@@ -21,7 +21,7 @@ export class CommentEffects {
         mergeMap(actions => actions),
         map(action => {
             if(action.type === "added") {                
-                return new actions.GetCommentSuccess(new Comment(action.payload.doc.id, action.payload.doc.data() as CommentData));
+                return new actions.GetCommentSuccess(new Comment(action.payload.doc.data() as CommentData));
             }
             return new actions.UnimplementedAction("");
         })
