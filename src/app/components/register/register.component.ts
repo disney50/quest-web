@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
   }
 
   createNewExplorer() {        
-    this.explorerService.createNewExplorer(this.selectedPlanet, this.newUser);
+    this.explorerService.createExplorer(this.selectedPlanet.name, this.newUser);
     this.signInUser();
   }
 
