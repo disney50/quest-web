@@ -12,9 +12,7 @@ export class UploadService {
   constructor(private angularFirestore: AngularFirestore) { }
 
   uploadFileToStorage(selectedFile: File, planetName: string, userId: string, questId: string) { 
-    
     this.upload.name = selectedFile.name;
-    
     
     const storageRef = firebase.storage().ref();
     
@@ -24,10 +22,10 @@ export class UploadService {
       console.log(error);
     });
 
-    this.createFirestoreDocumentForUploadedFile(planetName, userId, questId);
+    this.addDocumentForUploadedFile(planetName, userId, questId);
   }
 
-  createFirestoreDocumentForUploadedFile(planetName: string, userId: string, questId: string) {
+  addDocumentForUploadedFile(planetName: string, userId: string, questId: string) {
     this.upload.timestamp = firebase.firestore.Timestamp.now();    
 
     this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/" + questId + "/files/").add(this.upload);

@@ -11,12 +11,9 @@ export class UserService {
 
   }
 
-  createNewUserId(): string {    
-    const newUserId = this.angularFirestore.createId();
-    return newUserId;
-  }
+  registerNewUser(newUser: User) {  
+    newUser.userId = this.angularFirestore.createId();
 
-  registerNewUser(newUser: User) {    
     this.angularFirestore.collection("users").doc(newUser.userId).set(newUser);
   }
 }

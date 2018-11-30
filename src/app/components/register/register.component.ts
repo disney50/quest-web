@@ -48,13 +48,8 @@ export class RegisterComponent implements OnInit {
     }
     else {
       this.selectedPlanet = selectedPlanet;
-      this.getNewUserId();
+      this.getNewUserGender();
     }
-  }
-
-  getNewUserId() {
-    this.newUser.userId = this.userService.createNewUserId();
-    this.getNewUserGender();
   }
 
   getNewUserGender() {    
