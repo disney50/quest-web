@@ -9,7 +9,7 @@ import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
 import { Comment } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment/comment.service';
-import { UploadService } from 'src/app/services/upload/upload.service';
+import { FileService } from 'src/app/services/file/file.service';
 
 @Component({
   selector: 'app-quest',
@@ -29,7 +29,7 @@ export class QuestComponent implements OnInit {
   constructor(private store: Store<AppState>, 
     private router: Router, 
     private commentService: CommentService,
-    private uploadService: UploadService) { 
+    private uploadService: FileService) { 
 
     }
 
@@ -64,7 +64,7 @@ export class QuestComponent implements OnInit {
   }
 
   submitClicked() {
-    this.uploadService.uploadFile(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
+    this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
   }
 
   sliceHasLoginSucceeded() {
