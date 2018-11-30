@@ -17,13 +17,6 @@
     padding: 20px;
 }
 
-.full {
-    min-height: 100%;
-    min-height: 100vh;
-    display: flex;
-    overflow-y: auto;
-}
-
 .img-large {
     width: 200px;
     height: 200px;
@@ -63,12 +56,6 @@
     border-style: solid;
 }
 
-.border-gothic {
-    border-width: 1px;
-    border-color: rgb(107,157,160);
-    border-style: solid;
-}
-
 .border-top {
     border-width: 1px;
     border-top-color: rgb(232,227,240);
@@ -84,6 +71,12 @@
     border-right-color: transparent;
     border-bottom-color: rgb(232,227,240);
     border-left-color: transparent;
+    border-style: solid;
+}
+
+.border-gothic {
+    border-width: 1px;
+    border-color: rgb(107,157,160);
     border-style: solid;
 }
 
@@ -171,7 +164,7 @@
     outline: none;
 }
 
-.text-snuff {
+.text {
     color: rgb(232,227,240);
 }
 
@@ -227,21 +220,29 @@
     color: rgb(255,255,255);
 }
 
+.dropdown:hover {
+    cursor: pointer;
+}
+
 .dropdown-menu {
     background: rgb(85, 119, 123);
+    color: rgb(255,255,255);
     border-radius: 0%;
 }
 
 .dropdown-menu:hover {
-    background: rgb(255,255,255);
+    background: rgb(85, 119, 123);
+    color: rgb(255,255,255);
 }
 
 .dropdown-menu a:hover {
-    background: transparent;
-    color: rgb(85, 119, 123);
+    background: rgb(85, 119, 123);
+    color: rgb(255,255,255);
+    cursor: pointer;
 }
 
 .dropdown-item {
+    background: rgb(85, 119, 123);
     color: rgb(255,255,255);
 }
 
