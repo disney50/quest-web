@@ -17,33 +17,32 @@
 
             <div class="row justify-content-center align-items-center">
               <div class="col-sm-12 col-lg-6">
-                <input #email class="input border mb-3"
+                <input #email class="input mb-3"
                   type="email" placeholder="enter email..." value="geliefdevangod@gmail.com">
               </div>
 
               <div class="col-sm-12 col-lg-6">
-                <input #password class="input border mb-3"
+                <input #password class="input mb-3"
                   type="password" placeholder="enter password..." value="1234">
               </div>
             </div>
 
             <div class="row justify-content-center align-items-center">
               <button class="btn-mosque mr-3 ml-3 mb-3" (click)="signInClicked(email.value, password.value)">
-                Sign In
+                SIGN IN
               </button>
             </div>
 
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-lg-6 text-center">
-                <p style="color: rgb(230, 220, 201)">No account?</p>
+            <div class="row justify-content-center align-items-center text-center">
+              <div class="col-sm-12 col-lg-6">
+                <span class="text-snuff">No account?</span>
               </div>
 
               <div class="col-sm-12 col-lg-6">
                 <button class="btn-gothic" (click)="navigateRegister()">
-                  Register
+                  REGISTER
                 </button>
               </div>
-
             </div>
 
           </div>
