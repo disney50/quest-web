@@ -61,9 +61,14 @@ export class QuestComponent implements OnInit {
   }
 
   submitClicked() {
-    this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
-    this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest);
-    this.navigateDashboard();
+    if(!this.selectedFile) {
+      this.message = "You forgot to upload a file"
+    }
+    else {
+      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
+      this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest);
+      this.navigateDashboard();
+    }
   }
 
   sliceHasLoginSucceeded() {
