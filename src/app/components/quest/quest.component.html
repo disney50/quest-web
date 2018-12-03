@@ -6,7 +6,7 @@
         <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
       </a>
     
-      <a class="navbar-text text-snuff text-large">
+      <a class="navbar-text text-large">
         <b>{{currentPlanet.name}}</b>
       </a>
     
@@ -26,27 +26,29 @@
     </nav>
 
     <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+      
       <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
+          
           <div class="card-header border-bottom">
-            <b class="text-standard text-large text-uppercase">{{currentQuest.title}}</b>
+            <b class="text-large text-uppercase">{{currentQuest.title}}</b>
           </div>
 
           <div class="card-body">
             
-            <div class="row justify-content-center align-items-center text-center">
+            <div class="row justify-content-center align-items-center text-center mb-1">
               <b class="text-snuff text-medium">{{currentQuest.level1.name}} | {{currentQuest.level2.name}}</b>
             </div>
 
-            <div class="row justify-content-center align-items-center text-center">
-              <p class="text-snuff text-medium">XP: {{currentQuest.max_xp}}</p>
+            <div class="row justify-content-center align-items-center text-center mb-1">
+              <span class="text-snuff text-medium text-uppercase">XP: {{currentQuest.max_xp}}</span>
             </div>
 
-            <div class="row justify-content-center align-items-center text-center">
-              <p class="text-snuff text-small">{{currentQuest.description}}</p>
+            <div class="row justify-content-center align-items-center text-center mb-1">
+              <span class="text-snuff">{{currentQuest.description}}</span>
             </div>
 
-            <div class="row justify-content-center align-items-center text-center">
+            <div class="row justify-content-center align-items-center">
               <img class="img-small" src="../../../assets/{{currentPlanet.name}}.png"/>
             </div>
 
@@ -56,69 +58,77 @@
 
       <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
+
           <div class="card-header border-bottom">
-            <b class="text-standard text-large">COMMENTS</b>
+            <b class="text-large">COMMENTS</b>
           </div>
 
           <div class="card-body mb-0 pb-0">
             <div *ngFor="let comment of allComments"  class="row">
               <div class="col-12">
-                  <div *ngIf="comment.isModerator" class="row">
-                      <div class="col-10">
-                        <div class="card-granny-smith p-2 text-left">
-                          <span>{{comment.comment}}</span>
-                        </div>
-                        <p class="float-left font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
-                      </div>
-        
-                      <div class="col-2"></div>
+
+                <div *ngIf="comment.isModerator" class="row">
+                  <div class="col-10">
+                    <div class="card-granny-smith p-2 text-left">
+                      <span>{{comment.comment}}</span>
                     </div>
+                    <p class="float-left font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
+                  </div>
         
-                    <div *ngIf="!comment.isModerator" class="row">
-                      <div class="col-2"></div>
+                  <div class="col-2"></div>
+                </div>
         
-                      <div class="col-10">
-                        <div class="card-gothic p-2 text-right">
-                          <span>{{comment.comment}}</span>
-                        </div>
-                        <p class="float-right font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
-                      </div>
+                <div *ngIf="!comment.isModerator" class="row">
+                  <div class="col-2"></div>
+
+                  <div class="col-10">
+                    <div class="card-gothic p-2 text-right">
+                      <span>{{comment.comment}}</span>
                     </div>
+                    <p class="float-right font-italic">{{comment.timestamp.toDate() | date:'medium'}}</p>
+                  </div>
+                </div>
+
               </div>
             </div>
-            
           </div>
 
           <div class="card-footer border-top">
-              <div class="row">
-                  <div class="col-9">
-                    <input #comment class="input border" type="text" placeholder="enter comment...">
-                  </div>
+            <div class="row">
+
+              <div class="col-9">
+                <input #comment class="input border" type="text" placeholder="enter comment...">
+              </div>
     
-                  <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''" style="cursor: pointer">
-                    <span>SEND</span>
-                  </div>
-                </div>
+              <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''" style="cursor: pointer">
+                <span>SEND</span>
+              </div>
+             
+            </div>
           </div>
+
         </div>
       </div>
 
       <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border-gothic">
+
           <div class="card-header border-bottom-gothic">
-            <b class="text-standard text-large">UPLOADS</b>
+            <b class="text-large">UPLOADS</b>
           </div>
 
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <div *ngIf="!selectedFile" class="card-granny-smith">
+
+                <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
                   <span>No File Chosen</span>
                 </div>
 
-                <div *ngIf="selectedFile" class="card-granny-smith">
+                <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
                   <span>{{selectedFile.name}}</span>
                 </div>
+
               </div>
             </div>
           </div>
@@ -132,7 +142,7 @@
     </div>
 
     <button class="btn-mosque fixed-bottom" (click)="submitClicked()">
-      Submit
+      SUBMIT
     </button>
 
     <div class="modal" role="dialog"
@@ -141,19 +151,19 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
-            <div class="row">
-              <div class="col-12">
-                <button class="btn-close float-right">
-                  <span><b>X</b></span>
-                </button>
-              </div>
+          <div class="row">
+            <div class="col-12">
+              <button class="btn-close float-right">
+                <span><b>X</b></span>
+              </button>
             </div>
+          </div>
 
-            <div class="row justify-content-center align-items-center text-center">
-              <div class="col-12">
-                 <span><b>{{message}}</b></span>
-              </div>
+          <div class="row justify-content-center align-items-center text-center">
+            <div class="col-12">
+              <span><b>{{message}}</b></span>
             </div>
+          </div>
               
         </div>
       </div>
