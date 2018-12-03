@@ -22,19 +22,18 @@ export class LoginComponent implements OnInit {
   navigateRegister() {
     this.router.navigateByUrl("register");
   }
+  
+  navigateDashboard() {
+    this.router.navigateByUrl("dashboard");
+  }
 
   signInClicked(email: string, password: string) {
-
     if (!email || !password) {
       this.message = "You forgot to fill in some fields";
     }
     else {
       this.store.dispatch(new actions.RequestLoginUserExists({email: email, password: password} as LoginDetails));
     }
-  }
-
-  navigateDashboard() {
-    this.router.navigateByUrl("dashboard");
   }
 
   sliceHasLoginFailed() {
