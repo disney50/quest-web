@@ -20,7 +20,6 @@ export class DashboardComponent implements OnInit {
   currentExplorer: Explorer = {} as Explorer;
   currentQuest: Quest = {} as Quest;
   currentQuestExists: boolean = false;
-  message: string;
   status: string;
   signedIn: boolean = false;
 
