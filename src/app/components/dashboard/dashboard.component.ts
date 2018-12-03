@@ -91,9 +91,9 @@ export class DashboardComponent implements OnInit {
         if(this.currentQuest.status == "in_progress") {
           this.status = "IN PROGRESS";
         }
-        else if(this.currentQuest.status == "moderating") {
-          this.status = "MODERATING";
-        }
+        // else if(this.currentQuest.status == "moderating") {
+        //   this.status = "MODERATING";
+        // }
       } 
     })
   }
