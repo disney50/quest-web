@@ -45,10 +45,16 @@ export class QuestEffects {
         @Effect()
         GetAllQuests$ = this.actions$.ofType(actions.REQUEST_GET_PLANET_QUESTS).pipe(
             switchMap((action: actions.RequestGetPlanetQuests) => {
+                console.log("switchMap", action);
+                console.log(action.payload);
+                
+                
                 return this.angularFirestore.collection(action.payload + "quests/entries/").stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {
+                console.log("map", action);
+                
                 if(action.type === "added") {
                     return new actions.GetPlanetQuestsSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
                 }

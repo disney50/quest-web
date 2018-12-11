@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
-      if(this.signedIn == true) {
+      if(this.signedIn == true && this.currentQuestExists == true) {
         this.currentQuest = currentQuest;
         if(this.currentQuest.status == "in_progress") {
           this.status = "IN PROGRESS";
