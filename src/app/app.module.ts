@@ -18,6 +18,7 @@ import { StoreDevtoolsModule} from '@ngrx/store-devtools';
 import { RegisterComponent } from './components/register/register.component';
 import { QuestComponent } from './components/quest/quest.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { QuestsComponent } from './components/quests/quests.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     LoginComponent,
     DashboardComponent,
     RegisterComponent,
-    QuestComponent
+    QuestComponent,
+    QuestsComponent
   ],
   imports: [
     BrowserModule,

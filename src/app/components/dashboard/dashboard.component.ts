@@ -36,6 +36,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl("quest");
   }
 
+  navigateQuests() {
+    this.router.navigateByUrl("quests");
+  }
+
   navigateLogin() {
     this.router.navigateByUrl("login");
   }
