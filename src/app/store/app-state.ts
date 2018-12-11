@@ -11,6 +11,7 @@ export interface AppState {
         signedIn: boolean;
         loginFailed: boolean;
     };
+
     planetState: {
         allPlanets: Planet[];
         currentPlanet: Planet;
@@ -21,6 +22,7 @@ export interface AppState {
     };
 
     questState: {
+        planetQuests: Quest[];
         currentQuest: Quest;
         currentQuestExists: boolean;
     };

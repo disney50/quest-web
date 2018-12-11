@@ -5,6 +5,8 @@ export const REQUEST_IN_PROGRESS_QUEST_EXISTS = "[quest] REQUEST_IN_PROGRESS_QUE
 export const REQUEST_GET_IN_PROGRESS_QUEST = "[quest] REQUEST_GET_IN_PROGRESS_QUEST";
 export const GET_QUEST_SUCCESS = "[quest] GET_QUEST_SUCCESS";
 export const NO_IN_PROGRESS_QUEST = "[quest] NO_IN_PROGRESS_QUEST";
+export const REQUEST_GET_PLANET_QUESTS = "[quest] REQUEST_GET_PLANET_QUESTS";
+export const GET_PLANET_QUESTS_SUCCESS = "[quest] GET_PLANET_QUESTS_SUCCESS";
 export const CLEAR_QUEST_STATE = "[logout] CLEAR_QUEST_STATE";
 
 export class RequestInProgressQuestExists implements Action {
@@ -27,6 +29,16 @@ export class NoInProgressQuest implements Action {
     constructor() {}
 }
 
+export class RequestGetPlanetQuests implements Action {
+    type = REQUEST_GET_PLANET_QUESTS;
+    constructor(public payload: string) {}
+}
+
+export class GetPlanetQuestsSuccess implements Action {
+    type = GET_PLANET_QUESTS_SUCCESS;
+    constructor(public payload: Quest) {}
+}
+
 export class ClearQuestState implements Action {
     type = CLEAR_QUEST_STATE;
     constructor() {}
@@ -37,4 +49,6 @@ export type QuestActions =
     | RequestGetInProgressQuest
     | GetQuestSuccess
     | NoInProgressQuest
+    | RequestGetPlanetQuests
+    | GetPlanetQuestsSuccess
     | ClearQuestState

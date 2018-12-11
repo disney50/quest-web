@@ -15,6 +15,11 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.currentQuestExists = false;   
             return newState;
 
+        case actions.GET_PLANET_QUESTS_SUCCESS:
+            const getPlanetQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
+            newState.planetQuests = [...newState.planetQuests, getPlanetQuestsSuccessAction.payload];
+            return newState;
+
         case actions.CLEAR_QUEST_STATE:                        
             newState.currentQuest = {} as Quest;            
             newState.currentQuestExists = false;  
@@ -26,6 +31,7 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
 }
 
 export const initialQuestState = {
+    planetQuests: [],
     currentQuest: {} as Quest,
     currentQuestExists: false
 }

@@ -41,4 +41,18 @@ export class QuestEffects {
                 return new actions.UnimplementedAction("");
             })
         ); 
+
+        @Effect()
+        GetAllQuests$ = this.actions$.ofType(actions.REQUEST_GET_PLANET_QUESTS).pipe(
+            switchMap((action: actions.RequestGetPlanetQuests) => {
+                return this.angularFirestore.collection(action.payload + "quests/entries/").stateChanges();
+            }),
+            mergeMap(actions => actions),
+            map(action => {
+                if(action.type === "added") {
+                    return new actions.GetPlanetQuestsSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
+                }
+                return new actions.UnimplementedAction("");
+            })
+        )
 }
