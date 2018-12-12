@@ -19,7 +19,7 @@ export class CommentEffects {
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/" + action.questIdPayload + "/comments", ref => ref.orderBy('timestamp')).stateChanges();
         }),
         mergeMap(actions => actions),
-        map(action => {
+        map(action => {            
             if(action.type === "added") {                
                 return new actions.GetCommentSuccess(new Comment(action.payload.doc.data() as CommentData));
             }
