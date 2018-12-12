@@ -56,4 +56,19 @@ export class QuestEffects {
                 return new actions.UnimplementedAction("");
             })
         )
+
+        @Effect()
+        GetInteractedQuests$ = this.actions$.ofType(actions.REQUEST_GET_INTERACTED_QUESTS).pipe(
+            switchMap((action: actions.RequestGetInteractedQuests) => {              
+                
+                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/").stateChanges();
+            }),
+            mergeMap(actions => actions),
+            map(action => {                                
+                if(action.type === "added") {
+                    return new actions.GetInteractedQuestsSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
+                }
+                return new actions.UnimplementedAction("");
+            })
+        )
 }
