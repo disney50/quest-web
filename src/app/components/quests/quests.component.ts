@@ -18,6 +18,9 @@ export class QuestsComponent implements OnInit {
   currentPlanet: Planet = {} as Planet;
   signedIn: boolean = false;
   planetQuests: Quest[];
+  interactedQuests: Quest[];
+  availableQuests: Quest[];
+  keys: string[];
 
   constructor(private store: Store<AppState>,
     private router: Router) { 
@@ -57,6 +60,7 @@ export class QuestsComponent implements OnInit {
       if(this.signedIn == true) {       
         this.currentPlanet = currentPlanet;                
         this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));        
+        this.store.dispatch(new actions.RequestGetInteractedQuests(this.currentPlanet.name, this.signedInUser.userId));        
       }  
     })
   }
@@ -65,6 +69,21 @@ export class QuestsComponent implements OnInit {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
       if(this.signedIn == true) {        
         this.planetQuests = planetQuests;
+        
+      }
+    })
+  }
+
+  sliceInteractedQuests() {
+    this.store.select(selectors.interactedQuests).subscribe(interactedQuests => {
+      if(this.signedIn == true) {        
+        this.interactedQuests = interactedQuests;
+        
+        this.availableQuests = this.planetQuests.filter( function( item ){
+          return interactedQuests.filter( function( item2 ){
+            return item.questId == item2.questId;
+          }).length == 0;
+        });        
       }
     })
   }
@@ -74,6 +93,7 @@ export class QuestsComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.slicePlanetQuests();
+    this.sliceInteractedQuests();
   }
 
 }
