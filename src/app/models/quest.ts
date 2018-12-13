@@ -11,6 +11,7 @@ export class Quest {
   level2: Level2 = {} as Level2;
   status: string;
   questId: string;
+  isAvailable: boolean;
 
   constructor(questId: string, data: QuestData) {
     this.questId = questId;
