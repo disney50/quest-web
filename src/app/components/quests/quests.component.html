@@ -25,10 +25,10 @@
       </ul>
     </nav>
 
-    <div class="row align-items-center text-center mt-5 mb-5">
+    <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
       <div *ngFor="let quest of availableQuests" class="col-sm-12 col-lg-4 pt-5">
 
-        <div *ngIf="quest.isAvailable" class="card-transparent border">
+        <div *ngIf="quest.isAvailable" class="card-transparent border" (click)="navigateQuest()" style="cursor: pointer">
           <div class="card-body">
             <b class="text-large text-uppercase">{{quest.title}}</b>
             <br>  
@@ -40,7 +40,7 @@
           </div>  
         </div>
 
-        <div *ngIf="!quest.isAvailable" class="card-cutty-sark border">
+        <div *ngIf="!quest.isAvailable" class="card-cutty-sark border" (click)="navigateQuest()" style="cursor: pointer">
           <div class="card-body">
             <b class="text-large text-uppercase">{{quest.title}}</b>
             <br>  

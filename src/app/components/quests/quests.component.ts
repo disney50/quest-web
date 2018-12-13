@@ -35,6 +35,10 @@ export class QuestsComponent implements OnInit {
     this.router.navigateByUrl("login");
   }
 
+  navigateQuest() {
+    this.router.navigateByUrl("quest");
+  }
+
   filterAvailableQuests(planetQuest) {
     var found = this.interactedQuests.some(function (interactedQuest) {
       return interactedQuest.questId === planetQuest.questId;
