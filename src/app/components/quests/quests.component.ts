@@ -7,6 +7,7 @@ import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
 import { Quest } from 'src/app/models/quest';
+import { QuestService } from 'src/app/services/quest/quest.service';
 
 @Component({
   selector: 'app-quests',
@@ -24,7 +25,7 @@ export class QuestsComponent implements OnInit {
 
   constructor(private store: Store<AppState>,
     private router: Router) { 
-      
+
   }
 
   logOutClicked() {
@@ -33,6 +34,18 @@ export class QuestsComponent implements OnInit {
 
   navigateLogin() {
     this.router.navigateByUrl("login");
+  }
+
+  filterAvailableQuests(planetQuest) {
+    var found = this.interactedQuests.some(function (el) {
+      return el.questId === planetQuest.questId;
+    });
+
+    if (!found) { 
+      this.availableQuests.push(planetQuest);
+    }
+    console.log(this.availableQuests);
+    
   }
 
   sliceHasLoginSucceeded() {
@@ -60,7 +73,7 @@ export class QuestsComponent implements OnInit {
       if(this.signedIn == true) {       
         this.currentPlanet = currentPlanet;                
         this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));        
-        this.store.dispatch(new actions.RequestGetInteractedQuests(this.currentPlanet.name, this.signedInUser.userId));        
+        this.store.dispatch(new actions.RequestInteractedQuestExists(this.currentPlanet.name, this.signedInUser.userId));        
       }  
     })
   }
@@ -69,7 +82,7 @@ export class QuestsComponent implements OnInit {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
       if(this.signedIn == true) {        
         this.planetQuests = planetQuests;
-        
+        this.availableQuests = this.planetQuests;
       }
     })
   }
@@ -77,13 +90,22 @@ export class QuestsComponent implements OnInit {
   sliceInteractedQuests() {
     this.store.select(selectors.interactedQuests).subscribe(interactedQuests => {
       if(this.signedIn == true) {        
-        this.interactedQuests = interactedQuests;
+        this.interactedQuests = interactedQuests;    
+      }
+    })
+  }
+
+  sliceInteractedQuestExists() {
+    this.store.select(selectors.interactedQuestExists).subscribe(interactedQuestExists => {
+      if(interactedQuestExists) {
+        console.log("if");
+        this.availableQuests = [];
+        console.log(this.availableQuests);
         
-        this.availableQuests = this.planetQuests.filter( function( item ){
-          return interactedQuests.filter( function( item2 ){
-            return item.questId == item2.questId;
-          }).length == 0;
-        });        
+        
+        this.planetQuests.forEach(planetQuest => {          
+          this.filterAvailableQuests(planetQuest);
+        });
       }
     })
   }
@@ -94,6 +116,7 @@ export class QuestsComponent implements OnInit {
     this.sliceCurrentPlanet();
     this.slicePlanetQuests();
     this.sliceInteractedQuests();
+    this.sliceInteractedQuestExists();
   }
 
 }

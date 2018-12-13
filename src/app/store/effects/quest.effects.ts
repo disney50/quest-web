@@ -46,7 +46,7 @@ export class QuestEffects {
         GetPlanetQuests$ = this.actions$.ofType(actions.REQUEST_GET_PLANET_QUESTS).pipe(
             switchMap((action: actions.RequestGetPlanetQuests) => {              
                 
-                return this.angularFirestore.collection(action.payload + "/quests/entries/").stateChanges();
+                return this.angularFirestore.collection(action.payload + "/quests/entries/", ref => ref.orderBy("order")).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {                                
@@ -58,10 +58,25 @@ export class QuestEffects {
         )
 
         @Effect()
+        CheckInteractedQuestExists$ = this.actions$.ofType(actions.REQUEST_INTERACTED_QUEST_EXISTS).pipe(
+            switchMap((action: actions.RequestInteractedQuestExists) => {
+                this.planetName = action.planetNamePayload;
+                this.userId = action.userIdPayload;
+                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests").get();
+            }),
+            map(snapShot => {
+                if(snapShot.size === 0) {
+                    return new actions.NoInInteractedQuest();
+                }
+                return new actions.RequestGetInteractedQuests(this.planetName, this.userId);
+            })
+        );
+
+        @Effect()
         GetInteractedQuests$ = this.actions$.ofType(actions.REQUEST_GET_INTERACTED_QUESTS).pipe(
             switchMap((action: actions.RequestGetInteractedQuests) => {              
                 
-                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/").stateChanges();
+                return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/", ref => ref.orderBy("order")).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {                                
