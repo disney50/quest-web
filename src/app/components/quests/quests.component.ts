@@ -7,6 +7,7 @@ import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
 import { Quest } from 'src/app/models/quest';
+import { QuestService } from 'src/app/services/quest/quest.service';
 
 @Component({
   selector: 'app-quests',
@@ -20,10 +21,10 @@ export class QuestsComponent implements OnInit {
   planetQuests: Quest[];
   interactedQuests: Quest[];
   availableQuests: Quest[];
-  keys: string[];
 
   constructor(private store: Store<AppState>,
-    private router: Router) { 
+    private router: Router,
+    private questService: QuestService) { 
 
   }
 
@@ -55,26 +56,6 @@ export class QuestsComponent implements OnInit {
     if (!found) { 
       this.availableQuests.push(planetQuest);
     }    
-  }
-
-  filterPrerequisites(availableQuest) { 
-    var index: number;
-    var prerequisiteQuest: Quest;
-
-    this.interactedQuests.forEach(quest => {
-      if(availableQuest.prerequisites[0] == quest.questId) {
-        
-        index = this.interactedQuests.indexOf(quest);
-      }
-    });
-
-    prerequisiteQuest = this.interactedQuests[index];
-
-    if(prerequisiteQuest.status ==  "completed") {
-      availableQuest.isAvailable = true;
-      
-    }
-    
   }
 
   sliceHasLoginSucceeded() {
@@ -134,8 +115,8 @@ export class QuestsComponent implements OnInit {
         });
         
         this.availableQuests.forEach(availableQuest => {
-          this.filterPrerequisites(availableQuest);          
-        })
+          this.questService.filterPrerequisiteQuests(this.currentPlanet.name, this.signedInUser.userId, availableQuest);                                  
+        });
       }
     })
   }
