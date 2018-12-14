@@ -3,8 +3,10 @@ import { Quest } from "src/app/models/quest";
 
 export const REQUEST_IN_PROGRESS_QUEST_EXISTS = "[quest] REQUEST_IN_PROGRESS_QUEST_EXISTS";
 export const REQUEST_GET_IN_PROGRESS_QUEST = "[quest] REQUEST_GET_IN_PROGRESS_QUEST";
+export const REQUEST_MODERATING_QUEST_EXISTS = "[quest] REQUEST_MODERATING_QUEST_EXISTS";
+export const REQUEST_GET_MODERATING_QUEST = "[quest] REQUEST_GET_MODERATING_QUEST";
 export const GET_QUEST_SUCCESS = "[quest] GET_QUEST_SUCCESS";
-export const NO_IN_PROGRESS_QUEST = "[quest] NO_IN_PROGRESS_QUEST";
+export const NO_CURRENT_QUEST = "[quest] NO_CURRENT_QUEST";
 export const REQUEST_GET_PLANET_QUESTS = "[quest] REQUEST_GET_PLANET_QUESTS";
 export const GET_PLANET_QUESTS_SUCCESS = "[quest] GET_PLANET_QUESTS_SUCCESS";
 export const REQUEST_INTERACTED_QUEST_EXISTS = "[quest] REQUEST_INTERACTED_QUEST_EXISTS";
@@ -24,13 +26,23 @@ export class RequestGetInProgressQuest implements Action {
     constructor() {}
 }
 
+export class RequestModeratingQuestExists implements Action {
+    type = REQUEST_GET_MODERATING_QUEST;
+    constructor() {}
+}
+
+export class RequestGetModeratingQuest implements Action {
+    type = REQUEST_GET_MODERATING_QUEST;
+    constructor() {}
+}
+
 export class GetQuestSuccess implements Action {
     type = GET_QUEST_SUCCESS;
     constructor(public payload: Quest)  {}
 }
 
-export class NoInProgressQuest implements Action {
-    type = NO_IN_PROGRESS_QUEST;
+export class NoCurrentQuest implements Action {
+    type = NO_CURRENT_QUEST;
     constructor() {}
 }
 
@@ -77,8 +89,10 @@ export class ClearQuestState implements Action {
 export type QuestActions = 
     | RequestInProgressQuestExists
     | RequestGetInProgressQuest
+    | RequestModeratingQuestExists
+    | RequestGetModeratingQuest
     | GetQuestSuccess
-    | NoInProgressQuest
+    | NoCurrentQuest
     | RequestGetPlanetQuests
     | GetPlanetQuestsSuccess
     | RequestInteractedQuestExists

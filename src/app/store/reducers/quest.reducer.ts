@@ -11,7 +11,7 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.currentQuestExists = true;
             return newState;
 
-        case actions.NO_IN_PROGRESS_QUEST:
+        case actions.NO_CURRENT_QUEST:
             newState.currentQuestExists = false;   
             return newState;
 

@@ -22,7 +22,7 @@ export class QuestEffects {
             }),
             map(snapShot => {
                 if(snapShot.size === 0) {
-                    return new actions.NoInProgressQuest();
+                    return new actions.RequestModeratingQuestExists();
                 }
                 return new actions.RequestGetInProgressQuest();
             })
@@ -32,6 +32,33 @@ export class QuestEffects {
         GetInProgressQuest$ = this.actions$.ofType(actions.REQUEST_GET_IN_PROGRESS_QUEST).pipe(
             switchMap((action: actions.RequestGetInProgressQuest) => {                                                     
                 return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'in_progress')).stateChanges();
+            }),
+            mergeMap(actions => actions),
+            map(action => {
+                if(action.type === "added") {
+                    return new actions.GetQuestSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
+                }
+                return new actions.UnimplementedAction("");
+            })
+        ); 
+
+        @Effect()
+        CheckModeratingQuestExists$ = this.actions$.ofType(actions.REQUEST_MODERATING_QUEST_EXISTS).pipe(
+            switchMap((action: actions.RequestModeratingQuestExists) => {
+                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'moderating')).get();
+            }),
+            map(snapShot => {
+                if(snapShot.size === 0) {
+                    return new actions.NoCurrentQuest();
+                }
+                return new actions.RequestGetModeratingQuest();
+            })
+        );
+
+        @Effect()
+        GetModeratingQuest$ = this.actions$.ofType(actions.REQUEST_GET_MODERATING_QUEST).pipe(
+            switchMap((action: actions.RequestGetModeratingQuest) => {                                                     
+                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests", ref => ref.where('status', '==', 'moderating')).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {
