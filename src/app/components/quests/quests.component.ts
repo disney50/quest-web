@@ -39,6 +39,14 @@ export class QuestsComponent implements OnInit {
     this.router.navigateByUrl("quest");
   }
 
+  questClicked(selectedQuest: Quest) {
+    console.log("questClicked")
+    console.log("selectedQuest", selectedQuest);
+    
+    this.store.dispatch(new actions.RequestGetSelectedQuest(this.currentPlanet.name, selectedQuest.questId));
+    this.navigateQuest();        
+  }
+
   filterAvailableQuests(planetQuest) {
     var found = this.interactedQuests.some(function (interactedQuest) {
       return interactedQuest.questId === planetQuest.questId;
@@ -50,7 +58,6 @@ export class QuestsComponent implements OnInit {
   }
 
   filterPrerequisites(availableQuest) { 
-    console.log("filterPrerequisites");
     var index: number;
     var prerequisiteQuest: Quest;
 

@@ -85,5 +85,18 @@ export class QuestEffects {
                 }
                 return new actions.UnimplementedAction("");
             })
-        )
+        );
+
+        @Effect()
+        GetSelectedQuest$ = this.actions$.ofType(actions.REQUEST_GET_SELECTED_QUEST).pipe(
+            switchMap((action: actions.RequestGetSelectedQuest) => {                                                     
+                return this.angularFirestore.collection(action.planetNamePayload + "/quests/entries/").doc(action.questIdPayload).get();
+            }),
+            map(snapShot => {
+                if(snapShot.exists) {
+                    return new actions.GetQuestSuccess(new Quest(snapShot.id, snapShot.data() as QuestData));
+                }
+                return new actions.UnimplementedAction("");
+            })
+        );
 }
