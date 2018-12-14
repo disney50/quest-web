@@ -26,6 +26,10 @@ export class QuestComponent implements OnInit {
   message: string = null;
   signedIn: boolean = false;
   selectedFile: File;
+  isUndefined: boolean;
+  isInProgress: boolean;
+  isModerating: boolean;
+  isCompleted: boolean;
 
   constructor(private store: Store<AppState>, 
     private router: Router, 
@@ -105,7 +109,23 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
       if(this.signedIn == true) {
         this.currentQuest = currentQuest;
-        this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+        console.log(this.currentQuest.status);
+    
+        if(this.currentQuest.status == "in_progress") {
+          this.isInProgress = true;
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+        }
+        else if(this.currentQuest.status == "moderating") {
+          this.isModerating = true;
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+        }
+        else if(this.currentQuest.status == "completed") {
+          this.isCompleted = true;
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+        }
+        else {
+          this.isUndefined = true;
+        }
       } 
     })
   }

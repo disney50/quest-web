@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="col-sm-12 col-lg-4 align-self-start pt-5">
+      <div *ngIf="isInProgress || isModerating || isCompleted" class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
 
           <div class="card-header border-bottom">
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <div class="col-sm-12 col-lg-4 align-self-start pt-5">
+      <div *ngIf="isInProgress" class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border-gothic">
 
           <div class="card-header border-bottom-gothic">
@@ -142,7 +142,7 @@
 
     </div>
 
-    <button class="btn-mosque fixed-bottom" (click)="submitClicked()">
+    <button *ngIf="isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
       SUBMIT
     </button>
 
