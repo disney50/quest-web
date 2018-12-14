@@ -146,6 +146,10 @@
       SUBMIT
     </button>
 
+    <button *ngIf="isUndefined" class="btn-mosque fixed-bottom" (click)="submitClicked()">
+      LAUNCH
+    </button>
+
     <div class="modal" role="dialog"
       [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
       (click)="message = null">
