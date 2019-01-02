@@ -21,6 +21,7 @@ export class QuestComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
   currentQuest: Quest = {} as Quest;
+  selectedQuest: Quest = {} as Quest;
   allComments: Comment[];
   newComment: Comment = {} as Comment;
   message: string = null;
@@ -56,7 +57,9 @@ export class QuestComponent implements OnInit {
       this.message = "You forgot to write a comment";
     }
     else {
-      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId, newComment);
+      console.log(this.currentPlanet);
+      
+      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId, newComment);
     }
   }
 
@@ -69,8 +72,12 @@ export class QuestComponent implements OnInit {
       this.message = "You forgot to upload a file"
     }
     else {
-      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId);
-      this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest);
+      console.log(this.currentPlanet);
+      
+      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
+      console.log(this.currentPlanet);
+      
+      this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
       this.navigateDashboard();
     }
   }
@@ -103,28 +110,36 @@ export class QuestComponent implements OnInit {
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(this.signedIn == true) {
+        console.log(currentPlanet);
+                
         this.currentPlanet = currentPlanet;
+        console.log(this.currentPlanet);
+
         this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
+        this.sliceSelectedQuest();
+
       }  
     })
   }
 
-  sliceCurrentQuest() {
-    this.store.select(selectors.currentQuest).subscribe(currentQuest => {
+  sliceSelectedQuest() {
+    this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
       if(this.signedIn == true) {
-        this.currentQuest = currentQuest;
+        this.selectedQuest = selectedQuest;
     
-        if(this.currentQuest.status == "in_progress") {
+        if(this.selectedQuest.status == "in_progress") {
+          console.log(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
+          
           this.isInProgress = true;
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
         }
-        else if(this.currentQuest.status == "moderating") {
+        else if(this.selectedQuest.status == "moderating") {
           this.isModerating = true;
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
         }
-        else if(this.currentQuest.status == "completed") {
+        else if(this.selectedQuest.status == "completed") {
           this.isCompleted = true;
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.currentQuest.questId));
+          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
         }
         else {
           this.isUndefined = true;
@@ -145,7 +160,6 @@ export class QuestComponent implements OnInit {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
-    this.sliceCurrentQuest();
     this.sliceAllComments();
   }
 

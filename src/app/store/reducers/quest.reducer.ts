@@ -39,9 +39,9 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.interactedQuestExists = false;
             return newState;  
             
-        case actions.CHANGE_CURRENT_QUEST:
-            const changeCurrentQuestAction = action as actions.ChangeCurrentQuest;
-            newState.currentQuest = changeCurrentQuestAction.payload;
+        case actions.GET_SELECTED_QUEST:
+            const getSelectedQuestAction = action as actions.GetSelectedQuest;
+            newState.selectedQuest = getSelectedQuestAction.payload;
             return newState;    
 
         case actions.CLEAR_QUEST_STATE:                        
@@ -59,5 +59,6 @@ export const initialQuestState = {
     interactedQuests: [],
     interactedQuestExists: false,
     currentQuest: {} as Quest,
-    currentQuestExists: false
+    currentQuestExists: false,
+    selectedQuest: {} as Quest
 }

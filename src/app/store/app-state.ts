@@ -27,6 +27,7 @@ export interface AppState {
         interactedQuestExists: boolean;
         currentQuest: Quest;
         currentQuestExists: boolean;
+        selectedQuest: Quest;
     };
 
     commentState: {

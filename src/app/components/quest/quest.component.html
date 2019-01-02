@@ -31,21 +31,21 @@
         <div class="card-cutty-sark border">
           
           <div class="card-header border-bottom">
-            <b class="text-large text-uppercase">{{currentQuest.title}}</b>
+            <b class="text-large text-uppercase">{{selectedQuest.title}}</b>
           </div>
 
           <div class="card-body">
             
             <div class="row justify-content-center align-items-center text-center mb-2">
-              <b class="text-medium">{{currentQuest.level1.name}} | {{currentQuest.level2.name}}</b>
+              <b class="text-medium">{{selectedQuest.level1.name}} | {{selectedQuest.level2.name}}</b>
             </div>
 
             <div class="row justify-content-center align-items-center text-center mb-2">
-              <span class="text-medium text-uppercase">XP: {{currentQuest.max_xp}}</span>
+              <span class="text-medium text-uppercase">XP: {{selectedQuest.max_xp}}</span>
             </div>
 
             <div class="row justify-content-center align-items-center text-center mb-2">
-              <span>{{currentQuest.description}}</span>
+              <span>{{selectedQuest.description}}</span>
             </div>
 
             <div class="row justify-content-center align-items-center">
@@ -146,7 +146,7 @@
       SUBMIT
     </button>
 
-    <button *ngIf="isUndefined" class="btn-mosque fixed-bottom" (click)="launchClicked()">
+    <button *ngIf="selectedQuest.isAvailable" class="btn-mosque fixed-bottom" (click)="launchClicked()">
       LAUNCH
     </button>
 

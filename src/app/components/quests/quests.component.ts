@@ -8,7 +8,6 @@ import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
 import { Quest, QuestData } from 'src/app/models/quest';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { currentQuest } from '../../store/selectors';
 
 @Component({
   selector: 'app-quests',
@@ -46,7 +45,7 @@ export class QuestsComponent implements OnInit {
   }
 
   questClicked(selectedQuest: Quest) {     
-    this.store.dispatch(new actions.ChangeCurrentQuest(selectedQuest));
+    this.store.dispatch(new actions.GetSelectedQuest(selectedQuest));
     this.navigateQuest();        
   }
 

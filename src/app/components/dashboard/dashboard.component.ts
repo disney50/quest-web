@@ -44,6 +44,11 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl("login");
   }
 
+  viewClicked() {
+    this.store.dispatch(new actions.GetSelectedQuest(this.currentQuest));
+    this.navigateQuest();
+  }
+
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
       if(!signedIn) {
@@ -94,9 +99,9 @@ export class DashboardComponent implements OnInit {
         if(this.currentQuest.status == "in_progress") {
           this.status = "IN PROGRESS";
         }
-        // else if(this.currentQuest.status == "moderating") {
-        //   this.status = "MODERATING";
-        // }
+        else if(this.currentQuest.status == "moderating") {
+          this.status = "MODERATING";
+        }
       } 
     })
   }
