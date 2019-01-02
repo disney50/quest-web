@@ -6,8 +6,9 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
-import { Quest } from 'src/app/models/quest';
+import { Quest, QuestData } from 'src/app/models/quest';
 import { QuestService } from 'src/app/services/quest/quest.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-quests',
@@ -24,10 +25,11 @@ export class QuestsComponent implements OnInit {
   availableQuest: Quest = {} as Quest;
   planetQuestsIds: string[] = [];
   interactedQuestsIds: string[] = [];
+  prerequisiteQuest: Quest = {} as Quest;
 
   constructor(private store: Store<AppState>,
     private router: Router,
-    private questService: QuestService) { 
+    private angularFirestore: AngularFirestore) { 
 
   }
 
@@ -75,9 +77,28 @@ export class QuestsComponent implements OnInit {
 
         //add planet quest to available quests
         if(this.availableQuests.indexOf(this.availableQuest) === -1) {
-          this.availableQuests.push(this.availableQuest);
+          this.availableQuests.push(this.availableQuest);          
         }
       }
+    });
+  }
+
+  checkIfPrerequisiteQuestCompleted(possibleQuest: Quest) {  
+    this.prerequisiteQuest = {} as Quest;    
+
+    //get snapshot of prerequisite quest using prerequisite  quest id
+    this.angularFirestore.collection(this.currentPlanet.name + "/explorers/entries/" + this.signedInUser.userId + "/quests/")
+      .doc(possibleQuest.prerequisites[0]).ref.onSnapshot(snapShot => {
+        
+        //if prerequisite quest exists
+        if(snapShot.exists) {
+          this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);
+
+          //if prerequisite quest is completed possible quest is available
+          if(this.prerequisiteQuest.status == "completed") {
+            possibleQuest.isAvailable = true;            
+          }   
+        }
     });
   }
 
@@ -124,6 +145,18 @@ export class QuestsComponent implements OnInit {
       if(this.signedIn == true) {                
         this.interactedQuests = interactedQuests;
         this.getAvailableQuests();
+
+        //for each possible quest
+        this.availableQuests.forEach(possibleQuest => {          
+          //if quest has prerequisites check if prerequisites are completed
+          if(possibleQuest.prerequisites.length != 0) {
+            this.checkIfPrerequisiteQuestCompleted(possibleQuest);
+          }
+          //if quest not has prerequisites quest is available
+          else {
+            possibleQuest.isAvailable = true;
+          }
+        });
       }
     })
   }
