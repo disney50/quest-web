@@ -37,6 +37,11 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             
         case actions.NO_IN_INTERACTED_QUEST:
             newState.interactedQuestExists = false;
+            return newState;  
+            
+        case actions.CHANGE_CURRENT_QUEST:
+            const changeCurrentQuestAction = action as actions.ChangeCurrentQuest;
+            newState.currentQuest = changeCurrentQuestAction.payload;
             return newState;    
 
         case actions.CLEAR_QUEST_STATE:                        
