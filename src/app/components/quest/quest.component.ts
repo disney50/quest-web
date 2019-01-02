@@ -75,6 +75,10 @@ export class QuestComponent implements OnInit {
     }
   }
 
+  launchClicked() {
+    
+  }
+
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
       if(!signedIn) {
@@ -109,7 +113,6 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
       if(this.signedIn == true) {
         this.currentQuest = currentQuest;
-        console.log(this.currentQuest.status);
     
         if(this.currentQuest.status == "in_progress") {
           this.isInProgress = true;

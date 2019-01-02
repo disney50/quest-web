@@ -17,15 +17,21 @@ export class QuestService {
   }
 
   filterPrerequisiteQuests(planetName: string, userId: string, availableQuest: Quest) {  
-    this.prerequisiteQuest = {} as Quest;
+    this.prerequisiteQuest = {} as Quest;    
 
     this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/")
       .doc(availableQuest.prerequisites[0]).ref.onSnapshot(snapShot => {
-        this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);
+        
+        if(snapShot.exists) {
+          this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);
 
-        if(this.prerequisiteQuest.status == "completed") {
+          if(this.prerequisiteQuest.status == "completed") {
+            availableQuest.isAvailable = true;            
+          }   
+        }
+        else {
           availableQuest.isAvailable = true;
-        }     
+        }
     });
   }
 }

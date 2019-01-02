@@ -40,22 +40,14 @@ export class QuestsComponent implements OnInit {
     this.router.navigateByUrl("quest");
   }
 
-  questClicked(selectedQuest: Quest) {
-    console.log("questClicked")
-    console.log("selectedQuest", selectedQuest);
-    
+  questClicked(selectedQuest: Quest) { 
     this.store.dispatch(new actions.RequestGetSelectedQuest(this.currentPlanet.name, selectedQuest.questId));
     this.navigateQuest();        
   }
 
-  filterAvailableQuests(planetQuest) {
-    var found = this.interactedQuests.some(function (interactedQuest) {
-      return interactedQuest.questId === planetQuest.questId;
-    });
-
-    if (!found) { 
-      this.availableQuests.push(planetQuest);
-    }    
+  filterAvailableQuests(planetQuest) { 
+    //filter out interacted quests   
+    
   }
 
   sliceHasLoginSucceeded() {
@@ -90,34 +82,32 @@ export class QuestsComponent implements OnInit {
 
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      if(this.signedIn == true) {        
-        this.planetQuests = planetQuests;
-        this.availableQuests = this.planetQuests;
+      if(this.signedIn == true) {                
+        this.planetQuests = planetQuests;     
       }
     })
   }
 
   sliceInteractedQuests() {
     this.store.select(selectors.interactedQuests).subscribe(interactedQuests => {
-      if(this.signedIn == true) {        
+      if(this.signedIn == true) {                
         this.interactedQuests = interactedQuests;    
       }
     })
   }
 
   sliceInteractedQuestExists() {
-    this.store.select(selectors.interactedQuestExists).subscribe(interactedQuestExists => {
-      if(interactedQuestExists) {
-        this.availableQuests = [];        
+    this.store.select(selectors.interactedQuestExists).subscribe(interactedQuestExists => {   
         
-        this.planetQuests.forEach(planetQuest => {          
-          this.filterAvailableQuests(planetQuest);
+        this.planetQuests.forEach(planetQuest => {
+          //filter out interacted quests
+          
         });
         
         this.availableQuests.forEach(availableQuest => {
-          this.questService.filterPrerequisiteQuests(this.currentPlanet.name, this.signedInUser.userId, availableQuest);                                  
+          //filter for next quest
+
         });
-      }
     })
   }
 
