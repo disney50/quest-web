@@ -20,7 +20,7 @@ export class QuestsComponent implements OnInit {
   currentPlanet: Planet = {} as Planet;
   signedIn: boolean = false;
   planetQuests: Quest[];
-  interactedQuests: Quest[];
+  explorerQuests: Quest[];
   availableQuests: Quest[] = [];
 
   constructor(private store: Store<AppState>,
@@ -70,7 +70,7 @@ export class QuestsComponent implements OnInit {
       if(this.signedIn) {       
         this.currentPlanet = currentPlanet;                
         this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));        
-        this.store.dispatch(new actions.RequestInteractedQuestExists(this.currentPlanet.name, this.signedInUser.userId));        
+        this.store.dispatch(new actions.RequestExplorerQuestsExist(this.currentPlanet.name, this.signedInUser.userId));        
       }  
     })
   }
@@ -83,11 +83,11 @@ export class QuestsComponent implements OnInit {
     })
   }
 
-  sliceInteractedQuestExists() {
-    this.store.select(selectors.interactedQuestExists).subscribe(interactedQuestExists => {
+  sliceExplorerQuestsExist() {
+    this.store.select(selectors.explorerQuestsExist).subscribe(explorerQuestsExist => {
       if(this.signedIn) {
-        if(interactedQuestExists) {
-          this.sliceInteractedQuests();
+        if(explorerQuestsExist) {
+          this.sliceExplorerQuests();
         }
         else {
           this.availableQuests = this.planetQuests;
@@ -100,11 +100,11 @@ export class QuestsComponent implements OnInit {
     })
   }
 
-  sliceInteractedQuests() {
-    this.store.select(selectors.interactedQuests).subscribe(interactedQuests => {
+  sliceExplorerQuests() {
+    this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if(this.signedIn) {                
-        this.interactedQuests = interactedQuests;
-        this.availableQuests = this.questService.getAvailableQuests(this.planetQuests, this.interactedQuests, this.currentPlanet.name, this.signedInUser.userId);
+        this.explorerQuests = explorerQuests;
+        this.availableQuests = this.questService.getAvailableQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
       }
     })
   }
@@ -114,7 +114,7 @@ export class QuestsComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.slicePlanetQuests();
-    this.sliceInteractedQuestExists();
+    this.sliceExplorerQuestsExist();
   }
 
 }

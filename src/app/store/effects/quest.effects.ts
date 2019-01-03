@@ -85,30 +85,30 @@ export class QuestEffects {
         )
 
         @Effect()
-        CheckInteractedQuestExists$ = this.actions$.ofType(actions.REQUEST_INTERACTED_QUEST_EXISTS).pipe(
-            switchMap((action: actions.RequestInteractedQuestExists) => {
+        CheckExplorerQuestsExist$ = this.actions$.ofType(actions.REQUEST_EXPLORER_QUESTS_EXIST).pipe(
+            switchMap((action: actions.RequestExplorerQuestsExist) => {
                 this.planetName = action.planetNamePayload;
                 this.userId = action.userIdPayload;
                 return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests").get();
             }),
             map(snapShot => {
                 if(snapShot.size === 0) {
-                    return new actions.NoInInteractedQuest();
+                    return new actions.NoExplorerQuest();
                 }
-                return new actions.RequestGetInteractedQuests(this.planetName, this.userId);
+                return new actions.RequestGetExplorerQuests(this.planetName, this.userId);
             })
         );
 
         @Effect()
-        GetInteractedQuests$ = this.actions$.ofType(actions.REQUEST_GET_INTERACTED_QUESTS).pipe(
-            switchMap((action: actions.RequestGetInteractedQuests) => {              
+        GetExplorerQuests$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER_QUESTS).pipe(
+            switchMap((action: actions.RequestGetExplorerQuests) => {              
                 
                 return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/", ref => ref.orderBy("order")).stateChanges();
             }),
             mergeMap(actions => actions),
             map(action => {                                
                 if(action.type === "added") {
-                    return new actions.GetInteractedQuestsSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
+                    return new actions.GetExplorerQuestsSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
                 }
                 return new actions.UnimplementedAction("");
             })

@@ -24,19 +24,19 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.planetQuests = [...newState.planetQuests, getPlanetQuestsSuccessAction.payload];
             return newState;
 
-        case actions.REQUEST_GET_INTERACTED_QUESTS:
-            newState.interactedQuests = [];
-            newState.interactedQuestExists = false;
+        case actions.REQUEST_GET_EXPLORER_QUESTS:
+            newState.explorerQuests = [];
+            newState.explorerQuestsExist = false;
             return newState;    
 
         case actions.GET_INTERACTED_QUESTS_SUCCESS:
-            newState.interactedQuestExists = true;
-            const getInteractedQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
-            newState.interactedQuests = [...newState.interactedQuests, getInteractedQuestsSuccessAction.payload];
+            newState.explorerQuestsExist = true;
+            const getExplorerQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
+            newState.explorerQuests = [...newState.explorerQuests, getExplorerQuestsSuccessAction.payload];
             return newState; 
             
         case actions.NO_IN_INTERACTED_QUEST:
-            newState.interactedQuestExists = false;
+            newState.explorerQuestsExist = false;
             return newState;  
             
         case actions.GET_SELECTED_QUEST:
@@ -56,8 +56,8 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
 
 export const initialQuestState = {
     planetQuests: [],
-    interactedQuests: [],
-    interactedQuestExists: false,
+    explorerQuests: [],
+    explorerQuestsExist: false,
     currentQuest: {} as Quest,
     currentQuestExists: false,
     selectedQuest: {} as Quest

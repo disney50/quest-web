@@ -9,8 +9,8 @@ export const GET_QUEST_SUCCESS = "[quest] GET_QUEST_SUCCESS";
 export const NO_CURRENT_QUEST = "[quest] NO_CURRENT_QUEST";
 export const REQUEST_GET_PLANET_QUESTS = "[quest] REQUEST_GET_PLANET_QUESTS";
 export const GET_PLANET_QUESTS_SUCCESS = "[quest] GET_PLANET_QUESTS_SUCCESS";
-export const REQUEST_INTERACTED_QUEST_EXISTS = "[quest] REQUEST_INTERACTED_QUEST_EXISTS";
-export const REQUEST_GET_INTERACTED_QUESTS = "[quest] REQUEST_GET_INTERACTED_QUESTS";
+export const REQUEST_EXPLORER_QUESTS_EXIST = "[quest] REQUEST_INTERACTED_QUEST_EXISTS";
+export const REQUEST_GET_EXPLORER_QUESTS = "[quest] REQUEST_GET_INTERACTED_QUESTS";
 export const GET_INTERACTED_QUESTS_SUCCESS = "[quest] GET_INTERACTED_QUESTS_SUCCESS";
 export const NO_IN_INTERACTED_QUEST = "[quest] NO_IN_INTERACTED_QUEST";
 export const REQUEST_GET_SELECTED_QUEST = "[quest] REQUEST_GET_SELECTED_QUEST";
@@ -57,22 +57,22 @@ export class GetPlanetQuestsSuccess implements Action {
     constructor(public payload: Quest) {}
 }
 
-export class RequestInteractedQuestExists implements Action {
-    type = REQUEST_INTERACTED_QUEST_EXISTS;
+export class RequestExplorerQuestsExist implements Action {
+    type = REQUEST_EXPLORER_QUESTS_EXIST;
     constructor(public planetNamePayload: string, public userIdPayload: string) {}
 }
 
-export class RequestGetInteractedQuests implements Action {
-    type = REQUEST_GET_INTERACTED_QUESTS;
+export class RequestGetExplorerQuests implements Action {
+    type = REQUEST_GET_EXPLORER_QUESTS;
     constructor(public planetNamePayload: string, public userIdPayload: string) {}
 }
 
-export class GetInteractedQuestsSuccess implements Action {
+export class GetExplorerQuestsSuccess implements Action {
     type = GET_INTERACTED_QUESTS_SUCCESS;
     constructor(public payload: Quest) {}
 }
 
-export class NoInInteractedQuest implements Action {
+export class NoExplorerQuest implements Action {
     type = NO_IN_INTERACTED_QUEST;
     constructor() {}
 }
@@ -101,10 +101,10 @@ export type QuestActions =
     | NoCurrentQuest
     | RequestGetPlanetQuests
     | GetPlanetQuestsSuccess
-    | RequestInteractedQuestExists
-    | RequestGetInteractedQuests
-    | GetInteractedQuestsSuccess
-    | NoInInteractedQuest
+    | RequestExplorerQuestsExist
+    | RequestGetExplorerQuests
+    | GetExplorerQuestsSuccess
+    | NoExplorerQuest
     | RequestGetSelectedQuest
     | GetSelectedQuest
     | ClearQuestState

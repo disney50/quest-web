@@ -9,7 +9,7 @@ import { User } from 'src/app/models/user';
 })
 export class QuestService {
   planetQuestsIds: string[] = [];
-  interactedQuestsIds: string[] = [];
+  explorerQuestsIds: string[] = [];
   availableQuest: Quest = {} as Quest;
   availableQuests: Quest[] = []
   prerequisiteQuest: Quest = {} as Quest;
@@ -50,21 +50,21 @@ export class QuestService {
     return possibleQuest.isAvailable;
   }
 
-  getAvailableQuests(planetQuests: Quest[], interactedQuests: Quest[], planetName: string, userId: string): Quest[] { 
+  getAvailableQuests(planetQuests: Quest[], explorerQuests: Quest[], planetName: string, userId: string): Quest[] { 
     planetQuests.forEach(planetQuest => {
       if(this.planetQuestsIds.indexOf(planetQuest.questId) === -1) {
         this.planetQuestsIds.push(planetQuest.questId);
       }
     });     
         
-    interactedQuests.forEach(interactedQuest => {
-      if(this.interactedQuestsIds.indexOf(interactedQuest.questId) === -1) {
-        this.interactedQuestsIds.push(interactedQuest.questId);
+    explorerQuests.forEach(explorerQuest => {
+      if(this.explorerQuestsIds.indexOf(explorerQuest.questId) === -1) {
+        this.explorerQuestsIds.push(explorerQuest.questId);
       }
     });
 
     this.planetQuestsIds.forEach(planetQuestId => {      
-      if(this.interactedQuestsIds.indexOf(planetQuestId) === -1) {
+      if(this.explorerQuestsIds.indexOf(planetQuestId) === -1) {
         this.availableQuest = planetQuests.find(function(planetQuest) { 
           return planetQuest.questId === planetQuestId; 
         });        

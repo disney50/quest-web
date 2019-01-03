@@ -4,9 +4,9 @@ export const questBase = (state: AppState) => state.questState;
 
 export const planetQuests = (state: AppState) => questBase(state).planetQuests;
 
-export const interactedQuests = (state: AppState) => questBase(state).interactedQuests;
+export const explorerQuests = (state: AppState) => questBase(state).explorerQuests;
 
-export const interactedQuestExists = (state: AppState) => questBase(state).interactedQuestExists;
+export const explorerQuestsExist = (state: AppState) => questBase(state).explorerQuestsExist;
 
 export const currentQuest = (state: AppState)  => questBase(state).currentQuest;
 
