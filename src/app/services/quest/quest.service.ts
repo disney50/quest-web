@@ -16,22 +16,9 @@ export class QuestService {
     this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/").doc(currentQuest.questId).update(currentQuest.toData());
   }
 
-  filterPrerequisiteQuests(planetName: string, userId: string, availableQuest: Quest) {  
-    this.prerequisiteQuest = {} as Quest;    
+  launchQuest(planetName: string, userId: string, currentQuest: Quest) {
+    currentQuest.status = "in_progress";
 
-    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/")
-      .doc(availableQuest.prerequisites[0]).ref.onSnapshot(snapShot => {
-        
-        if(snapShot.exists) {
-          this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);
-
-          if(this.prerequisiteQuest.status == "completed") {
-            availableQuest.isAvailable = true;            
-          }   
-        }
-        else {
-          availableQuest.isAvailable = true;
-        }
-    });
+    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/").doc(currentQuest.questId).set(currentQuest.toData());
   }
 }

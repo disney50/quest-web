@@ -56,9 +56,7 @@ export class QuestComponent implements OnInit {
     if (!newComment) {
       this.message = "You forgot to write a comment";
     }
-    else {
-      console.log(this.currentPlanet);
-      
+    else {      
       this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId, newComment);
     }
   }
@@ -71,19 +69,16 @@ export class QuestComponent implements OnInit {
     if(!this.selectedFile) {
       this.message = "You forgot to upload a file"
     }
-    else {
-      console.log(this.currentPlanet);
-      
-      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
-      console.log(this.currentPlanet);
-      
+    else {      
+      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);      
       this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
       this.navigateDashboard();
     }
   }
 
   launchClicked() {
-    
+    this.questService.launchQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
+    this.navigateDashboard();
   }
 
   sliceHasLoginSucceeded() {
@@ -109,12 +104,8 @@ export class QuestComponent implements OnInit {
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(this.signedIn == true) {
-        console.log(currentPlanet);
-                
+      if(this.signedIn == true) {                
         this.currentPlanet = currentPlanet;
-        console.log(this.currentPlanet);
-
         this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
         this.sliceSelectedQuest();
 
@@ -127,9 +118,7 @@ export class QuestComponent implements OnInit {
       if(this.signedIn == true) {
         this.selectedQuest = selectedQuest;
     
-        if(this.selectedQuest.status == "in_progress") {
-          console.log(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
-          
+        if(this.selectedQuest.status == "in_progress") {          
           this.isInProgress = true;
           this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
         }

@@ -15,15 +15,11 @@ export class CommentEffects {
 
     @Effect() 
     GetComments$ = this.actions$.ofType(actions.REQUEST_GET_COMMENTS).pipe(
-        switchMap((action: actions.RequestGetComments) => {   
-            console.log("switchmap");
-                     
+        switchMap((action: actions.RequestGetComments) => {                        
             return this.angularFirestore.collection(action.planetNamePayload + "/explorers/entries/" + action.userIdPayload + "/quests/" + action.questIdPayload + "/comments", ref => ref.orderBy('timestamp')).stateChanges();
         }),
         mergeMap(actions => actions),
-        map(action => { 
-            console.log(action.payload);
-                       
+        map(action => {                        
             if(action.type === "added") {                
                 return new actions.GetCommentSuccess(new Comment(action.payload.doc.data() as CommentData));
             }
