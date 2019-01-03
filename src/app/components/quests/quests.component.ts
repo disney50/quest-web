@@ -6,9 +6,9 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
-import { Quest, QuestData } from 'src/app/models/quest';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Quest } from 'src/app/models/quest';
 import { QuestService } from 'src/app/services/quest/quest.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-quests',
@@ -77,21 +77,20 @@ export class QuestsComponent implements OnInit {
 
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      if(this.signedIn) {                
-        this.planetQuests = planetQuests;  
-      }
+      this.planetQuests = planetQuests;  
+      this.posssibleQuests = this.planetQuests;   
+      this.sliceExplorerQuestsExist();     
     })
   }
 
-  sliceExplorerQuestsExist() {
+  sliceExplorerQuestsExist() { 
     this.store.select(selectors.explorerQuestsExist).subscribe(explorerQuestsExist => {
       if(this.signedIn) {
         if(explorerQuestsExist) {
           this.sliceExplorerQuests();
         }
-        else {
-          this.posssibleQuests = this.planetQuests;
-          this.posssibleQuests.forEach(possibleQuest => {
+        else { 
+          this.posssibleQuests.forEach(possibleQuest => {            
             possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
           });
         }
@@ -114,7 +113,7 @@ export class QuestsComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.slicePlanetQuests();
-    this.sliceExplorerQuestsExist();
+    // this.sliceExplorerQuestsExist();
   }
 
 }

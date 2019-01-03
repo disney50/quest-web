@@ -75,15 +75,6 @@ export class QuestService {
       }
     });
 
-    this.possibleQuests.forEach(possibleQuest => {          
-      if(possibleQuest.prerequisites.length != 0) {
-        possibleQuest.isAvailable = this.checkIfPrerequisiteQuestCompleted(planetName, userId, possibleQuest);
-      }
-      else {
-        possibleQuest.isAvailable = true;
-      }
-    });
-
     return this.possibleQuests;
   }
 }
