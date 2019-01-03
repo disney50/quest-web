@@ -40,16 +40,16 @@ export class QuestComponent implements OnInit {
 
     }
 
-  logOutClicked() {
-    this.store.dispatch(new actions.LogOutUser);
-  }
-
   navigateLogin() {
     this.router.navigateByUrl("login");
   }
 
   navigateDashboard() {
     this.router.navigateByUrl("dashboard");
+  }
+
+  logOutClicked() {
+    this.store.dispatch(new actions.LogOutUser);
   }
 
   sendClicked(newComment: string) {
@@ -84,7 +84,6 @@ export class QuestComponent implements OnInit {
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
       if(!signedIn) {
-        this.signedIn = false;
         this.navigateLogin();
       }
       else {
@@ -95,40 +94,36 @@ export class QuestComponent implements OnInit {
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if(this.signedIn == true) {
+      if(this.signedIn) {
         this.signedInUser = signedInUser;
-        this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
       }  
     })
   }
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(this.signedIn == true) {                
+      if(this.signedIn) {                
         this.currentPlanet = currentPlanet;
-        this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
-        this.sliceSelectedQuest();
-
       }  
     })
   }
 
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
-      if(this.signedIn == true) {
+      if(this.signedIn) {
         this.selectedQuest = selectedQuest;
-    
-        if(this.selectedQuest.status == "in_progress") {          
-          this.isInProgress = true;
+        if(this.selectedQuest.status == "in_progress" || this.selectedQuest.status == "moderating" || this.selectedQuest.status == "completed") {
           this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
-        }
-        else if(this.selectedQuest.status == "moderating") {
-          this.isModerating = true;
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
-        }
-        else if(this.selectedQuest.status == "completed") {
-          this.isCompleted = true;
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
+          this.sliceAllComments();
+          if(this.selectedQuest.status == "in_progress") {
+            this.isInProgress = true;
+          }
+          else if(this.selectedQuest.status == "moderating") {
+            this.isModerating = true;
+          }
+          else if(this.selectedQuest.status == "completed") {
+            this.isCompleted = true;
+          }
         }
         else {
           this.isUndefined = true;
@@ -139,7 +134,7 @@ export class QuestComponent implements OnInit {
 
   sliceAllComments() {
     this.store.select(selectors.allComments).subscribe(allComments => {
-      if(this.signedIn == true) {
+      if(this.signedIn) {
         this.allComments = allComments;        
       }
     })
@@ -149,7 +144,7 @@ export class QuestComponent implements OnInit {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
-    this.sliceAllComments();
+    this.sliceSelectedQuest();
   }
 
 }

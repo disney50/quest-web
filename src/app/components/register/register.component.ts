@@ -32,6 +32,10 @@ export class RegisterComponent implements OnInit {
 
   } 
 
+  navigateDashboard() {    
+    this.router.navigateByUrl("dashboard");
+  }
+
   maleClicked() {
     this.maleStatus = true;
     this.femaleStatus = false;  
@@ -59,7 +63,6 @@ export class RegisterComponent implements OnInit {
     else {
       this.newUser.gender = "FEMALE";
     }
-
     this.registerNewUser();
   }
 
@@ -80,10 +83,6 @@ export class RegisterComponent implements OnInit {
 
   signInUser() {    
     this.store.dispatch(new actions.RequestLoginUserExists({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
-  }
-
-  navigateDashboard() {    
-    this.router.navigateByUrl("dashboard");
   }
 
   sliceAllPlanets() {
