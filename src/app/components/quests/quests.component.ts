@@ -21,7 +21,7 @@ export class QuestsComponent implements OnInit {
   signedIn: boolean = false;
   planetQuests: Quest[];
   explorerQuests: Quest[];
-  availableQuests: Quest[] = [];
+  posssibleQuests: Quest[] = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -42,7 +42,7 @@ export class QuestsComponent implements OnInit {
   }
 
   questClicked(selectedQuest: Quest) {     
-    this.store.dispatch(new actions.GetSelectedQuest(selectedQuest));
+    this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
     this.navigateQuest();        
   }
 
@@ -90,8 +90,8 @@ export class QuestsComponent implements OnInit {
           this.sliceExplorerQuests();
         }
         else {
-          this.availableQuests = this.planetQuests;
-          this.availableQuests.forEach(possibleQuest => {
+          this.posssibleQuests = this.planetQuests;
+          this.posssibleQuests.forEach(possibleQuest => {
             possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
           });
         }
@@ -104,7 +104,7 @@ export class QuestsComponent implements OnInit {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if(this.signedIn) {                
         this.explorerQuests = explorerQuests;
-        this.availableQuests = this.questService.getAvailableQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
+        this.posssibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
       }
     })
   }

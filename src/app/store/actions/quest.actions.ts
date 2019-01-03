@@ -11,10 +11,10 @@ export const REQUEST_GET_PLANET_QUESTS = "[quest] REQUEST_GET_PLANET_QUESTS";
 export const GET_PLANET_QUESTS_SUCCESS = "[quest] GET_PLANET_QUESTS_SUCCESS";
 export const REQUEST_EXPLORER_QUESTS_EXIST = "[quest] REQUEST_INTERACTED_QUEST_EXISTS";
 export const REQUEST_GET_EXPLORER_QUESTS = "[quest] REQUEST_GET_INTERACTED_QUESTS";
-export const GET_INTERACTED_QUESTS_SUCCESS = "[quest] GET_INTERACTED_QUESTS_SUCCESS";
-export const NO_IN_INTERACTED_QUEST = "[quest] NO_IN_INTERACTED_QUEST";
+export const GET_EXPLORER_QUESTS_SUCCESS = "[quest] GET_EXPLORER_QUESTS_SUCCESS";
+export const NO_EXPLORER_QUESTS = "[quest] NO_EXPLORER_QUESTS";
 export const REQUEST_GET_SELECTED_QUEST = "[quest] REQUEST_GET_SELECTED_QUEST";
-export const GET_SELECTED_QUEST = "[quest] GET_SELECTED_QUEST";
+export const GET_SELECTED_QUEST_SUCCESS = "[quest] GET_SELECTED_QUEST_SUCCESS";
 export const CLEAR_QUEST_STATE = "[logout] CLEAR_QUEST_STATE";
 
 export class RequestInProgressQuestExists implements Action {
@@ -68,12 +68,12 @@ export class RequestGetExplorerQuests implements Action {
 }
 
 export class GetExplorerQuestsSuccess implements Action {
-    type = GET_INTERACTED_QUESTS_SUCCESS;
+    type = GET_EXPLORER_QUESTS_SUCCESS;
     constructor(public payload: Quest) {}
 }
 
 export class NoExplorerQuest implements Action {
-    type = NO_IN_INTERACTED_QUEST;
+    type = NO_EXPLORER_QUESTS;
     constructor() {}
 }
 
@@ -82,8 +82,8 @@ export class RequestGetSelectedQuest implements Action {
     constructor(public planetNamePayload: string, public questIdPayload: string) {}
 }
 
-export class GetSelectedQuest implements Action {
-    type = GET_SELECTED_QUEST;
+export class GetSelectedQuestSuccess implements Action {
+    type = GET_SELECTED_QUEST_SUCCESS;
     constructor(public payload: Quest) {}
 }
 
@@ -106,5 +106,5 @@ export type QuestActions =
     | GetExplorerQuestsSuccess
     | NoExplorerQuest
     | RequestGetSelectedQuest
-    | GetSelectedQuest
+    | GetSelectedQuestSuccess
     | ClearQuestState

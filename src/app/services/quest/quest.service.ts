@@ -10,8 +10,8 @@ import { User } from 'src/app/models/user';
 export class QuestService {
   planetQuestsIds: string[] = [];
   explorerQuestsIds: string[] = [];
-  availableQuest: Quest = {} as Quest;
-  availableQuests: Quest[] = []
+  posssibleQuest: Quest = {} as Quest;
+  possibleQuests: Quest[] = []
   prerequisiteQuest: Quest = {} as Quest;
 
   constructor(private angularFirestore: AngularFirestore) { }
@@ -50,7 +50,7 @@ export class QuestService {
     return possibleQuest.isAvailable;
   }
 
-  getAvailableQuests(planetQuests: Quest[], explorerQuests: Quest[], planetName: string, userId: string): Quest[] { 
+  getPossibleQuests(planetQuests: Quest[], explorerQuests: Quest[], planetName: string, userId: string): Quest[] { 
     planetQuests.forEach(planetQuest => {
       if(this.planetQuestsIds.indexOf(planetQuest.questId) === -1) {
         this.planetQuestsIds.push(planetQuest.questId);
@@ -65,17 +65,17 @@ export class QuestService {
 
     this.planetQuestsIds.forEach(planetQuestId => {      
       if(this.explorerQuestsIds.indexOf(planetQuestId) === -1) {
-        this.availableQuest = planetQuests.find(function(planetQuest) { 
+        this.posssibleQuest = planetQuests.find(function(planetQuest) { 
           return planetQuest.questId === planetQuestId; 
         });        
 
-        if(this.availableQuests.indexOf(this.availableQuest) === -1) {
-          this.availableQuests.push(this.availableQuest);          
+        if(this.possibleQuests.indexOf(this.posssibleQuest) === -1) {
+          this.possibleQuests.push(this.posssibleQuest);          
         }
       }
     });
 
-    this.availableQuests.forEach(possibleQuest => {          
+    this.possibleQuests.forEach(possibleQuest => {          
       if(possibleQuest.prerequisites.length != 0) {
         possibleQuest.isAvailable = this.checkIfPrerequisiteQuestCompleted(planetName, userId, possibleQuest);
       }
@@ -84,6 +84,6 @@ export class QuestService {
       }
     });
 
-    return this.availableQuests;
+    return this.possibleQuests;
   }
 }

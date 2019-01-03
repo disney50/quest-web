@@ -29,18 +29,18 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.explorerQuestsExist = false;
             return newState;    
 
-        case actions.GET_INTERACTED_QUESTS_SUCCESS:
+        case actions.GET_EXPLORER_QUESTS_SUCCESS:
             newState.explorerQuestsExist = true;
             const getExplorerQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
             newState.explorerQuests = [...newState.explorerQuests, getExplorerQuestsSuccessAction.payload];
             return newState; 
             
-        case actions.NO_IN_INTERACTED_QUEST:
+        case actions.NO_EXPLORER_QUESTS:
             newState.explorerQuestsExist = false;
             return newState;  
             
-        case actions.GET_SELECTED_QUEST:
-            const getSelectedQuestAction = action as actions.GetSelectedQuest;
+        case actions.GET_SELECTED_QUEST_SUCCESS:
+            const getSelectedQuestAction = action as actions.GetSelectedQuestSuccess;
             newState.selectedQuest = getSelectedQuestAction.payload;
             return newState;    
 

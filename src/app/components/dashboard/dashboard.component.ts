@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
 
   viewClicked() {
-    this.store.dispatch(new actions.GetSelectedQuest(this.currentQuest));
+    this.store.dispatch(new actions.GetSelectedQuestSuccess(this.currentQuest));
     this.navigateQuest();
   }
 
