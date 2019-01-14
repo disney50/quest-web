@@ -98,7 +98,7 @@
             <div class="row">
 
               <div class="col-9">
-                <input #comment class="input border" type="text" placeholder="enter comment...">
+                <input #comment (keyup.enter)="sendClicked(comment.value); comment.value = ''" class="input border" type="text" placeholder="enter comment...">
               </div>
     
               <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''" style="cursor: pointer">

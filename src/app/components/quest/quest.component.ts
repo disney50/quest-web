@@ -52,6 +52,25 @@ export class QuestComponent implements OnInit {
     this.store.dispatch(new actions.LogOutUser);
   }
 
+  checkStatus() {
+    if(this.selectedQuest.status == "in_progress" || this.selectedQuest.status == "moderating" || this.selectedQuest.status == "completed") {
+      this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
+      this.sliceAllComments();
+      if(this.selectedQuest.status == "in_progress") {
+        this.isInProgress = true;
+      }
+      else if(this.selectedQuest.status == "moderating") {
+        this.isModerating = true;
+      }
+      else if(this.selectedQuest.status == "completed") {
+        this.isCompleted = true;
+      }
+    }
+    else {
+      this.isUndefined = true;
+    }
+  }
+
   sendClicked(newComment: string) {
     if (!newComment) {
       this.message = "You forgot to write a comment";
@@ -112,22 +131,7 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
       if(this.signedIn) {
         this.selectedQuest = selectedQuest;
-        if(this.selectedQuest.status == "in_progress" || this.selectedQuest.status == "moderating" || this.selectedQuest.status == "completed") {
-          this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
-          this.sliceAllComments();
-          if(this.selectedQuest.status == "in_progress") {
-            this.isInProgress = true;
-          }
-          else if(this.selectedQuest.status == "moderating") {
-            this.isModerating = true;
-          }
-          else if(this.selectedQuest.status == "completed") {
-            this.isCompleted = true;
-          }
-        }
-        else {
-          this.isUndefined = true;
-        }
+        this.checkStatus();
       } 
     })
   }

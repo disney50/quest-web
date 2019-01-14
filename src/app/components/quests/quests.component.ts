@@ -40,6 +40,19 @@ export class QuestsComponent implements OnInit {
     this.store.dispatch(new actions.LogOutUser);
   }
 
+  checkPossibleQuests() {
+    if(this.explorerQuests.length != 0) {                              
+      this.possibleQuests = [];
+      this.possibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);      
+    }   
+    else {     
+      this.possibleQuests = this.planetQuests;
+      this.possibleQuests.forEach(possibleQuest => {
+        possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
+      });          
+    }         
+  }
+
   questClicked(selectedQuest: Quest) {     
     this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
     this.navigateQuest();        
@@ -83,18 +96,9 @@ export class QuestsComponent implements OnInit {
 
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
-      if(this.signedIn) {                   
-        if(explorerQuests.length != 0) {                              
-          this.explorerQuests = explorerQuests;
-          this.possibleQuests = [];
-          this.possibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);      
-        }   
-        else {     
-          this.possibleQuests = this.planetQuests;
-          this.possibleQuests.forEach(possibleQuest => {
-            possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
-          });          
-        }          
+      if(this.signedIn) { 
+        this.explorerQuests = explorerQuests;
+        this.checkPossibleQuests();
       }
     })
   }
