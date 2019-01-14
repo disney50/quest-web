@@ -68,7 +68,6 @@ export class QuestsComponent implements OnInit {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(this.signedIn) {       
         this.currentPlanet = currentPlanet;  
-        this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));        
       }  
     })
   }
