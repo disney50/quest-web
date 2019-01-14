@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class QuestService {
   planetQuestsIds: string[] = [];
   explorerQuestsIds: string[] = [];
+  possibleQuestsIds: string[] = [];
   posssibleQuest: Quest = {} as Quest;
   possibleQuests: Quest[] = []
   prerequisiteQuest: Quest = {} as Quest;
@@ -53,13 +54,13 @@ export class QuestService {
     return possibleQuest.isAvailable;
   }
 
-  getPossibleQuests(planetQuests: Quest[], explorerQuests: Quest[], planetName: string, userId: string): Quest[] { 
+  getPossibleQuests(planetQuests: Quest[], explorerQuests: Quest[], planetName: string, userId: string): Quest[] {     
     planetQuests.forEach(planetQuest => {
       if(this.planetQuestsIds.indexOf(planetQuest.questId) === -1) {
         this.planetQuestsIds.push(planetQuest.questId);
       }
-    });     
-        
+    });  
+            
     explorerQuests.forEach(explorerQuest => {
       if(this.explorerQuestsIds.indexOf(explorerQuest.questId) === -1) {
         this.explorerQuestsIds.push(explorerQuest.questId);
@@ -67,13 +68,21 @@ export class QuestService {
     });
 
     this.planetQuestsIds.forEach(planetQuestId => {      
-      if(this.explorerQuestsIds.indexOf(planetQuestId) === -1) {
+      if(this.explorerQuestsIds.indexOf(planetQuestId) === -1) {        
         this.posssibleQuest = planetQuests.find(function(planetQuest) { 
           return planetQuest.questId === planetQuestId; 
-        });        
+        }); 
 
-        if(this.possibleQuests.indexOf(this.posssibleQuest) === -1) {
-          this.possibleQuests.push(this.posssibleQuest);          
+        this.possibleQuests.forEach(possibleQuest => {
+          if(this.possibleQuestsIds.indexOf(possibleQuest.questId) === -1) {
+            this.possibleQuestsIds.push(possibleQuest.questId);
+          }
+        });
+
+        if(this.possibleQuestsIds.indexOf(this.posssibleQuest.questId) === -1) {
+          if(this.posssibleQuest != undefined) {
+            this.possibleQuests.push(this.posssibleQuest);          
+          }
         }
       }
     });
