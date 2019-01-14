@@ -9,10 +9,8 @@ export const GET_QUEST_SUCCESS = "[quest] GET_QUEST_SUCCESS";
 export const NO_CURRENT_QUEST = "[quest] NO_CURRENT_QUEST";
 export const REQUEST_GET_PLANET_QUESTS = "[quest] REQUEST_GET_PLANET_QUESTS";
 export const GET_PLANET_QUESTS_SUCCESS = "[quest] GET_PLANET_QUESTS_SUCCESS";
-export const REQUEST_EXPLORER_QUESTS_EXIST = "[quest] REQUEST_EXPLORER_QUESTS_EXIST";
 export const REQUEST_GET_EXPLORER_QUESTS = "[quest] REQUEST_GET_EXPLORER_QUESTS";
 export const GET_EXPLORER_QUESTS_SUCCESS = "[quest] GET_EXPLORER_QUESTS_SUCCESS";
-export const NO_EXPLORER_QUESTS = "[quest] NO_EXPLORER_QUESTS";
 export const REQUEST_GET_SELECTED_QUEST = "[quest] REQUEST_GET_SELECTED_QUEST";
 export const GET_SELECTED_QUEST_SUCCESS = "[quest] GET_SELECTED_QUEST_SUCCESS";
 export const CLEAR_QUEST_STATE = "[logout] CLEAR_QUEST_STATE";
@@ -57,11 +55,6 @@ export class GetPlanetQuestsSuccess implements Action {
     constructor(public payload: Quest) {}
 }
 
-export class RequestExplorerQuestsExist implements Action {
-    type = REQUEST_EXPLORER_QUESTS_EXIST;
-    constructor(public planetNamePayload: string, public userIdPayload: string) {}
-}
-
 export class RequestGetExplorerQuests implements Action {
     type = REQUEST_GET_EXPLORER_QUESTS;
     constructor(public planetNamePayload: string, public userIdPayload: string) {}
@@ -70,11 +63,6 @@ export class RequestGetExplorerQuests implements Action {
 export class GetExplorerQuestsSuccess implements Action {
     type = GET_EXPLORER_QUESTS_SUCCESS;
     constructor(public payload: Quest) {}
-}
-
-export class NoExplorerQuest implements Action {
-    type = NO_EXPLORER_QUESTS;
-    constructor() {}
 }
 
 export class RequestGetSelectedQuest implements Action {
@@ -101,10 +89,8 @@ export type QuestActions =
     | NoCurrentQuest
     | RequestGetPlanetQuests
     | GetPlanetQuestsSuccess
-    | RequestExplorerQuestsExist
     | RequestGetExplorerQuests
     | GetExplorerQuestsSuccess
-    | NoExplorerQuest
     | RequestGetSelectedQuest
     | GetSelectedQuestSuccess
     | ClearQuestState

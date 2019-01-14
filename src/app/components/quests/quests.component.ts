@@ -8,7 +8,6 @@ import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
 import { Quest } from 'src/app/models/quest';
 import { QuestService } from 'src/app/services/quest/quest.service';
-import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-quests',
@@ -19,9 +18,9 @@ export class QuestsComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
   signedIn: boolean = false;
-  planetQuests: Quest[];
-  explorerQuests: Quest[];
-  posssibleQuests: Quest[] = [];
+  planetQuests: Quest[] = [];
+  explorerQuests: Quest[] = [];
+  possibleQuests: Quest[] = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -60,7 +59,7 @@ export class QuestsComponent implements OnInit {
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
       if(this.signedIn) {
-        this.signedInUser = signedInUser;
+        this.signedInUser = signedInUser;        
       }  
     })
   }
@@ -68,42 +67,35 @@ export class QuestsComponent implements OnInit {
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if(this.signedIn) {       
-        this.currentPlanet = currentPlanet;                
-        this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));        
-        this.store.dispatch(new actions.RequestExplorerQuestsExist(this.currentPlanet.name, this.signedInUser.userId));        
+        this.currentPlanet = currentPlanet;  
+        this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));        
       }  
     })
   }
 
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      this.planetQuests = planetQuests;  
-      this.posssibleQuests = this.planetQuests;   
-      this.sliceExplorerQuestsExist();     
-    })
-  }
-
-  sliceExplorerQuestsExist() { 
-    this.store.select(selectors.explorerQuestsExist).subscribe(explorerQuestsExist => {
       if(this.signedIn) {
-        if(explorerQuestsExist) {
-          this.sliceExplorerQuests();
-        }
-        else { 
-          this.posssibleQuests.forEach(possibleQuest => {            
-            possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
-          });
-        }
-      }   
-      
+        this.planetQuests = planetQuests; 
+        this.possibleQuests = this.planetQuests;
+      }
     })
   }
 
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
-      if(this.signedIn) {                
-        this.explorerQuests = explorerQuests;
-        this.posssibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
+      if(this.signedIn) {                   
+        if(explorerQuests.length != 0) {                              
+          this.explorerQuests = explorerQuests;
+          this.possibleQuests = [];
+          this.possibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);      
+        }   
+        else {     
+          this.possibleQuests = this.planetQuests;
+          this.possibleQuests.forEach(possibleQuest => {
+            possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
+          });          
+        }          
       }
     })
   }
@@ -113,7 +105,7 @@ export class QuestsComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.slicePlanetQuests();
-    // this.sliceExplorerQuestsExist();
+    this.sliceExplorerQuests();
   }
 
 }

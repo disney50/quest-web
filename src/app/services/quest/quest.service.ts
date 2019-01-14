@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Quest, QuestData } from 'src/app/models/quest';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Planet } from 'src/app/models/planet';
-import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +28,14 @@ export class QuestService {
 
   checkIfPrerequisiteQuestCompleted(planetName: string, userId: string, possibleQuest: Quest): boolean {  
     this.prerequisiteQuest = {} as Quest; 
-
-    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/")
+    
+    if(possibleQuest.prerequisites.length != 0) {
+      this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/")
       .doc(possibleQuest.prerequisites[0]).ref.onSnapshot(snapShot => {
-        if(snapShot.exists) {
-          this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);
+
+        if(snapShot.exists) {          
+          this.prerequisiteQuest = new Quest(snapShot.id, snapShot.data() as QuestData);          
+
           if(this.prerequisiteQuest.status == "completed") {
             possibleQuest.isAvailable = true;            
           }
@@ -42,10 +43,12 @@ export class QuestService {
             possibleQuest.isAvailable = false;
           }   
         }
-        else {
-          possibleQuest.isAvailable = true;
-        }
-    });
+
+      });
+    }
+    else {
+      possibleQuest.isAvailable = true;
+    }
 
     return possibleQuest.isAvailable;
   }
@@ -73,6 +76,10 @@ export class QuestService {
           this.possibleQuests.push(this.posssibleQuest);          
         }
       }
+    });
+
+    this.possibleQuests.forEach(possibleQuest => {
+      possibleQuest.isAvailable = this.checkIfPrerequisiteQuestCompleted(planetName, userId, possibleQuest)
     });
 
     return this.possibleQuests;

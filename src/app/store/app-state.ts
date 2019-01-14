@@ -24,7 +24,6 @@ export interface AppState {
     questState: {
         planetQuests: Quest[];
         explorerQuests: Quest[];
-        explorerQuestsExist: boolean;
         currentQuest: Quest;
         currentQuestExists: boolean;
         selectedQuest: Quest;

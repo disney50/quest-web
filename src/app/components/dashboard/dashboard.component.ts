@@ -72,6 +72,7 @@ export class DashboardComponent implements OnInit {
       if(this.signedIn) {
         this.currentPlanet = currentPlanet;
         this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
+        this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));  
       }  
     })
   }

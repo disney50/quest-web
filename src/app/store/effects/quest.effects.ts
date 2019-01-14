@@ -85,21 +85,6 @@ export class QuestEffects {
         )
 
         @Effect()
-        CheckExplorerQuestsExist$ = this.actions$.ofType(actions.REQUEST_EXPLORER_QUESTS_EXIST).pipe(
-            switchMap((action: actions.RequestExplorerQuestsExist) => {
-                this.planetName = action.planetNamePayload;
-                this.userId = action.userIdPayload;
-                return this.angularFirestore.collection(this.planetName + "/explorers/entries/" + this.userId + "/quests").get();
-            }),
-            map(snapShot => {
-                if(snapShot.size === 0) {
-                    return new actions.NoExplorerQuest();
-                }
-                return new actions.RequestGetExplorerQuests(this.planetName, this.userId);
-            })
-        );
-
-        @Effect()
         GetExplorerQuests$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER_QUESTS).pipe(
             switchMap((action: actions.RequestGetExplorerQuests) => {              
                 
