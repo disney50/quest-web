@@ -2,9 +2,9 @@ import * as actions from '../actions';
 import { Explorer } from 'src/app/models/explorer';
 
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
-    const newState = {...state};
+    const newState = { ...state };
 
-    switch(action.type) {
+    switch (action.type) {
         case actions.REQUEST_GET_EXPLORER:
             newState.currentExplorer = {} as Explorer;
             return newState;
@@ -17,12 +17,12 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
         case actions.CLEAR_EXPLORER_STATE:
             newState.currentExplorer = {} as Explorer;
             return newState;
-                
+
         default:
-            return state;       
+            return state;
     }
 }
 
 export const initialExplorerState = {
     currentExplorer: {} as Explorer
-}
+};

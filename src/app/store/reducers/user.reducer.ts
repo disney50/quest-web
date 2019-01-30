@@ -3,7 +3,7 @@ import { User } from 'src/app/models/user';
 
 export function userReducer(state = initialUserState, action: actions.UserActions) {
 
-    const newState = {...state};
+    const newState = { ...state };
 
     switch (action.type) {
         case actions.REQUEST_LOGIN_USER_EXISTS:
@@ -19,7 +19,7 @@ export function userReducer(state = initialUserState, action: actions.UserAction
         case actions.LOGIN_FAILED:
             newState.signedInUser = {} as User;
             newState.loginFailed = true;
-            return newState;    
+            return newState;
 
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
