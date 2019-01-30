@@ -71,7 +71,6 @@ export class DashboardComponent implements OnInit {
         this.signedInUser = signedInUser;
         this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
           if (!fetchedCurrentPlanet) {
-            console.log('if');
             this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
           }
         });

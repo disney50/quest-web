@@ -9,6 +9,8 @@ import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { LoginDetails } from 'src/app/models/login-details';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +30,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private planetService: PlanetService,
     private explorerService: ExplorerService,
-    private store: Store<AppState>) {
+    private store: Store<AppState>,
+    private angularFirestore: AngularFirestore) {
 
   }
 
@@ -50,8 +53,14 @@ export class RegisterComponent implements OnInit {
     if (!this.newUser.email || !this.newUser.name || !this.newUser.password || !this.newUser.surname) {
       this.message = 'You forgot to fill in some fields';
     } else {
-      this.selectedPlanet = selectedPlanet;
-      this.getNewUserGender();
+      this.angularFirestore.collection('users', ref => ref.where('email', '==', this.newUser.email)).get().subscribe(snapShot => {
+        if (snapShot.docs.length === 0) {
+          this.selectedPlanet = selectedPlanet;
+          this.getNewUserGender();
+        } else {
+          this.message = 'There is already user with this email';
+        }
+      });
     }
   }
 
