@@ -46,10 +46,10 @@
           <div class="col-sm-6 col-lg-3" *ngFor="let planet of allPlanets">
             <div class="card-transparent border mb-3">
 
-              <div class="card-body">
+              <div class="card-body text-center">
                 <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
-                <h4 class="text-center">{{planet.name}}</h4>
-                <p class="text-center">{{planet.description}}</p>
+                <h4>{{planet.name}}</h4>
+                <span>{{planet.description}}</span>
               </div>
 
               <button class="btn-mosque" (click)="registerClicked(planet)">
