@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="row justify-content-center align-items-center pb-3">
-      <img class="img-medium" src="../../../assets/ic_logo.png"/>
+      <img class="img-medium" src="../../../assets/ic_logo.png" />
     </div>
 
     <div class="row justify-content-center align-items-center">
@@ -10,41 +10,35 @@
 
         <div class="row justify-content-center align-items-center">
           <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.email" class="input mb-3" 
-              type="email" placeholder="enter email...">
+            <input [(ngModel)]="newUser.email" class="input mb-3" type="email" placeholder="enter email...">
           </div>
-        
+
           <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.password" class="input mb-3" 
-              type="password" placeholder="enter password...">
-          </div>                 
+            <input [(ngModel)]="newUser.password" class="input mb-3" type="password" placeholder="enter password...">
+          </div>
         </div>
-                  
+
         <div class="row justify-content-center align-items-center">
           <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.name" class="input mb-3" 
-              type="text" placeholder="enter name...">
+            <input [(ngModel)]="newUser.name" class="input mb-3" type="text" placeholder="enter name...">
           </div>
-        
+
           <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.surname" class="input mb-3" 
-              type="text" placeholder="enter surname...">
+            <input [(ngModel)]="newUser.surname" class="input mb-3" type="text" placeholder="enter surname...">
           </div>
         </div>
-        
+
         <div class="row justify-content-center align-items-center">
           <div class="col-12">
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()" 
-              [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
-        
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()" 
-              [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
+            <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()" [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
+
+            <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()" [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
           </div>
         </div>
 
       </div>
     </div>
-     
+
     <div class="row justify-content-center align-items-center">
       <div class="col-12">
 
@@ -53,7 +47,7 @@
             <div class="card-transparent border mb-3">
 
               <div class="card-body">
-                <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png"/>
+                <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
                 <h4 class="text-center">{{planet.name}}</h4>
                 <p class="text-center">{{planet.description}}</p>
               </div>
@@ -61,11 +55,11 @@
               <button class="btn-mosque" (click)="registerClicked(planet)">
                 REGISTER
               </button>
-               
-            </div> 
+
+            </div>
           </div>
         </div>
-      
+
       </div>
     </div>
 
@@ -76,7 +70,7 @@
           <div class="row">
             <div class="col-12">
               <button class="btn-close float-right">
-                 <span><b>X</b></span>
+                <span><b>X</b></span>
               </button>
             </div>
           </div>
@@ -86,7 +80,7 @@
               <span><b>{{message}}</b></span>
             </div>
           </div>
-              
+
         </div>
       </div>
     </div>
