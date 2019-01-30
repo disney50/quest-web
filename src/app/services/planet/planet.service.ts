@@ -6,7 +6,7 @@ import { Planet } from 'src/app/models/planet';
   providedIn: 'root'
 })
 export class PlanetService {
-  selectedPlanet: Planet =  {} as Planet;
+  selectedPlanet: Planet = {} as Planet;
 
   constructor(private angularFirestore: AngularFirestore) {
 
