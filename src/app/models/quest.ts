@@ -1,5 +1,5 @@
-import { Level2 } from "./level2";
-import { Level1 } from "./level1";
+import { Level2 } from './level2';
+import { Level1 } from './level1';
 
 export class Quest {
   title: string;
@@ -11,7 +11,7 @@ export class Quest {
   level2: Level2 = {} as Level2;
   status: string;
   questId: string;
-  isAvailable: boolean = false;
+  isAvailable = false;
 
   constructor(questId: string, data: QuestData) {
     this.questId = questId;

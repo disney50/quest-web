@@ -12,7 +12,7 @@ export class Comment {
     }
 
     toData(): CommentData {
-        return { 
+        return {
             comment: this.comment,
             isModerator: this.isModerator,
             timestamp: this.timestamp
