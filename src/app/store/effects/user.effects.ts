@@ -28,13 +28,11 @@ export class UserEffects {
                 return new actions.LoginFailed();
             } else {
                 if (snapShot.docs[0].data().password === undefined) {
-                    console.log('if');
                     this.user = new User(snapShot.docs[0].data().userId, snapShot.docs[0].data() as UserData);
                     this.user.password = this.password;
                     this.angularFirestore.collection('users').doc(this.user.userId).update(this.user.toData());
                     return new actions.RequestGetUserByLoginDetails();
                 } else {
-                    console.log('else');
                     return new actions.RequestGetUserByLoginDetails();
                 }
             }
