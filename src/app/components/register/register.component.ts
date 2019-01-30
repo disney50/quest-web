@@ -53,15 +53,19 @@ export class RegisterComponent implements OnInit {
     if (!this.newUser.email || !this.newUser.name || !this.newUser.password || !this.newUser.surname) {
       this.message = 'You forgot to fill in some fields';
     } else {
-      this.angularFirestore.collection('users', ref => ref.where('email', '==', this.newUser.email)).get().subscribe(snapShot => {
-        if (snapShot.docs.length === 0) {
-          this.selectedPlanet = selectedPlanet;
-          this.getNewUserGender();
-        } else {
-          this.message = 'There is already user with this email';
-        }
-      });
+      this.selectedPlanet = selectedPlanet;
+      this.checkUserExists();
     }
+  }
+
+  checkUserExists() {
+    this.userService.checksUserExists(this.newUser.email).subscribe(user => {
+      if (user) {
+        this.message = 'There is already user with this email';
+      } else {
+        this.getNewUserGender();
+      }
+    });
   }
 
   getNewUserGender() {
