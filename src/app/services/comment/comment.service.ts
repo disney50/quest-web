@@ -21,6 +21,6 @@ export class CommentService {
   }
 
   sendComment(planetName: string, userId: string, questId: string) {
-    this.angularFirestore.collection(planetName + "/explorers/entries/" + userId + "/quests/" + questId + "/comments").add(this.newComment);
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/comments').add(this.newComment);
   }
 }
