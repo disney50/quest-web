@@ -12,13 +12,13 @@ export class PlanetService {
 
   }
 
-  createPlanet(userId: string, selectedPlanet: Planet) {    
+  createPlanet(userId: string, selectedPlanet: Planet) {
     this.selectedPlanet.name = selectedPlanet.name;
     this.selectedPlanet.description = selectedPlanet.description;
     this.addPlanetToUser(userId);
   }
 
   addPlanetToUser(userId: string) {
-    this.angularFirestore.collection("users/" + userId + "/planets").doc(this.selectedPlanet.name).set(this.selectedPlanet);
+    this.angularFirestore.collection('users/' + userId + '/planets').doc(this.selectedPlanet.name).set(this.selectedPlanet);
   }
 }

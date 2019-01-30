@@ -11,8 +11,8 @@ export class UserService {
 
   }
 
-  registerNewUser(newUser: User) {  
+  registerNewUser(newUser: User) {
     newUser.userId = this.angularFirestore.createId();
-    this.angularFirestore.collection("users").doc(newUser.userId).set(newUser);
+    this.angularFirestore.collection('users').doc(newUser.userId).set(newUser);
   }
 }
