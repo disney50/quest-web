@@ -17,23 +17,23 @@ import { QuestService } from 'src/app/services/quest/quest.service';
 export class QuestsComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
-  signedIn: boolean = false;
+  signedIn = false;
   planetQuests: Quest[] = [];
   explorerQuests: Quest[] = [];
   possibleQuests: Quest[] = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
-    private questService: QuestService) { 
+    private questService: QuestService) {
 
   }
 
   navigateLogin() {
-    this.router.navigateByUrl("login");
+    this.router.navigateByUrl('login');
   }
 
   navigateQuest() {
-    this.router.navigateByUrl("quest");
+    this.router.navigateByUrl('quest');
   }
 
   logOutClicked() {
@@ -41,29 +41,29 @@ export class QuestsComponent implements OnInit {
   }
 
   checkPossibleQuests() {
-    if(this.explorerQuests.length != 0) {                              
+    if (this.explorerQuests.length !== 0) {
       this.possibleQuests = [];
-      this.possibleQuests = this.questService.getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);      
-    }   
-    else {     
+      this.possibleQuests = this.questService
+       .getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
+    } else {
       this.possibleQuests = this.planetQuests;
       this.possibleQuests.forEach(possibleQuest => {
-        possibleQuest.isAvailable = this.questService.checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
-      });          
-    }         
+        possibleQuest.isAvailable = this.questService
+          .checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
+      });
+    }
   }
 
-  questClicked(selectedQuest: Quest) {     
+  questClicked(selectedQuest: Quest) {
     this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
-    this.navigateQuest();        
+    this.navigateQuest();
   }
 
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if(!signedIn) {
+      if (!signedIn) {
         this.navigateLogin();
-      }
-      else {
+      } else {
         this.signedIn = true;
       }
     });
@@ -71,36 +71,36 @@ export class QuestsComponent implements OnInit {
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if(this.signedIn) {
-        this.signedInUser = signedInUser;        
-      }  
-    })
+      if (this.signedIn) {
+        this.signedInUser = signedInUser;
+      }
+    });
   }
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(this.signedIn) {       
-        this.currentPlanet = currentPlanet;  
-      }  
-    })
+      if (this.signedIn) {
+        this.currentPlanet = currentPlanet;
+      }
+    });
   }
 
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      if(this.signedIn) {
-        this.planetQuests = planetQuests; 
+      if (this.signedIn) {
+        this.planetQuests = planetQuests;
         this.possibleQuests = this.planetQuests;
       }
-    })
+    });
   }
 
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
-      if(this.signedIn) { 
+      if (this.signedIn) {
         this.explorerQuests = explorerQuests;
         this.checkPossibleQuests();
       }
-    })
+    });
   }
 
   ngOnInit() {

@@ -1,9 +1,9 @@
 <div class="center bg">
   <div class="container-fluid">
-    
+
     <nav class="row navbar fixed-top navbar-expand navbar-dark mx-auto">
       <a class="navbar-brand nav-brand ml-2" routerLink="currentquests">
-        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
+        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
       </a>
 
       <a class="navbar-text text-large">
@@ -13,9 +13,9 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
-            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png"/>
+            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
             {{signedInUser.name}}
-            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png"/>
+            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
           </a>
 
           <div class="dropdown-menu dropdown-menu-right">
@@ -35,7 +35,7 @@
 
               <div class="col-4 my-auto mx-auto">
                 <div class="row justify-content-center align-items-center">
-                  <img class="img-medium" src="../../../assets/{{currentPlanet.name}}.png"/>
+                  <img class="img-medium" src="../../../assets/{{currentPlanet.name}}.png" />
                 </div>
               </div>
 
@@ -51,7 +51,7 @@
 
               <div class="col-4 my-auto mx-auto">
                 <div class="row justify-content-center align-items-center">
-                  <img class="img-small" src="../../../assets/{{currentQuest.status}}.png"/>
+                  <img class="img-small" src="../../../assets/{{currentQuest.status}}.png" />
                 </div>
 
                 <div class="row justify-content-center align-items-center text-center mt-2">
@@ -61,12 +61,12 @@
 
             </div>
           </div>
-     
+
           <button class="btn-gothic" (click)="viewClicked()">
             VIEW
-          </button> 
-                
-        </div> 
+          </button>
+
+        </div>
 
         <div *ngIf="!currentQuestExists" class="card-cutty-sark border-gothic">
 
@@ -84,9 +84,9 @@
 
           <button class="btn-gothic" (click)="navigateQuests()">
             EXPLORE
-          </button> 
+          </button>
 
-        </div> 
+        </div>
 
       </div>
     </div>

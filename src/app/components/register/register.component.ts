@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { PlanetService } from 'src/app/services/planet/planet.service';
-import { ExplorerService } from 'src/app/services/explorer/explorer.service';import { Router } from '@angular/router';
+import { ExplorerService } from 'src/app/services/explorer/explorer.service'; import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
@@ -17,8 +17,8 @@ import { LoginDetails } from 'src/app/models/login-details';
 })
 
 export class RegisterComponent implements OnInit {
-  maleStatus: boolean = true;
-  femaleStatus: boolean = false;
+  maleStatus = true;
+  femaleStatus = false;
   newUser: User = {} as User;
   allPlanets: Planet[];
   selectedPlanet: Planet = {} as Planet;
@@ -30,15 +30,15 @@ export class RegisterComponent implements OnInit {
     private explorerService: ExplorerService,
     private store: Store<AppState>) {
 
-  } 
+  }
 
-  navigateDashboard() {    
-    this.router.navigateByUrl("dashboard");
+  navigateDashboard() {
+    this.router.navigateByUrl('dashboard');
   }
 
   maleClicked() {
     this.maleStatus = true;
-    this.femaleStatus = false;  
+    this.femaleStatus = false;
   }
 
   femaleClicked() {
@@ -46,56 +46,54 @@ export class RegisterComponent implements OnInit {
     this.femaleStatus = true;
   }
 
-  registerClicked(selectedPlanet: Planet) {    
+  registerClicked(selectedPlanet: Planet) {
     if (!this.newUser.email || !this.newUser.name || !this.newUser.password || !this.newUser.surname) {
-      this.message  = "You forgot to fill in some fields"
-    }
-    else {
+      this.message = 'You forgot to fill in some fields';
+    } else {
       this.selectedPlanet = selectedPlanet;
       this.getNewUserGender();
     }
   }
 
-  getNewUserGender() {    
-    if(this.maleStatus == true) {
-      this.newUser.gender = "MALE";
-    }
-    else {
-      this.newUser.gender = "FEMALE";
+  getNewUserGender() {
+    if (this.maleStatus === true) {
+      this.newUser.gender = 'MALE';
+    } else {
+      this.newUser.gender = 'FEMALE';
     }
     this.registerNewUser();
   }
 
-  registerNewUser() {    
+  registerNewUser() {
     this.userService.registerNewUser(this.newUser);
     this.addSelectedPlanetToUser();
   }
 
-  addSelectedPlanetToUser() {    
+  addSelectedPlanetToUser() {
     this.planetService.createPlanet(this.newUser.userId, this.selectedPlanet);
     this.createNewExplorer();
   }
 
-  createNewExplorer() {        
+  createNewExplorer() {
     this.explorerService.createExplorer(this.selectedPlanet.name, this.newUser);
     this.signInUser();
   }
 
-  signInUser() {    
-    this.store.dispatch(new actions.RequestLoginUserExists({email: this.newUser.email, password: this.newUser.password} as LoginDetails));
+  signInUser() {
+    this.store.dispatch(new actions.RequestLoginUserExists({ email: this.newUser.email, password: this.newUser.password } as LoginDetails));
   }
 
   sliceAllPlanets() {
     this.store.select(selectors.allPlanets).subscribe(allPlanets => {
-      if(allPlanets) {
+      if (allPlanets) {
         this.allPlanets = allPlanets;
       }
-    })
+    });
   }
 
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if(signedIn) {
+      if (signedIn) {
         this.navigateDashboard();
       }
     });

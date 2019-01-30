@@ -25,27 +25,27 @@ export class QuestComponent implements OnInit {
   allComments: Comment[];
   newComment: Comment = {} as Comment;
   message: string = null;
-  signedIn: boolean = false;
+  signedIn = false;
   selectedFile: File;
   isUndefined: boolean;
   isInProgress: boolean;
   isModerating: boolean;
   isCompleted: boolean;
 
-  constructor(private store: Store<AppState>, 
-    private router: Router, 
+  constructor(private store: Store<AppState>,
+    private router: Router,
     private commentService: CommentService,
     private uploadService: UploadService,
-    private questService: QuestService) { 
+    private questService: QuestService) {
 
-    }
+  }
 
   navigateLogin() {
-    this.router.navigateByUrl("login");
+    this.router.navigateByUrl('login');
   }
 
   navigateDashboard() {
-    this.router.navigateByUrl("dashboard");
+    this.router.navigateByUrl('dashboard');
   }
 
   logOutClicked() {
@@ -53,29 +53,27 @@ export class QuestComponent implements OnInit {
   }
 
   checkStatus() {
-    if(this.selectedQuest.status == "in_progress" || this.selectedQuest.status == "moderating" || this.selectedQuest.status == "completed") {
+    if (this.selectedQuest.status === 'in_progress'
+      || this.selectedQuest.status === 'moderating'
+      || this.selectedQuest.status === 'completed') {
       this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
       this.sliceAllComments();
-      if(this.selectedQuest.status == "in_progress") {
+      if (this.selectedQuest.status === 'in_progress') {
         this.isInProgress = true;
-      }
-      else if(this.selectedQuest.status == "moderating") {
+      } else if (this.selectedQuest.status === 'moderating') {
         this.isModerating = true;
-      }
-      else if(this.selectedQuest.status == "completed") {
+      } else if (this.selectedQuest.status === 'completed') {
         this.isCompleted = true;
       }
-    }
-    else {
+    } else {
       this.isUndefined = true;
     }
   }
 
   sendClicked(newComment: string) {
     if (!newComment) {
-      this.message = "You forgot to write a comment";
-    }
-    else {      
+      this.message = 'You forgot to write a comment';
+    } else {
       this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId, newComment);
     }
   }
@@ -85,11 +83,11 @@ export class QuestComponent implements OnInit {
   }
 
   submitClicked() {
-    if(!this.selectedFile) {
-      this.message = "You forgot to upload a file"
-    }
-    else {      
-      this.uploadService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);      
+    if (!this.selectedFile) {
+      this.message = 'You forgot to upload a file';
+    } else {
+      this.uploadService
+        .uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
       this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
       this.navigateDashboard();
     }
@@ -102,10 +100,9 @@ export class QuestComponent implements OnInit {
 
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if(!signedIn) {
+      if (!signedIn) {
         this.navigateLogin();
-      }
-      else {
+      } else {
         this.signedIn = true;
       }
     });
@@ -113,35 +110,35 @@ export class QuestComponent implements OnInit {
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if(this.signedIn) {
+      if (this.signedIn) {
         this.signedInUser = signedInUser;
-      }  
-    })
+      }
+    });
   }
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(this.signedIn) {                
+      if (this.signedIn) {
         this.currentPlanet = currentPlanet;
-      }  
-    })
+      }
+    });
   }
 
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
-      if(this.signedIn) {
+      if (this.signedIn) {
         this.selectedQuest = selectedQuest;
         this.checkStatus();
-      } 
-    })
+      }
+    });
   }
 
   sliceAllComments() {
     this.store.select(selectors.allComments).subscribe(allComments => {
-      if(this.signedIn) {
-        this.allComments = allComments;        
+      if (this.signedIn) {
+        this.allComments = allComments;
       }
-    })
+    });
   }
 
   ngOnInit() {

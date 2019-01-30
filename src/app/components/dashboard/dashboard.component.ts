@@ -17,25 +17,25 @@ export class DashboardComponent implements OnInit {
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
   currentQuest: Quest = {} as Quest;
-  currentQuestExists: boolean = false;
+  currentQuestExists = false;
   status: string;
-  signedIn: boolean = false;
+  signedIn = false;
 
   constructor(private store: Store<AppState>,
     private router: Router) {
-    
+
   }
 
   navigateQuest() {
-    this.router.navigateByUrl("quest");
+    this.router.navigateByUrl('quest');
   }
 
   navigateQuests() {
-    this.router.navigateByUrl("quests");
+    this.router.navigateByUrl('quests');
   }
 
   navigateLogin() {
-    this.router.navigateByUrl("login");
+    this.router.navigateByUrl('login');
   }
 
   logOutClicked() {
@@ -43,11 +43,10 @@ export class DashboardComponent implements OnInit {
   }
 
   checkStatus() {
-    if(this.currentQuest.status == "in_progress") {
-      this.status = "IN PROGRESS";
-    }
-    else if(this.currentQuest.status == "moderating") {
-      this.status = "MODERATING";
+    if (this.currentQuest.status === 'in_progress') {
+      this.status = 'IN PROGRESS';
+    } else if (this.currentQuest.status === 'moderating') {
+      this.status = 'MODERATING';
     }
   }
 
@@ -58,10 +57,9 @@ export class DashboardComponent implements OnInit {
 
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if(!signedIn) {
+      if (!signedIn) {
         this.navigateLogin();
-      }
-      else {
+      } else {
         this.signedIn = true;
       }
     });
@@ -69,45 +67,63 @@ export class DashboardComponent implements OnInit {
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if(this.signedIn) {
+      if (this.signedIn) {
         this.signedInUser = signedInUser;
-        this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
-      }  
-    })
+        this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
+          if (!fetchedCurrentPlanet) {
+            console.log('if');
+            this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
+          }
+        });
+      }
+    });
   }
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if(this.signedIn) {
+      if (this.signedIn) {
         this.currentPlanet = currentPlanet;
-        this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
-        this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));  
-        this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));        
 
-      }  
-    })
+        this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
+          if (!fetchedCurrentQuest) {
+            this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
+          }
+        });
+
+        this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
+          if (!fetchedPlanetQuests) {
+            this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
+          }
+        });
+
+        this.store.select(selectors.fetchedExplorerQuests).subscribe(fetchedExplorerQuests => {
+          if (!fetchedExplorerQuests) {
+            this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));
+          }
+        });
+      }
+    });
   }
 
   sliceCurrentQuestExists() {
     this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
-      if(this.signedIn) {
-        if(currentQuestExists) {
+      if (this.signedIn) {
+        if (currentQuestExists) {
           this.currentQuestExists = true;
-        }
-        else if(!currentQuestExists) {
+        } else if (!currentQuestExists) {
           this.currentQuestExists = false;
         }
-      } 
-    })
+      }
+    });
   }
 
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
-      if(this.signedIn && this.currentQuestExists) {
+      if (this.signedIn && this.currentQuestExists) {
         this.currentQuest = currentQuest;
         this.checkStatus();
-      } 
-    })
+      }
+    });
   }
 
   ngOnInit() {

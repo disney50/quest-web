@@ -5,38 +5,38 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
 import { Planet, PlanetData } from 'src/app/models/planet';
 
-@Injectable() 
+@Injectable()
 export class PlanetEffects {
-    
-    constructor(private actions$: Actions,
-        private angularFirestore: AngularFirestore) {}
 
-    @Effect() 
+    constructor(private actions$: Actions,
+        private angularFirestore: AngularFirestore) { }
+
+    @Effect()
     GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_PLANETS).pipe(
         switchMap((action: actions.RequestGetPlanets) => {
-            return this.angularFirestore.collection("planets").stateChanges()
+            return this.angularFirestore.collection('planets').stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
-            if(action.type === "added") {
+            if (action.type === 'added') {
                 return new actions.GetPlanetsSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
             }
-            return new actions.UnimplementedAction("");
+            return new actions.UnimplementedAction('');
         })
     );
 
     @Effect()
     GetDefaultPlanet$ = this.actions$.ofType(actions.REQUEST_GET_DEFAULT_PLANET).pipe(
-        switchMap((action: actions.RequestGetDefaultPlanet) => {                                    
-            return this.angularFirestore.collection("users/" + action.payload + "/planets", ref => ref.limit(1)).stateChanges();
+        switchMap((action: actions.RequestGetDefaultPlanet) => {
+            return this.angularFirestore.collection('users/' + action.payload + '/planets', ref => ref.limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
-            if(action.type === "added") {
+            if (action.type === 'added') {
                 return new actions.GetPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
             }
-            return new actions.UnimplementedAction("");
+            return new actions.UnimplementedAction('');
         })
     );
-    
+
 }

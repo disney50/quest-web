@@ -15,6 +15,7 @@ export interface AppState {
     planetState: {
         allPlanets: Planet[];
         currentPlanet: Planet;
+        fetchedCurrentPlanet: boolean;
     };
 
     explorerState: {
@@ -23,8 +24,11 @@ export interface AppState {
 
     questState: {
         planetQuests: Quest[];
+        fetchedPlanetQuests: boolean;
         explorerQuests: Quest[];
+        fetchedExplorerQuests: boolean;
         currentQuest: Quest;
+        fetchedCurrentQuest: boolean;
         currentQuestExists: boolean;
         selectedQuest: Quest;
     };

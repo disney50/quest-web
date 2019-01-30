@@ -15,37 +15,37 @@ export class LoginComponent implements OnInit {
   message: string = null;
 
   constructor(private router: Router,
-    private store: Store<AppState>) { 
+    private store: Store<AppState>) {
 
   }
 
   navigateRegister() {
-    this.router.navigateByUrl("register");
+    this.router.navigateByUrl('register');
   }
-  
+
   navigateDashboard() {
-    this.router.navigateByUrl("dashboard");
+    this.router.navigateByUrl('dashboard');
   }
 
   signInClicked(email: string, password: string) {
     if (!email || !password) {
-      this.message = "You forgot to fill in some fields";
-    }
-    else {
-      this.store.dispatch(new actions.RequestLoginUserExists({email: email, password: password} as LoginDetails));
+      this.message = 'You forgot to fill in some fields';
+    } else {
+      this.store.dispatch(new actions.RequestLoginUserExists({ email: email, password: password } as LoginDetails));
     }
   }
 
   sliceHasLoginFailed() {
     this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
-      if(hasFailed)
-        this.message = "Incorrect email or password";
+      if (hasFailed) {
+        this.message = 'Incorrect email or password';
+      }
     });
   }
 
   sliceHasLoginSucceeded() {
     this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if(signedIn) {
+      if (signedIn) {
         this.navigateDashboard();
       }
     });
@@ -54,6 +54,6 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.sliceHasLoginFailed();
     this.sliceHasLoginSucceeded();
-   }
+  }
 
 }

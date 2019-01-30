@@ -2,56 +2,70 @@ import * as actions from '../actions';
 import { Quest } from 'src/app/models/quest';
 
 export function questReducer(state = initialQuestState, action: actions.QuestActions) {
-    const newState = {...state};
+    const newState = { ...state };
 
-    switch(action.type) {
+    switch (action.type) {
         case actions.GET_QUEST_SUCCESS:
-            const getQuestSuccessAction = action as actions.GetQuestSuccess;            
+            const getQuestSuccessAction = action as actions.GetQuestSuccess;
             newState.currentQuest = getQuestSuccessAction.payload;
             newState.currentQuestExists = true;
+            newState.fetchedCurrentQuest = true;
             return newState;
 
         case actions.NO_CURRENT_QUEST:
-            newState.currentQuestExists = false;   
+            newState.currentQuestExists = false;
             return newState;
 
         case actions.REQUEST_GET_PLANET_QUESTS:
             newState.planetQuests = [];
-            return newState;    
+            newState.fetchedPlanetQuests = false;
+            return newState;
 
         case actions.GET_PLANET_QUESTS_SUCCESS:
             const getPlanetQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
             newState.planetQuests = [...newState.planetQuests, getPlanetQuestsSuccessAction.payload];
+            newState.fetchedPlanetQuests = true;
             return newState;
 
         case actions.REQUEST_GET_EXPLORER_QUESTS:
             newState.explorerQuests = [];
-            return newState;    
+            newState.fetchedExplorerQuests = false;
+            return newState;
 
         case actions.GET_EXPLORER_QUESTS_SUCCESS:
             const getExplorerQuestsSuccessAction = action as actions.GetPlanetQuestsSuccess;
             newState.explorerQuests = [...newState.explorerQuests, getExplorerQuestsSuccessAction.payload];
-            return newState; 
-            
+            newState.fetchedExplorerQuests = true;
+            return newState;
+
         case actions.GET_SELECTED_QUEST_SUCCESS:
             const getSelectedQuestAction = action as actions.GetSelectedQuestSuccess;
             newState.selectedQuest = getSelectedQuestAction.payload;
-            return newState;    
+            return newState;
 
-        case actions.CLEAR_QUEST_STATE:                        
-            newState.currentQuest = {} as Quest;            
-            newState.currentQuestExists = false;  
-            return newState;  
+        case actions.CLEAR_QUEST_STATE:
+            newState.planetQuests = [];
+            newState.fetchedPlanetQuests = false;
+            newState.explorerQuests = [];
+            newState.fetchedExplorerQuests = false;
+            newState.currentQuest = {} as Quest;
+            newState.fetchedCurrentQuest = false;
+            newState.currentQuestExists = false;
+            newState.selectedQuest = {} as Quest;
+            return newState;
 
         default:
-            return state;    
+            return state;
     }
 }
 
 export const initialQuestState = {
     planetQuests: [],
+    fetchedPlanetQuests: false,
     explorerQuests: [],
+    fetchedExplorerQuests: false,
     currentQuest: {} as Quest,
+    fetchedCurrentQuest: false,
     currentQuestExists: false,
     selectedQuest: {} as Quest
-}
+};
