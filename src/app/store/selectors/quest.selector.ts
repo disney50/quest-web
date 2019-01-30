@@ -10,7 +10,7 @@ export const explorerQuests = (state: AppState) => questBase(state).explorerQues
 
 export const fetchedExplorerQuests = (state: AppState) => questBase(state).fetchedExplorerQuests;
 
-export const currentQuest = (state: AppState)  => questBase(state).currentQuest;
+export const currentQuest = (state: AppState) => questBase(state).currentQuest;
 
 export const fetchedCurrentQuest = (state: AppState) => questBase(state).fetchedCurrentQuest;
 

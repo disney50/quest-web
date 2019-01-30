@@ -1,4 +1,4 @@
-import { AppState } from "../app-state";
+import { AppState } from '../app-state';
 
 export const commentBase = (state: AppState) => state.commentState;
 
