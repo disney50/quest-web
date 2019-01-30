@@ -44,7 +44,7 @@ export class QuestsComponent implements OnInit {
     if (this.explorerQuests.length !== 0) {
       this.possibleQuests = [];
       this.possibleQuests = this.questService
-       .getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
+        .getPossibleQuests(this.planetQuests, this.explorerQuests, this.currentPlanet.name, this.signedInUser.userId);
     } else {
       this.possibleQuests = this.planetQuests;
       this.possibleQuests.forEach(possibleQuest => {

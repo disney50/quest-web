@@ -1,9 +1,9 @@
 <div class="center bg">
   <div class="container-fluid">
-    
+
     <nav class="row navbar fixed-top navbar-expand navbar-dark mx-auto">
       <a class="navbar-brand nav-brand ml-2" routerLink="currentquests">
-        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png"/> 
+        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
       </a>
 
       <a class="navbar-text text-large">
@@ -13,9 +13,9 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
-            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png"/>
+            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
             {{signedInUser.name}}
-            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png"/>
+            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
           </a>
 
           <div class="dropdown-menu dropdown-menu-right">
@@ -31,25 +31,25 @@
         <div *ngIf="quest.isAvailable" class="card-transparent border" (click)="questClicked(quest)" style="cursor: pointer">
           <div class="card-body">
             <b class="text-large text-uppercase">{{quest.title}}</b>
-            <br>  
+            <br>
             <b class="text-medium">{{quest.level1.name}} | {{quest.level2.name}}</b>
             <br>
             <span class="text-medium text-uppercase">XP: {{quest.max_xp}}</span>
             <br>
-            <img class="img-small mx-auto" src="../../../assets/{{currentPlanet.name}}.png"/>    
-          </div>  
+            <img class="img-small mx-auto" src="../../../assets/{{currentPlanet.name}}.png" />
+          </div>
         </div>
 
         <div *ngIf="!quest.isAvailable" class="card-cutty-sark border" (click)="questClicked(quest)" style="cursor: pointer">
           <div class="card-body">
             <b class="text-large text-uppercase">{{quest.title}}</b>
-            <br>  
+            <br>
             <b class="text-medium">{{quest.level1.name}} | {{quest.level2.name}}</b>
             <br>
             <span class="text-medium text-uppercase">XP: {{quest.max_xp}}</span>
             <br>
-            <img class="img-small mx-auto" src="../../../assets/{{currentPlanet.name}}.png"/>    
-          </div>  
+            <img class="img-small mx-auto" src="../../../assets/{{currentPlanet.name}}.png" />
+          </div>
         </div>
 
       </div>
