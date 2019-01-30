@@ -9,19 +9,19 @@ import { User } from 'src/app/models/user';
 export class ExplorerService {
   newExplorer: Explorer = {} as Explorer;
 
-  constructor(private angularFirestore: AngularFirestore) { 
+  constructor(private angularFirestore: AngularFirestore) {
 
   }
 
-  createExplorer(planetName: string, newUser: User) {      
+  createExplorer(planetName: string, newUser: User) {
     this.newExplorer.name = newUser.name;
     this.newExplorer.surname = newUser.surname;
-    this.newExplorer.xp = "0";
+    this.newExplorer.xp = '0';
     this.newExplorer.userId = newUser.userId;
     this.addNewExplorerToPlanet(planetName);
   }
 
-  addNewExplorerToPlanet(planetName: string) {      
-    this.angularFirestore.collection(planetName + "/explorers/entries").doc(this.newExplorer.userId).set(this.newExplorer);
+  addNewExplorerToPlanet(planetName: string) {
+    this.angularFirestore.collection(planetName + '/explorers/entries').doc(this.newExplorer.userId).set(this.newExplorer);
   }
 }
