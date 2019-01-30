@@ -7,6 +7,10 @@ import { User, UserData } from 'src/app/models/user';
 
 @Injectable()
 export class UserEffects {
+    email: string;
+    password: string;
+    user: User = {} as User;
+
 
     constructor(private actions$: Actions,
         private angularFirestore: AngularFirestore) { }
@@ -15,15 +19,25 @@ export class UserEffects {
     @Effect()
     RequestUserLogin$ = this.actions$.ofType(actions.REQUEST_LOGIN_USER_EXISTS).pipe(
         switchMap((action: actions.RequestLoginUserExists) => {
-            return this.angularFirestore.collection('users', ref => ref
-                .where('email', '==', action.payload.email).where('password', '==', action.payload.password)).get();
+            this.email = action.payload.email;
+            this.password = action.payload.password;
+            return this.angularFirestore.collection('users', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
                 return new actions.LoginFailed();
+            } else {
+                if (snapShot.docs[0].data().password === undefined) {
+                    console.log('if');
+                    this.user = new User(snapShot.docs[0].data().userId, snapShot.docs[0].data() as UserData);
+                    this.user.password = this.password;
+                    this.angularFirestore.collection('users').doc(this.user.userId).update(this.user.toData());
+                    return new actions.RequestGetUserByLoginDetails();
+                } else {
+                    console.log('else');
+                    return new actions.RequestGetUserByLoginDetails();
+                }
             }
-            return new actions.RequestGetUserByLoginDetails
-                ({ email: snapShot.docs[0].data().email, password: snapShot.docs[0].data().password });
         })
     );
 
@@ -31,7 +45,7 @@ export class UserEffects {
     GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
         switchMap((action: actions.RequestGetUserByLoginDetails) => {
             return this.angularFirestore.collection('users', ref => ref
-                .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
+                .where('email', '==', this.email).where('password', '==', this.password).limit(1)).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {

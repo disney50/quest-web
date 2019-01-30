@@ -21,7 +21,7 @@ export class User {
       name: this.name,
       surname: this.surname,
       email: this.email,
-      password: this.email
+      password: this.password
     } as UserData;
   }
 }

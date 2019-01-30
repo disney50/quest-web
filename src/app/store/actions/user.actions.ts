@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user';
 import { LoginDetails } from 'src/app/models/login-details';
 
 export const REQUEST_LOGIN_USER_EXISTS = '[login] REQUEST_LOGIN_USER_EXISTS';
+export const REQUEST_LOGIN_USER_PASSWORD_EXISTS = '[login] REQUEST_LOGIN_USER_PASSWORD_EXISTS';
 export const REQUEST_GET_USER_BY_LOGIN_DETAILS = '[login] REQUEST_GET_USER_BY_LOGIN_DETAILS';
 export const LOGIN_SUCCESS = '[login] LOGIN_SUCCESS';
 export const LOGIN_FAILED = '[login] LOGIN_FAILED';
@@ -16,9 +17,14 @@ export class RequestLoginUserExists implements Action {
     constructor(public payload: LoginDetails) { }
 }
 
+export class RequestLoginUserPasswordExists implements Action {
+    type = REQUEST_LOGIN_USER_PASSWORD_EXISTS;
+    constructor() { }
+}
+
 export class RequestGetUserByLoginDetails implements Action {
     type = REQUEST_GET_USER_BY_LOGIN_DETAILS;
-    constructor(public payload: LoginDetails) { }
+    constructor() { }
 }
 
 export class LoginSuccess implements Action {
