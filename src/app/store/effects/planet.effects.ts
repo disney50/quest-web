@@ -28,12 +28,11 @@ export class PlanetEffects {
     @Effect()
     GetDefaultPlanet$ = this.actions$.ofType(actions.REQUEST_GET_DEFAULT_PLANET).pipe(
         switchMap((action: actions.RequestGetDefaultPlanet) => {
-            return this.angularFirestore.collection('users/' + action.payload + '/planets', ref => ref.limit(1)).stateChanges();
+            return this.angularFirestore.collection('users/' + action.payload + '/planets').doc('codeez').get();
         }),
-        mergeMap(actions => actions),
-        map(action => {
-            if (action.type === 'added') {
-                return new actions.GetPlanetSuccess(new Planet(action.payload.doc.id, action.payload.doc.data() as PlanetData));
+        map(snapShot => {
+            if (snapShot.exists) {
+                return new actions.GetPlanetSuccess(new Planet(snapShot.id, snapShot.data() as PlanetData));
             }
             return new actions.UnimplementedAction('');
         })
