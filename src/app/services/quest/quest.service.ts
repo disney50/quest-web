@@ -23,7 +23,7 @@ export class QuestService {
   }
 
   launchQuest(planetName: string, userId: string, currentQuest: Quest) {
-    currentQuest.status = 'in_progress';
+    currentQuest.status = 'inprogress';
 
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(currentQuest.questId).set(currentQuest.toData());

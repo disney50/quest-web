@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
 
   checkStatus() {
-    if (this.currentQuest.status === 'in_progress') {
+    if (this.currentQuest.status === 'inprogress') {
       this.status = 'IN PROGRESS';
     } else if (this.currentQuest.status === 'moderating') {
       this.status = 'MODERATING';
@@ -85,6 +85,8 @@ export class DashboardComponent implements OnInit {
 
         this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
           if (!fetchedCurrentQuest) {
+            console.log('hello');
+            
             this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
           }
         });

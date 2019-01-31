@@ -53,12 +53,12 @@ export class QuestComponent implements OnInit {
   }
 
   checkStatus() {
-    if (this.selectedQuest.status === 'in_progress'
+    if (this.selectedQuest.status === 'inprogress'
       || this.selectedQuest.status === 'moderating'
       || this.selectedQuest.status === 'completed') {
       this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
       this.sliceAllComments();
-      if (this.selectedQuest.status === 'in_progress') {
+      if (this.selectedQuest.status === 'inprogress') {
         this.isInProgress = true;
       } else if (this.selectedQuest.status === 'moderating') {
         this.isModerating = true;

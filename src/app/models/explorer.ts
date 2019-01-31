@@ -13,6 +13,7 @@ export class Explorer {
 
   toData(): ExplorerData {
     return {
+      userId: this.userId,
       name: this.name,
       surname: this.surname,
       xp: this.xp
