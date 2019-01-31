@@ -20,6 +20,7 @@ export class User {
       gender: this.gender,
       name: this.name,
       surname: this.surname,
+      userId: this.userId,
       email: this.email,
       password: this.password
     } as UserData;

@@ -19,16 +19,22 @@ export class UserEffects {
         private planetService: PlanetService) { }
 
     @Effect()
-    RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
+    RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
         switchMap((action: actions.RequestUserExistsUsers) => {
+            console.log('hello too');
+            
             this.email = action.payload.email;
             this.password = action.payload.password;
             return this.angularFirestore.collection('users', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
+                console.log('if');
+                
                 return new actions.RequestUserExistsExplorers();
             } else {
+                console.log('else');
+                
                 if (snapShot.docs[0].data().password === undefined) {
                     this.user = new User(snapShot.docs[0].data().userId, snapShot.docs[0].data() as UserData);
                     this.user.password = this.password;
@@ -43,28 +49,40 @@ export class UserEffects {
 
 
     @Effect()
-    RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_EXPLORERS).pipe(
+    RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_EXPLORERS).pipe(
         switchMap((action: actions.RequestUserExistsExplorers) => {
+            console.log('hello three');
+            
             return this.angularFirestore.collection('codeez/explorers/entries', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
+                console.log('if too');
+                
                 return new actions.LoginFailed();
             } else {
+                console.log('else too');
+                
                 if (snapShot.docs[0].data().password === undefined) {
-                    this.user = new User(snapShot.docs[0].data().userId, {
+                    console.log('if three');
+                    
+                    this.user = new User(snapShot.docs[0].id, {
                         gender: snapShot.docs[0].data().gender,
                         name: snapShot.docs[0].data().name,
                         surname: snapShot.docs[0].data().surname,
-                        userId: snapShot.docs[0].data().userId,
+                        userId: snapShot.docs[0].id,
                         email: snapShot.docs[0].data().email,
                         password: this.password
                     } as UserData);
+                    console.log(this.user);
+                    
                     this.angularFirestore.collection('users').doc(this.user.userId).set(this.user.toData());
                     this.planetService.createPlanet
-                        (this.user.userId, new Planet('codeez', {name: 'codeez', description: 'learn to code with python'} as PlanetData);
+                        (this.user.userId, new Planet('codeez', {name: 'codeez', description: 'learn to code with python'} as PlanetData));
                     return new actions.RequestGetUserByLoginDetails();
                 } else {
+                    console.log('else three');
+                    
                     return new actions.RequestGetUserByLoginDetails();
                 }
             }
