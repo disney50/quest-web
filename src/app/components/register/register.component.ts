@@ -54,12 +54,22 @@ export class RegisterComponent implements OnInit {
       this.message = 'You forgot to fill in some fields';
     } else {
       this.selectedPlanet = selectedPlanet;
-      this.checkUserExists();
+      this.checkUserExistsUsers();
     }
   }
 
-  checkUserExists() {
-    this.userService.checksUserExists(this.newUser.email).subscribe(user => {
+  checkUserExistsUsers() {
+    this.userService.checksUserExistsUsers(this.newUser.email).subscribe(user => {
+      if (user) {
+        this.message = 'There is already user with this email';
+      } else {
+        this.checkUserExistsExplorers();
+      }
+    });
+  }
+
+  checkUserExistsExplorers() {
+    this.userService.checksUserExistsExplorers(this.newUser.email).subscribe(user => {
       if (user) {
         this.message = 'There is already user with this email';
       } else {

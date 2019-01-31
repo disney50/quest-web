@@ -12,11 +12,25 @@ export class UserService {
   constructor(private angularFirestore: AngularFirestore) {
 
   }
-  checksUserExists(email: string): Observable<boolean> {
+  checksUserExistsUsers(email: string): Observable<boolean> {
     return this.angularFirestore.collection('users', ref => ref.where('email', '==', email))
       .get()
       .pipe(
         map(doc => {
+          console.log(doc.docs[0]);
+
+          return doc.docs.length !== 0 ? true : false;
+        })
+      );
+  }
+
+  checksUserExistsExplorers(email: string): Observable<boolean> {
+    return this.angularFirestore.collection('codeez/explorers/entries/', ref => ref.where('email', '==', email))
+      .get()
+      .pipe(
+        map(doc => {
+          console.log(doc.docs[0]);
+
           return doc.docs.length !== 0 ? true : false;
         })
       );
