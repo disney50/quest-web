@@ -31,6 +31,7 @@ export class QuestComponent implements OnInit {
   isInProgress: boolean;
   isModerating: boolean;
   isCompleted: boolean;
+  currentQuestExists: boolean;
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -141,11 +142,24 @@ export class QuestComponent implements OnInit {
     });
   }
 
+  sliceCurrentQuestExists() {
+    this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
+      if (this.signedIn) {
+        if (currentQuestExists) {
+          this.currentQuestExists = true;
+        } else if (!currentQuestExists) {
+          this.currentQuestExists = false;
+        }
+      }
+    });
+  }
+
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceSelectedQuest();
+    this.sliceCurrentQuestExists();
   }
 
 }

@@ -147,7 +147,7 @@
       SUBMIT
     </button>
 
-    <button *ngIf="selectedQuest.isAvailable" class="btn-mosque fixed-bottom" (click)="launchClicked()">
+    <button *ngIf="selectedQuest.isAvailable && !currentQuestExists" class="btn-mosque fixed-bottom" (click)="launchClicked()">
       LAUNCH
     </button>
 
