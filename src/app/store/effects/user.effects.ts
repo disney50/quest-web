@@ -4,6 +4,8 @@ import * as actions from '../actions';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User, UserData } from 'src/app/models/user';
+import { PlanetService } from 'src/app/services/planet/planet.service';
+import { Planet, PlanetData } from 'src/app/models/planet';
 
 @Injectable()
 export class UserEffects {
@@ -13,7 +15,8 @@ export class UserEffects {
 
 
     constructor(private actions$: Actions,
-        private angularFirestore: AngularFirestore) { }
+        private angularFirestore: AngularFirestore,
+        private planetService: PlanetService) { }
 
     @Effect()
     RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
@@ -58,6 +61,8 @@ export class UserEffects {
                         password: this.password
                     } as UserData);
                     this.angularFirestore.collection('users').doc(this.user.userId).set(this.user.toData());
+                    this.planetService.createPlanet
+                        (this.user.userId, new Planet('codeez', {name: 'codeez', description: 'learn to code with python'} as PlanetData);
                     return new actions.RequestGetUserByLoginDetails();
                 } else {
                     return new actions.RequestGetUserByLoginDetails();
