@@ -17,8 +17,6 @@ export class UserService {
       .get()
       .pipe(
         map(doc => {
-          console.log(doc.docs[0]);
-
           return doc.docs.length !== 0 ? true : false;
         })
       );
@@ -29,8 +27,6 @@ export class UserService {
       .get()
       .pipe(
         map(doc => {
-          console.log(doc.docs[0]);
-
           return doc.docs.length !== 0 ? true : false;
         })
       );
