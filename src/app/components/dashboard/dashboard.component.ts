@@ -85,8 +85,6 @@ export class DashboardComponent implements OnInit {
 
         this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
           if (!fetchedCurrentQuest) {
-            console.log('hello');
-            
             this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
           }
         });

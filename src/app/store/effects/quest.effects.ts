@@ -16,8 +16,6 @@ export class QuestEffects {
     @Effect()
     CheckInProgressQuestExists$ = this.actions$.ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS).pipe(
         switchMap((action: actions.RequestInProgressQuestExists) => {
-            console.log('hello too');
-            
             this.planetName = action.planetNamePayload;
             this.userId = action.userIdPayload;
             return this.angularFirestore
@@ -26,12 +24,8 @@ export class QuestEffects {
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
-                console.log('if');
-                
                 return new actions.RequestModeratingQuestExists();
             } else {
-                console.log('else');
-                
                 return new actions.RequestGetInProgressQuest();
             }
         })
@@ -47,8 +41,6 @@ export class QuestEffects {
         mergeMap(actions => actions),
         map(action => {
             if (action.type === 'added') {
-                console.log(action.payload);
-                
                 return new actions.GetQuestSuccess(new Quest(action.payload.doc.id, action.payload.doc.data() as QuestData));
             }
             return new actions.UnimplementedAction('');
@@ -104,10 +96,8 @@ export class QuestEffects {
     @Effect()
     GetExplorerQuests$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER_QUESTS).pipe(
         switchMap((action: actions.RequestGetExplorerQuests) => {
-
             return this.angularFirestore
-                .collection(action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/', ref => ref
-                    .orderBy('order')).stateChanges();
+                .collection(action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/').stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
