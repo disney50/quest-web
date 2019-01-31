@@ -2,7 +2,8 @@ import { Action } from '@ngrx/store';
 import { User } from 'src/app/models/user';
 import { LoginDetails } from 'src/app/models/login-details';
 
-export const REQUEST_LOGIN_USER_EXISTS = '[login] REQUEST_LOGIN_USER_EXISTS';
+export const REQUEST_USER_EXISTS_USERS = '[login] REQUEST_USER_EXISTS_USERS';
+export const REQUEST_USER_EXISTS_EXPLORERS = '[login] REQUEST_USER_EXISTS_EXPLORERS';
 export const REQUEST_LOGIN_USER_PASSWORD_EXISTS = '[login] REQUEST_LOGIN_USER_PASSWORD_EXISTS';
 export const REQUEST_GET_USER_BY_LOGIN_DETAILS = '[login] REQUEST_GET_USER_BY_LOGIN_DETAILS';
 export const LOGIN_SUCCESS = '[login] LOGIN_SUCCESS';
@@ -12,9 +13,14 @@ export const LOG_OUT_USER = '[logout] LOG_OUT_USER';
 export const CLEAR_USER_STATE = '[logout] CLEAR_USER_STATE';
 export const UNIMPLEMENTED_ACTION = 'UNIMPLEMENTED_ACTION';
 
-export class RequestLoginUserExists implements Action {
-    type = REQUEST_LOGIN_USER_EXISTS;
+export class RequestUserExistsUsers implements Action {
+    type = REQUEST_USER_EXISTS_USERS;
     constructor(public payload: LoginDetails) { }
+}
+
+export class RequestUserExistsExplorers implements Action {
+    type = REQUEST_USER_EXISTS_EXPLORERS;
+    constructor() { }
 }
 
 export class RequestLoginUserPasswordExists implements Action {
@@ -58,7 +64,8 @@ export class UnimplementedAction implements Action {
 }
 
 export type UserActions =
-    | RequestLoginUserExists
+    | RequestUserExistsUsers
+    | RequestUserExistsExplorers
     | RequestGetUserByLoginDetails
     | GetUserSuccess
     | LoginSuccess

@@ -15,22 +15,49 @@ export class UserEffects {
     constructor(private actions$: Actions,
         private angularFirestore: AngularFirestore) { }
 
-
     @Effect()
-    RequestUserLogin$ = this.actions$.ofType(actions.REQUEST_LOGIN_USER_EXISTS).pipe(
-        switchMap((action: actions.RequestLoginUserExists) => {
+    RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
+        switchMap((action: actions.RequestUserExistsUsers) => {
             this.email = action.payload.email;
             this.password = action.payload.password;
             return this.angularFirestore.collection('users', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
-                return new actions.LoginFailed();
+                return new actions.RequestUserExistsExplorers();
             } else {
                 if (snapShot.docs[0].data().password === undefined) {
                     this.user = new User(snapShot.docs[0].data().userId, snapShot.docs[0].data() as UserData);
                     this.user.password = this.password;
                     this.angularFirestore.collection('users').doc(this.user.userId).update(this.user.toData());
+                    return new actions.RequestGetUserByLoginDetails();
+                } else {
+                    return new actions.RequestGetUserByLoginDetails();
+                }
+            }
+        })
+    );
+
+
+    @Effect()
+    RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_EXPLORERS).pipe(
+        switchMap((action: actions.RequestUserExistsExplorers) => {
+            return this.angularFirestore.collection('codeez/explorers/entries', ref => ref.where('email', '==', this.email)).get();
+        }),
+        map(snapShot => {
+            if (snapShot.size === 0) {
+                return new actions.LoginFailed();
+            } else {
+                if (snapShot.docs[0].data().password === undefined) {
+                    this.user = new User(snapShot.docs[0].data().userId, {
+                        gender: snapShot.docs[0].data().gender,
+                        name: snapShot.docs[0].data().name,
+                        surname: snapShot.docs[0].data().surname,
+                        userId: snapShot.docs[0].data().userId,
+                        email: snapShot.docs[0].data().email,
+                        password: this.password
+                    } as UserData);
+                    this.angularFirestore.collection('users').doc(this.user.userId).set(this.user.toData());
                     return new actions.RequestGetUserByLoginDetails();
                 } else {
                     return new actions.RequestGetUserByLoginDetails();

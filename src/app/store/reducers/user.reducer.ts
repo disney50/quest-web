@@ -6,7 +6,11 @@ export function userReducer(state = initialUserState, action: actions.UserAction
     const newState = { ...state };
 
     switch (action.type) {
-        case actions.REQUEST_LOGIN_USER_EXISTS:
+        case actions.REQUEST_USER_EXISTS_USERS:
+            newState.loginFailed = false;
+            return newState;
+
+        case actions.REQUEST_USER_EXISTS_EXPLORERS:
             newState.loginFailed = false;
             return newState;
 
