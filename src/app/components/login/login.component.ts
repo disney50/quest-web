@@ -32,7 +32,11 @@ export class LoginComponent implements OnInit {
     if (!email || !password) {
       this.message = 'You forgot to fill in some fields';
     } else {
-      this.store.dispatch(new actions.RequestUserExistsUsers({ email: email, password: password } as LoginDetails));
+      if (email === 'moderator') {
+        this.store.dispatch(new actions.RequestGetModeratorByLoginDetails({email: email, password: password} as LoginDetails));
+      } else {
+        this.store.dispatch(new actions.RequestUserExistsUsers({ email: email, password: password } as LoginDetails));
+      }
     }
   }
 

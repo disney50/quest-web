@@ -16,7 +16,23 @@ export class UserEffects {
 
     constructor(private actions$: Actions,
         private angularFirestore: AngularFirestore,
-        private planetService: PlanetService) { }
+        private planetService: PlanetService
+    ) { }
+
+    @Effect()
+    GetModeratorByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS).pipe(
+        switchMap((action: actions.RequestGetModeratorByLoginDetails) => {
+            return this.angularFirestore.collection('users', ref => ref
+                .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            if (action.type === 'added') {
+                return new actions.LoginModeratorSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+            }
+            return new actions.UnimplementedAction('');
+        })
+    );
 
     @Effect()
     RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(

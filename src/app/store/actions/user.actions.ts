@@ -2,6 +2,10 @@ import { Action } from '@ngrx/store';
 import { User } from 'src/app/models/user';
 import { LoginDetails } from 'src/app/models/login-details';
 
+export const REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS = '[moderator] REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS';
+export const LOGIN_MODERATOR_SUCCESS = '[moderator] LOGIN_MODERATOR_SUCCESS';
+
+
 export const REQUEST_USER_EXISTS_USERS = '[login] REQUEST_USER_EXISTS_USERS';
 export const REQUEST_USER_EXISTS_EXPLORERS = '[login] REQUEST_USER_EXISTS_EXPLORERS';
 export const REQUEST_LOGIN_USER_PASSWORD_EXISTS = '[login] REQUEST_LOGIN_USER_PASSWORD_EXISTS';
@@ -12,6 +16,16 @@ export const GET_USER_SUCCESS = '[user] GET_USER_SUCCESS';
 export const LOG_OUT_USER = '[logout] LOG_OUT_USER';
 export const CLEAR_USER_STATE = '[logout] CLEAR_USER_STATE';
 export const UNIMPLEMENTED_ACTION = 'UNIMPLEMENTED_ACTION';
+
+export class RequestGetModeratorByLoginDetails implements Action {
+    type = REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS;
+    constructor(public payload: LoginDetails) { }
+}
+
+export class LoginModeratorSuccess implements Action {
+    type = LOGIN_MODERATOR_SUCCESS;
+    constructor(public payload: User) { }
+}
 
 export class RequestUserExistsUsers implements Action {
     type = REQUEST_USER_EXISTS_USERS;
