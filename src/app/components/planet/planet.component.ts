@@ -60,18 +60,12 @@ export class PlanetComponent implements OnInit {
     });
   }
 
-  slicePlanetExplorers() {
-    this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
-      if (this.moderatorSignedIn) {
-        this.planetExplorers = planetExplorers;
-      }
-    });
-  }
-
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
       if (this.moderatorSignedIn) {
         this.currentPlanet = currentPlanet;
+
+        this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
 
         this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
           if (!fetchedPlanetQuests) {
@@ -82,11 +76,28 @@ export class PlanetComponent implements OnInit {
     });
   }
 
+  slicePlanetExplorers() {
+    this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
+      if (this.moderatorSignedIn) {
+        this.planetExplorers = planetExplorers;
+      }
+    });
+  }
+
+  slicePlanetQuests() {
+    this.store.select(selectors.planetQuests).subscribe(planetQuests => {
+      if (this.moderatorSignedIn) {
+        this.planetQuests = planetQuests;
+      }
+    })
+  }
+
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
-    this.slicePlanetExplorers();
     this.sliceCurrentPlanet();
+    this.slicePlanetExplorers();
+    this.slicePlanetQuests();
   }
 
 }

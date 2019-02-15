@@ -25,5 +25,65 @@
       </ul>
     </nav>
 
+    <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5 mb-2">
+        <div class="card-cutty-sark border">
+
+          <div class="card-header border-bottom">
+            <b class="text-large">EXPLORERS</b>
+          </div>
+
+          <div class="card-body mb-0 pb-0">
+            <div *ngFor="let explorer of planetExplorers" class="row">
+              <div class="col-12">
+                <div class="card-gothic m-2 py-2">
+                  <div class="row justify-content-center align-items-center text-center">
+                    <b class="text-medium">{{explorer.name}} {{explorer.surname}}</b>
+                  </div>
+
+                  <div class="row justify-content-center align-items-center text-center">
+                    <span class="text-medium text-uppercase">XP: {{explorer.xp}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer" style="border-top: none"></div>
+
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5 mb-2">
+        <div class="card-cutty-sark border-gothic">
+
+          <div class="card-header border-bottom-gothic">
+            <b class="text-large">QUESTS</b>
+          </div>
+
+          <div class="card-body">
+            <div *ngFor="let quest of planetQuests" class="row">
+              <div class="col-12">
+                <div class="card-granny-smith m-2 py-2">
+                  <div class="row justify-content-center align-items-center text-center">
+                    <b class="text-medium">{{quest.title}}</b>
+                  </div>
+
+                  <div class="row justify-content-center align-items-center text-center">
+                    <span class="text-medium">{{quest.level1.name}} | {{quest.level2.name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-gothic" (click)="createClicked()">CREATE</button>
+
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
