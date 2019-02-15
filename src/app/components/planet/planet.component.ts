@@ -7,6 +7,8 @@ import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
 import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
+import { Quest } from 'src/app/models/quest';
+import { Explorer } from 'src/app/models/explorer';
 
 @Component({
   selector: 'app-planet',
@@ -33,8 +35,29 @@ export class PlanetComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
+  navigateQuest() {
+    this.router.navigateByUrl('quest');
+  }
+
+  navigateCreate() {
+    this.router.navigateByUrl('create');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+  }
+
+  questClicked(selectedQuest: Quest) {
+    this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
+    this.navigateQuest();
+  }
+
+  explorerClicked(selectedExplorer: Explorer) {
+
+  }
+
+  createClicked() {
+    this.navigateCreate();
   }
 
   sliceHasLoginSucceeded() {

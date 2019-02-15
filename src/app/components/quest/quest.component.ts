@@ -11,6 +11,7 @@ import { CommentService } from 'src/app/services/comment/comment.service';
 import { UploadService } from 'src/app/services/upload/upload.service';
 import { QuestService } from 'src/app/services/quest/quest.service';
 import * as selectors from '../../store/selectors';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-quest',
@@ -25,13 +26,14 @@ export class QuestComponent implements OnInit {
   allComments: Comment[];
   newComment: Comment = {} as Comment;
   message: string = null;
-  signedIn = false;
   selectedFile: File;
   isUndefined: boolean;
   isInProgress: boolean;
   isModerating: boolean;
   isCompleted: boolean;
   currentQuestExists: boolean;
+  moderatorSignedIn = false;
+  userSignedIn = false;
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -100,18 +102,21 @@ export class QuestComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
-      if (!signedIn) {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (!this.moderatorSignedIn && !this.userSignedIn) {
         this.navigateLogin();
-      } else {
-        this.signedIn = true;
       }
     });
   }
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.signedInUser = signedInUser;
       }
     });
@@ -119,7 +124,7 @@ export class QuestComponent implements OnInit {
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.currentPlanet = currentPlanet;
       }
     });
@@ -127,7 +132,7 @@ export class QuestComponent implements OnInit {
 
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.selectedQuest = selectedQuest;
         this.checkStatus();
       }
@@ -136,7 +141,7 @@ export class QuestComponent implements OnInit {
 
   sliceAllComments() {
     this.store.select(selectors.allComments).subscribe(allComments => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.allComments = allComments;
       }
     });
@@ -144,7 +149,7 @@ export class QuestComponent implements OnInit {
 
   sliceCurrentQuestExists() {
     this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         if (currentQuestExists) {
           this.currentQuestExists = true;
         } else if (!currentQuestExists) {
