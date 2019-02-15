@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
-import * as actions from '../../store/actions/';
-import * as selectors from '../../store/selectors/';
+import * as actions from '../../store/actions';
 import { LoginDetails } from 'src/app/models/login-details';
+import * as selectors from '../../store/selectors';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -36,16 +37,16 @@ export class LoginComponent implements OnInit {
   }
 
   sliceHasLoginFailed() {
-    this.store.select(selectors.hasLoginFailed).subscribe(hasFailed => {
-      if (hasFailed) {
+    this.store.select(selectors.loginFailed).subscribe(loginFailed => {
+      if (loginFailed) {
         this.message = 'Incorrect email or password';
       }
     });
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if (signedIn) {
+    this.store.select(selectors.userSignedIn).subscribe(userSignedIn => {
+      if (userSignedIn) {
         this.navigateDashboard();
       }
     });

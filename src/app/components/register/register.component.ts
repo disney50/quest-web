@@ -4,13 +4,12 @@ import { Planet } from 'src/app/models/planet';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service'; import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
-import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { LoginDetails } from 'src/app/models/login-details';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import * as selectors from '../../store/selectors';
 
 @Component({
   selector: 'app-register',
@@ -115,7 +114,7 @@ export class RegisterComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
       if (signedIn) {
         this.navigateDashboard();
       }

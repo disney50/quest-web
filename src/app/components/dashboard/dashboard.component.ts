@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
       if (!signedIn) {
         this.navigateLogin();
       } else {

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
-import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
 import { User } from 'src/app/models/user';
 import { Quest } from 'src/app/models/quest';
 import { QuestService } from 'src/app/services/quest/quest.service';
+import * as selectors from '../../store/selectors';
 
 @Component({
   selector: 'app-quests',
@@ -60,7 +60,7 @@ export class QuestsComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
+    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
       if (!signedIn) {
         this.navigateLogin();
       } else {

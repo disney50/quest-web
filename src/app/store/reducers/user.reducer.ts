@@ -16,7 +16,7 @@ export function userReducer(state = initialUserState, action: actions.UserAction
 
         case actions.LOGIN_SUCCESS:
             newState.signedInUser = (action as actions.LoginSuccess).payload;
-            newState.signedIn = true;
+            newState.userSignedIn = true;
             newState.loginFailed = false;
             return newState;
 
@@ -28,13 +28,13 @@ export function userReducer(state = initialUserState, action: actions.UserAction
         case actions.GET_USER_SUCCESS:
             const getUserSuccessAction = action as actions.GetUserSuccess;
             newState.signedInUser = getUserSuccessAction.payload;
-            newState.signedIn = true;
+            newState.userSignedIn = true;
             newState.loginFailed = false;
             return newState;
 
         case actions.CLEAR_USER_STATE:
             newState.signedInUser = {} as User;
-            newState.signedIn = false;
+            newState.userSignedIn = false;
             newState.loginFailed = false;
             return newState;
 
@@ -45,6 +45,7 @@ export function userReducer(state = initialUserState, action: actions.UserAction
 
 export const initialUserState = {
     signedInUser: {} as User,
-    signedIn: false,
+    userSignedIn: false,
+    moderatorSignedIn: false,
     loginFailed: false
 };
