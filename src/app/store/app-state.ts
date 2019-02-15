@@ -8,7 +8,7 @@ export interface AppState {
 
     userState: {
         signedInUser: User;
-        signedIn: boolean;
+        userSignedIn: boolean;
         loginFailed: boolean;
     };
 
