@@ -6,7 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { QuestComponent } from './components/quest/quest.component';
 import { QuestsComponent } from './components/quests/quests.component';
 import { PlanetComponent } from './components/planet/planet.component';
-import { CreateComponent } from './create/create.component';
+import { CreateComponent } from './components/create/create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

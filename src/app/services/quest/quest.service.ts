@@ -15,6 +15,11 @@ export class QuestService {
 
   constructor(private angularFirestore: AngularFirestore) { }
 
+  createNewQuest(currentPlanetName: string, newQuest: Quest) {
+    newQuest.questId = this.angularFirestore.createId();
+    this.angularFirestore.collection(currentPlanetName + '/quests/entries').doc(newQuest.questId).set(newQuest);
+  }
+
   submitQuest(planetName: string, userId: string, currentQuest: Quest) {
     currentQuest.status = 'moderating';
 
