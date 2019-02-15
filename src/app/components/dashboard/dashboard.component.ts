@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   status: string;
   userSignedIn = false;
   moderatorSignedIn = false;
+  allPlanets = [];
 
   constructor(private store: Store<AppState>,
     private router: Router) {
@@ -66,9 +67,9 @@ export class DashboardComponent implements OnInit {
       this.store.select(selectors.moderatorSignedIn),
       this.store.select(selectors.userSignedIn)
     ).subscribe(combinedValue => {
-      const moderatorSignedIn = combinedValue[0];
-      const userSignedIn = combinedValue[1];
-      if (!moderatorSignedIn && !userSignedIn) {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (!this.moderatorSignedIn && !this.userSignedIn) {
         this.navigateLogin();
       }
     });
@@ -76,13 +77,24 @@ export class DashboardComponent implements OnInit {
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.userSignedIn) {
+      if (this.moderatorSignedIn) {
+        this.signedInUser = signedInUser;
+        this.store.dispatch(new actions.RequestGetPlanets());
+      } else if (this.userSignedIn) {
         this.signedInUser = signedInUser;
         this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
           if (!fetchedCurrentPlanet) {
             this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
           }
         });
+      }
+    });
+  }
+
+  sliceAllPlanets() {
+    this.store.select(selectors.allPlanets).subscribe(allPlanets => {
+      if (this.moderatorSignedIn) {
+        this.allPlanets = allPlanets;
       }
     });
   }
@@ -137,6 +149,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
+
+    this.sliceAllPlanets();
+
     this.sliceCurrentPlanet();
     this.sliceCurrentQuestExists();
     this.sliceCurrentQuest();
