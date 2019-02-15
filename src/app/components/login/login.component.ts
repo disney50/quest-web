@@ -6,6 +6,7 @@ import * as actions from '../../store/actions';
 import { LoginDetails } from 'src/app/models/login-details';
 import * as selectors from '../../store/selectors';
 import { tap } from 'rxjs/operators';
+import { moderatorSignedIn } from '../../store/selectors';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +50,12 @@ export class LoginComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
+    this.store.select(selectors.moderatorSignedIn).subscribe(moderatorSignedIn => {
+      if (moderatorSignedIn) {
+        this.navigateDashboard();
+      }
+    });
+
     this.store.select(selectors.userSignedIn).subscribe(userSignedIn => {
       if (userSignedIn) {
         this.navigateDashboard();

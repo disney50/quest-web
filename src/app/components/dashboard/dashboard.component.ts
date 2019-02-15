@@ -7,6 +7,7 @@ import * as selectors from '../../store/selectors';
 import { Planet } from 'src/app/models/planet';
 import { Quest } from 'src/app/models/quest';
 import { Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ export class DashboardComponent implements OnInit {
   currentQuest: Quest = {} as Quest;
   currentQuestExists = false;
   status: string;
-  signedIn = false;
+  userSignedIn = false;
+  moderatorSignedIn = false;
 
   constructor(private store: Store<AppState>,
     private router: Router) {
@@ -50,24 +52,31 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  viewClicked() {
+  viewQuestClicked() {
     this.store.dispatch(new actions.GetSelectedQuestSuccess(this.currentQuest));
     this.navigateQuest();
   }
 
+  viewPlanetClicked() {
+
+  }
+
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
-      if (!signedIn) {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      const moderatorSignedIn = combinedValue[0];
+      const userSignedIn = combinedValue[1];
+      if (!moderatorSignedIn && !userSignedIn) {
         this.navigateLogin();
-      } else {
-        this.signedIn = true;
       }
     });
   }
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.signedIn) {
+      if (this.userSignedIn) {
         this.signedInUser = signedInUser;
         this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
           if (!fetchedCurrentPlanet) {
@@ -80,7 +89,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if (this.signedIn) {
+      if (this.userSignedIn) {
         this.currentPlanet = currentPlanet;
 
         this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
@@ -106,7 +115,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentQuestExists() {
     this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
-      if (this.signedIn) {
+      if (this.userSignedIn) {
         if (currentQuestExists) {
           this.currentQuestExists = true;
         } else if (!currentQuestExists) {
@@ -118,7 +127,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
-      if (this.signedIn && this.currentQuestExists) {
+      if (this.userSignedIn && this.currentQuestExists) {
         this.currentQuest = currentQuest;
         this.checkStatus();
       }
