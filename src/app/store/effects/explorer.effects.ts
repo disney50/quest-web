@@ -25,4 +25,18 @@ export class ExplorerEffects {
             return new actions.UnimplementedAction('');
         })
     );
+
+    @Effect()
+    GetExplorers$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORERS).pipe(
+        switchMap((action: actions.RequestGetExplorers) => {
+            return this.angularFirestore.collection(action.payload + '/explorers/entries').stateChanges();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+            if (action.type === 'added') {
+                return new actions.GetExplorersSuccess(new Explorer(action.payload.doc.id, action.payload.doc.data() as ExplorerData));
+            }
+            return new actions.UnimplementedAction('');
+        })
+    );
 }

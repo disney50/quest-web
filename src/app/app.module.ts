@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { QuestComponent } from './components/quest/quest.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { QuestsComponent } from './components/quests/quests.component';
+import { PlanetComponent } from './components/planet/planet.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { QuestsComponent } from './components/quests/quests.component';
     DashboardComponent,
     RegisterComponent,
     QuestComponent,
-    QuestsComponent
+    QuestsComponent,
+    PlanetComponent
   ],
   imports: [
     BrowserModule,

@@ -41,6 +41,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+  navigatePlanet() {
+    this.router.navigateByUrl('planet');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
   }
@@ -58,8 +62,9 @@ export class DashboardComponent implements OnInit {
     this.navigateQuest();
   }
 
-  viewPlanetClicked() {
-
+  viewPlanetClicked(selectedPlanet: Planet) {
+    this.store.dispatch(new actions.GetPlanetSuccess(selectedPlanet));
+    this.navigatePlanet();
   }
 
   sliceHasLoginSucceeded() {
