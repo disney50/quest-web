@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Quest, QuestData } from 'src/app/models/quest';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +95,13 @@ export class QuestService {
     });
 
     return this.possibleQuests;
+  }
+
+  updateLastViewCommentDate(planetName: string, userId: string, currentQuest: Quest) {
+    let updatedQuest = {} as Quest;
+    updatedQuest = currentQuest;
+    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();    
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
+      .doc(updatedQuest.questId).set(updatedQuest.toData());
   }
 }

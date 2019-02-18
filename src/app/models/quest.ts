@@ -1,5 +1,6 @@
 import { Level2 } from './level2';
 import { Level1 } from './level1';
+import { Timestamp } from '@firebase/firestore-types';
 
 export class Quest {
   title: string;
@@ -12,6 +13,7 @@ export class Quest {
   status: string;
   questId: string;
   isAvailable = false;
+  comment_last_view_date: Timestamp;
 
   constructor(questId: string, data: QuestData) {
     this.questId = questId;
@@ -23,6 +25,7 @@ export class Quest {
     this.level1 = data.level1;
     this.level2 = data.level2;
     this.status = data.status;
+    this.comment_last_view_date = data.comment_last_view_date;
   }
 
   toData(): QuestData {
@@ -34,7 +37,8 @@ export class Quest {
       // prerequisites: this.prerequisites,
       level1: this.level1,
       level2: this.level2,
-      status: this.status
+      status: this.status,
+      comment_last_view_date: this.comment_last_view_date
     } as QuestData;
   }
 }
@@ -48,4 +52,5 @@ export class QuestData {
   level1: Level1 = {} as Level1;
   level2: Level2 = {} as Level2;
   status: string;
+  comment_last_view_date: Timestamp;
 }

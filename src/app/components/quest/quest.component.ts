@@ -174,7 +174,7 @@ export class QuestComponent implements OnInit {
     if (!newComment) {
       this.message = 'You forgot to write a comment';
     } else {
-      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId, newComment);
+      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest, newComment);
     }
   }
 
