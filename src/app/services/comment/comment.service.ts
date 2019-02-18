@@ -16,14 +16,17 @@ export class CommentService {
 
   }
 
-  createComment(planetName: string, userId: string, quest: Quest, newComment: string) {
+  createModeratorComment(planetName: string, selectedExplorerId: string, quest: Quest, newComment: string) {
     this.newComment.comment = newComment;
-    if (userId === 'moderator') {
-      this.newComment.isModerator = true;
-      this.questService.updateLastViewCommentDate(planetName, userId, quest);
-    } else {
-      this.newComment.isModerator = false;
-    }
+    this.newComment.isModerator = true;
+    this.questService.updateLastViewCommentDate(planetName, selectedExplorerId, quest);
+    this.newComment.timestamp = firebase.firestore.Timestamp.now();
+    this.sendComment(planetName, selectedExplorerId, quest.questId);
+  }
+
+  createUserComment(planetName: string, userId: string, quest: Quest, newComment: string) {
+    this.newComment.comment = newComment;
+    this.newComment.isModerator = false;
     this.newComment.timestamp = firebase.firestore.Timestamp.now();
     this.sendComment(planetName, userId, quest.questId);
   }

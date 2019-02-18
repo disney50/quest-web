@@ -81,7 +81,7 @@ export class QuestComponent implements OnInit {
     this.completedStatus = false;
 
     this.moderateQuest();
-    }
+  }
 
   completedClicked() {
     this.failedStatus = false;
@@ -97,13 +97,10 @@ export class QuestComponent implements OnInit {
     } else {
       if (this.failedStatus) {
         this.selectedQuest.status = 'inprogress';
-        console.log(this.selectedQuest);
       } else if (this.relaunchStatus) {
         this.selectedQuest.status = 'inprogress';
-        console.log(this.selectedQuest);
       } else if (this.completedStatus) {
         this.selectedQuest.status = 'completed';
-        console.log(this.selectedQuest);
       }
 
       this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest);
@@ -115,7 +112,6 @@ export class QuestComponent implements OnInit {
       .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName);
     storageRef.getDownloadURL().then(url => {
       this.image = url;
-      console.log(this.image);
     });
   }
 
@@ -174,7 +170,11 @@ export class QuestComponent implements OnInit {
     if (!newComment) {
       this.message = 'You forgot to write a comment';
     } else {
-      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest, newComment);
+      if (this.moderatorSignedIn) {
+        this.commentService.createModeratorComment(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest, newComment);
+      } else if (this.userSignedIn) {
+        this.commentService.createUserComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest, newComment);
+      }
     }
   }
 
@@ -227,11 +227,25 @@ export class QuestComponent implements OnInit {
     });
   }
 
+  sliceSelectedExplorer() {
+    this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
+      if (this.moderatorSignedIn) {
+        this.selectedExplorer = selectedExplorer;
+      }
+    });
+  }
+
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
-      if (this.moderatorSignedIn || this.userSignedIn) {
+      if (this.userSignedIn) {
         this.selectedQuest = selectedQuest;
         this.checkStatus();
+        this.sliceAllComments();
+      } else if (this.moderatorSignedIn) {
+        this.selectedQuest = selectedQuest;
+        this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.selectedExplorer.userId,
+          this.selectedQuest.questId));
+        this.sliceAllComments();
       }
     });
   }
@@ -240,6 +254,8 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.allComments).subscribe(allComments => {
       if (this.moderatorSignedIn || this.userSignedIn) {
         this.allComments = allComments;
+        console.log(this.allComments);
+
       }
     });
   }
@@ -256,21 +272,13 @@ export class QuestComponent implements OnInit {
     });
   }
 
-  sliceSelectedExplorer() {
-    this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
-      if (this.moderatorSignedIn) {
-        this.selectedExplorer = selectedExplorer;
-      }
-    });
-  }
-
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
+    this.sliceSelectedExplorer();
     this.sliceSelectedQuest();
     this.sliceCurrentQuestExists();
-    this.sliceSelectedExplorer();
     this.getDocuments();
   }
 

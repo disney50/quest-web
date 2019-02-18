@@ -100,7 +100,7 @@ export class QuestService {
   updateLastViewCommentDate(planetName: string, userId: string, currentQuest: Quest) {
     let updatedQuest = {} as Quest;
     updatedQuest = currentQuest;
-    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();    
+    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(updatedQuest.questId).set(updatedQuest.toData());
   }
