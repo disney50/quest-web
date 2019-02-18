@@ -1,3 +1,91 @@
-<p>
-  explorer works!
-</p>
+<div class="center bg">
+  <div class="container-fluid">
+
+    <nav class="row navbar fixed-top navbar-expand navbar-dark mx-auto">
+      <a class="navbar-brand nav-brand ml-2" routerLink="currentquests">
+        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
+      </a>
+
+      <a class="navbar-text text-large">
+        <b>{{selectedExplorer.name}}</b>
+      </a>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
+            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
+            {{signedInUser.name}}
+            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item text-white" (click)="logOutClicked()">Log Out</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5 mb-2">
+        <div class="card-cutty-sark border">
+
+          <div class="card-header border-bottom">
+            <b class="text-large">{{selectedExplorer.name}} {{selectedExplorer.surname}}</b>
+          </div>
+
+          <div class="card-body">
+
+            <div class="row justify-content-center align-items-center text-center mb-2">
+              <b class="text-medium">PLANET: {{currentPlanet.name}}</b>
+            </div>
+
+            <div class="row justify-content-center align-items-center text-center mb-2">
+              <span class="text-medium text-uppercase">XP: {{selectedExplorer.xp}}</span>
+            </div>
+
+            <!-- <div class="row justify-content-center align-items-center text-center mb-2">
+              <span>{{currentPlanet.name}}</span>
+            </div> -->
+
+            <div class="row justify-content-center align-items-center">
+              <img class="img-small" src="../../../assets/{{currentPlanet.name}}.png" />
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-4 align-self-start pt-5 mb-2">
+        <div class="card-cutty-sark border-gothic">
+
+          <div class="card-header border-bottom-gothic">
+            <b class="text-large">QUESTS</b>
+          </div>
+
+          <div class="card-body">
+            <div *ngFor="let quest of explorerQuests" class="row">
+              <div class="col-12">
+                <div class="card-granny-smith m-2 py-2" style="cursor: pointer;" (click)="questClicked(quest)">
+                  <div class="row justify-content-center align-items-center text-center">
+                    <b class="text-medium">{{quest.title}}</b>
+                  </div>
+
+                  <div class="row justify-content-center align-items-center text-center">
+                    <span class="text-medium">{{quest.level1.name}} | {{quest.level2.name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <button type="button" class="btn-gothic" (click)="createClicked()">CREATE</button> -->
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

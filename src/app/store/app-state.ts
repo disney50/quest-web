@@ -22,6 +22,7 @@ export interface AppState {
     explorerState: {
         planetExplorers: Explorer[];
         currentExplorer: Explorer;
+        selectedExplorer: Explorer;
     };
 
     questState: {

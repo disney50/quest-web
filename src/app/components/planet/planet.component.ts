@@ -43,6 +43,10 @@ export class PlanetComponent implements OnInit {
     this.router.navigateByUrl('create');
   }
 
+  navigateExplorer() {
+    this.router.navigateByUrl('explorer');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
   }
@@ -53,7 +57,8 @@ export class PlanetComponent implements OnInit {
   }
 
   explorerClicked(selectedExplorer: Explorer) {
-
+    this.store.dispatch(new actions.GetSelectedExplorerSuccess(selectedExplorer));
+    this.navigateExplorer();
   }
 
   createClicked() {

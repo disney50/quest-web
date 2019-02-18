@@ -7,6 +7,7 @@ import { QuestComponent } from './components/quest/quest.component';
 import { QuestsComponent } from './components/quests/quests.component';
 import { PlanetComponent } from './components/planet/planet.component';
 import { CreateComponent } from './components/create/create.component';
+import { ExplorerComponent } from './components/explorer/explorer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'quest', component: QuestComponent },
   { path: 'quests', component: QuestsComponent },
   { path: 'planet', component: PlanetComponent },
-  { path: 'create', component: CreateComponent }
+  { path: 'create', component: CreateComponent },
+  { path: 'explorer', component: ExplorerComponent }
 ];
 
 @NgModule({

@@ -23,6 +23,10 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.planetExplorers = [...newState.planetExplorers, getExplorersSuccessAction.payload];
             return newState;
 
+        case actions.GET_SELECTED_EXPLORER_SUCCESS:
+            newState.selectedExplorer = (action as actions.GetSelectedExplorerSuccess).payload;
+            return newState;
+
         case actions.CLEAR_EXPLORER_STATE:
             newState.currentExplorer = {} as Explorer;
             return newState;
@@ -34,5 +38,6 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
 
 export const initialExplorerState = {
     planetExplorers: [],
-    currentExplorer: {} as Explorer
+    currentExplorer: {} as Explorer,
+    selectedExplorer: {} as Explorer
 };
