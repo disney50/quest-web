@@ -42,6 +42,11 @@ export class QuestComponent implements OnInit {
   uploads = [];
   image = null;
 
+  newXP = null;
+  failedStatus = false;
+  relaunchStatus = false;
+  completedStatus = true;
+
   constructor(private store: Store<AppState>,
     private router: Router,
     private commentService: CommentService,
@@ -60,6 +65,49 @@ export class QuestComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+  }
+
+  failedClicked() {
+    this.failedStatus = true;
+    this.relaunchStatus = false;
+    this.completedStatus = false;
+
+    this.moderateQuest();
+  }
+
+  relaunchClicked() {
+    this.failedStatus = false;
+    this.relaunchStatus = true;
+    this.completedStatus = false;
+
+    this.moderateQuest();
+    }
+
+  completedClicked() {
+    this.failedStatus = false;
+    this.relaunchStatus = false;
+    this.completedStatus = true;
+
+    this.moderateQuest();
+  }
+
+  moderateQuest() {
+    if (this.newXP === null) {
+      this.message = 'You forgot to assign XP...';
+    } else {
+      if (this.failedStatus) {
+        this.selectedQuest.status = 'inprogress';
+        console.log(this.selectedQuest);
+      } else if (this.relaunchStatus) {
+        this.selectedQuest.status = 'inprogress';
+        console.log(this.selectedQuest);
+      } else if (this.completedStatus) {
+        this.selectedQuest.status = 'completed';
+        console.log(this.selectedQuest);
+      }
+
+      this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest);
+    }
   }
 
   fileClicked(selectedUploadName: string) {

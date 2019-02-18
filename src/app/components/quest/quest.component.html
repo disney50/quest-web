@@ -162,6 +162,20 @@
         </div>
       </div>
 
+      <div *ngIf="moderatorSignedIn" class="col-sm-12 col-lg-4 pt-5">
+        <input [(ngModel)]="newXP" class="input mb-3" type="text" placeholder="enter xp...">
+      </div>
+
+    </div>
+
+    <div *ngIf="moderatorSignedIn" class="row justify-content-center align-items-center fixed-bottom">
+      <div class="col-12">
+        <button class="btn-mosque border" style="width: 33%; border-left: none" (click)="failedClicked()">FAILED</button>
+
+        <button class="btn-mosque border" style="width: 34%" (click)="relaunchClicked()">RELAUNCH</button>
+
+        <button class="btn-mosque border" style="width: 33%; border-right: none" (click)="completedClicked()">COMPLETE</button>
+      </div>
     </div>
 
     <button *ngIf="userSignedIn && isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
