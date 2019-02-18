@@ -62,14 +62,14 @@
               </div>
 
               <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newQuest.description" class="input mb-3" type="text" placeholder="enter order...">
+                <input [(ngModel)]="newQuest.order" class="input mb-3" type="number" placeholder="enter order...">
               </div>
             </div>
 
             <div class="row justify-content-center align-items-center">
               <div class="col-12">
                 <select class="custom-select mb-3" [(ngModel)]="newPrerequisite">
-                  <option *ngFor="let quest of planetQuests" [ngValue]="quest.questId">{{quest.title}}</option>
+                  <option *ngFor="let quest of planetQuests" [ngValue]="quest.questId" style="border-radius: 0">{{quest.title}}</option>
                 </select>
 
                 <!-- <div class="dropdown mb-3">

@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user';
 import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Planet } from 'src/app/models/planet';
+import { QuestService } from 'src/app/services/quest/quest.service';
 
 @Component({
   selector: 'app-create',
@@ -25,11 +26,13 @@ export class CreateComponent implements OnInit {
   newQuest: Quest = {} as Quest;
   newLevel1: Level1 = {} as Level1;
   newLevel2: Level2 = {} as Level2;
-  newPrerequisite: string = null;
+  newPrerequisite = '';
+  newPrerequisites = [];
   message: string = null;
 
   constructor(private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private questService: QuestService
   ) { }
 
   navigateLogin() {
@@ -60,11 +63,11 @@ export class CreateComponent implements OnInit {
   }
 
   createNewQuest() {
-    this.newQuest.prerequisites.push(this.newPrerequisite);
+    this.newPrerequisites.push(this.newPrerequisite);
+    this.newQuest.prerequisites = this.newPrerequisites;
     this.newQuest.level1 = this.newLevel1;
     this.newQuest.level2 = this.newLevel2;
-    console.log(this.newQuest);
-    
+    this.questService.createNewQuest(this.currentPlanet.name, this.newQuest);
   }
 
   sliceHasLoginSucceeded() {
