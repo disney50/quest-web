@@ -101,6 +101,10 @@ export class QuestComponent implements OnInit {
     this.navigateDashboard();
   }
 
+  viewClicked() {
+
+  }
+
   sliceHasLoginSucceeded() {
     combineLatest(
       this.store.select(selectors.moderatorSignedIn),

@@ -8,6 +8,7 @@ import * as actions from '../../store/actions';
 import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { Explorer } from 'src/app/models/explorer';
+import { Quest } from 'src/app/models/quest';
 
 @Component({
   selector: 'app-explorer',
@@ -34,8 +35,9 @@ export class ExplorerComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
-  questClicked() {
-
+  questClicked(selectedQuest: Quest) {
+    this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
+    this.router.navigateByUrl('quest');
   }
 
   sliceHasLoginSucceeded() {

@@ -7,7 +7,8 @@
       </a>
 
       <a class="navbar-text text-large">
-        <b>{{currentPlanet.name}}</b>
+        <b *ngIf="userSignedIn">{{currentPlanet.name}}</b>
+        <b *ngIf="moderatorSignedIn">{{selectedQuest.title}}</b>
       </a>
 
       <ul class="navbar-nav ml-auto">
@@ -102,7 +103,8 @@
                   type="text" placeholder="enter comment...">
               </div>
 
-              <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''" style="cursor: pointer">
+              <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''"
+                style="cursor: pointer">
                 <span>SEND</span>
               </div>
 
@@ -135,23 +137,31 @@
             </div>
           </div>
 
-          <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
-          <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
+          <div *ngIf="userSignedIn">
+            <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
+            <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
+          </div>
+
+          <div *ngIf="moderatorSignedIn">
+            <button type="button" class="btn-gothic" (click)="viewClicked()">VIEW</button>
+          </div>
 
         </div>
       </div>
 
     </div>
 
-    <button *ngIf="isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
+    <button *ngIf="userSignedIn && isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
       SUBMIT
     </button>
 
-    <button *ngIf="selectedQuest.isAvailable && !currentQuestExists" class="btn-mosque fixed-bottom" (click)="launchClicked()">
+    <button *ngIf="userSignedIn && selectedQuest.isAvailable && !currentQuestExists" class="btn-mosque fixed-bottom"
+      (click)="launchClicked()">
       LAUNCH
     </button>
 
-    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}" (click)="message = null">
+    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+      (click)="message = null">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
