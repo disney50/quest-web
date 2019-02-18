@@ -21,6 +21,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { QuestsComponent } from './components/quests/quests.component';
 import { PlanetComponent } from './components/planet/planet.component';
 import { CreateComponent } from './components/create/create.component';
+import { ExplorerComponent } from './explorer/explorer.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CreateComponent } from './components/create/create.component';
     QuestComponent,
     QuestsComponent,
     PlanetComponent,
-    CreateComponent
+    CreateComponent,
+    ExplorerComponent
   ],
   imports: [
     BrowserModule,
