@@ -17,8 +17,6 @@ export class QuestService {
 
   createNewQuest(currentPlanetName: string, newQuest: Quest) {
     newQuest.questId = this.angularFirestore.createId();
-    console.log(newQuest.questId);
-
     this.angularFirestore.collection(currentPlanetName + '/quests/entries').doc(newQuest.questId).set(newQuest);
   }
 

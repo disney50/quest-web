@@ -8,10 +8,13 @@ import { AppState } from 'src/app/store/app-state';
 import { Router } from '@angular/router';
 import { Comment } from 'src/app/models/comment';
 import { CommentService } from 'src/app/services/comment/comment.service';
-import { UploadService } from 'src/app/services/upload/upload.service';
+import { FileService } from 'src/app/services/upload/file.service';
 import { QuestService } from 'src/app/services/quest/quest.service';
 import * as selectors from '../../store/selectors';
 import { combineLatest } from 'rxjs';
+import { Explorer } from 'src/app/models/explorer';
+import { Upload } from 'src/app/models/upload';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-quest',
@@ -34,14 +37,17 @@ export class QuestComponent implements OnInit {
   currentQuestExists: boolean;
   moderatorSignedIn = false;
   userSignedIn = false;
+  selectedExplorer = {} as Explorer;
+  documents = [];
+  uploads = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
     private commentService: CommentService,
-    private uploadService: UploadService,
-    private questService: QuestService) {
-
-  }
+    private fileService: FileService,
+    private questService: QuestService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   navigateLogin() {
     this.router.navigateByUrl('login');
@@ -53,6 +59,34 @@ export class QuestComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+  }
+
+  getDocuments() {
+    this.fileService.getCollectionForUpload(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest.questId)
+      .valueChanges().subscribe(documents => {
+        this.documents = documents;
+        this.getUploads();
+      });
+  }
+
+  getUploads() {
+    this.documents.forEach(document => {
+      this.fileService.downloadFileFromStorage(this.currentPlanet.name, this.selectedExplorer.userId,
+        this.selectedQuest.questId, document.name)
+        .then(url => {
+          const upload = {} as Upload;
+          const xmlHttpRequest = new XMLHttpRequest();
+          xmlHttpRequest.responseType = 'blob';
+          xmlHttpRequest.onload = () => {
+            upload.name = document.name;
+            const blob = xmlHttpRequest.response;
+            upload.link = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+            this.uploads.push(upload);
+          };
+          xmlHttpRequest.open('GET', url);
+          xmlHttpRequest.send();
+        });
+    });
   }
 
   checkStatus() {
@@ -89,7 +123,7 @@ export class QuestComponent implements OnInit {
     if (!this.selectedFile) {
       this.message = 'You forgot to upload a file';
     } else {
-      this.uploadService
+      this.fileService
         .uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
       this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
       this.navigateDashboard();
@@ -163,12 +197,22 @@ export class QuestComponent implements OnInit {
     });
   }
 
+  sliceSelectedExplorer() {
+    this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
+      if (this.moderatorSignedIn) {
+        this.selectedExplorer = selectedExplorer;
+      }
+    });
+  }
+
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.sliceSelectedQuest();
     this.sliceCurrentQuestExists();
+    this.sliceSelectedExplorer();
+    this.getDocuments();
   }
 
 }

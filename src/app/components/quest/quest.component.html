@@ -58,7 +58,8 @@
         </div>
       </div>
 
-      <div *ngIf="moderatorSignedIn || isInProgress || isModerating || isCompleted" class="col-sm-12 col-lg-4 align-self-start pt-5">
+      <div *ngIf="moderatorSignedIn || isInProgress || isModerating || isCompleted"
+        class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
 
           <div class="card-header border-bottom">
@@ -125,13 +126,29 @@
             <div class="row">
               <div class="col-12">
 
-                <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
-                  <span>No File Chosen</span>
-                </div>
+                <ng-container *ngIf="userSignedIn">
+                  <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
+                    <span>No File Chosen</span>
+                  </div>
 
-                <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
-                  <span>{{selectedFile.name}}</span>
-                </div>
+                  <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
+                    <span>{{selectedFile.name}}</span>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="moderatorSignedIn">
+                  <div *ngIf="uploads.length === 0" class="row justify-content-center align-items-center text-center">
+                    <span>No File Uploaded</span>
+                  </div>
+
+                  <div *ngIf="uploads.length === 0" class="row justify-content-center align-items-center text-center">
+                    <div class="col-12">
+                      <div *ngFor="let upload of uploads" class="card-granny-smith p-2 text-center">
+                          <span [attr.href]="fileWithLink.link" target="_blank" style="cursor: pointer">{{upload.name}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
 
               </div>
             </div>
