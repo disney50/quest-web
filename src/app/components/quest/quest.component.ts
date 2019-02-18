@@ -15,6 +15,7 @@ import { combineLatest } from 'rxjs';
 import { Explorer } from 'src/app/models/explorer';
 import { Upload } from 'src/app/models/upload';
 import { DomSanitizer } from '@angular/platform-browser';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-quest',
@@ -38,8 +39,8 @@ export class QuestComponent implements OnInit {
   moderatorSignedIn = false;
   userSignedIn = false;
   selectedExplorer = {} as Explorer;
-  documents = [];
   uploads = [];
+  image = null;
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -61,33 +62,47 @@ export class QuestComponent implements OnInit {
     this.store.dispatch(new actions.LogOutUser);
   }
 
+  fileClicked(selectedUploadName: string) {
+    const storageRef = firebase.storage().ref()
+      .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName);
+    storageRef.getDownloadURL().then(url => {
+      this.image = url;
+      console.log(this.image);
+    });
+  }
+
   getDocuments() {
     this.fileService.getCollectionForUpload(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest.questId)
       .valueChanges().subscribe(documents => {
-        this.documents = documents;
-        this.getUploads();
+        documents.forEach(document => {
+          const upload = {} as Upload;
+          upload.name = document.name;
+          upload.timestamp = document.timestamp;
+          this.uploads.push(upload);
+        });
       });
+
   }
 
-  getUploads() {
-    this.documents.forEach(document => {
-      this.fileService.downloadFileFromStorage(this.currentPlanet.name, this.selectedExplorer.userId,
-        this.selectedQuest.questId, document.name)
-        .then(url => {
-          const upload = {} as Upload;
-          const xmlHttpRequest = new XMLHttpRequest();
-          xmlHttpRequest.responseType = 'blob';
-          xmlHttpRequest.onload = () => {
-            upload.name = document.name;
-            const blob = xmlHttpRequest.response;
-            upload.link = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
-            this.uploads.push(upload);
-          };
-          xmlHttpRequest.open('GET', url);
-          xmlHttpRequest.send();
-        });
-    });
-  }
+  // getUploads() {
+  //   this.documents.forEach(document => {
+  //     this.fileService.downloadFileFromStorage(this.currentPlanet.name, this.selectedExplorer.userId,
+  //       this.selectedQuest.questId, document.name)
+  //       .then(url => {
+  //         const upload = {} as Upload;
+  //         const xmlHttpRequest = new XMLHttpRequest();
+  //         xmlHttpRequest.responseType = 'blob';
+  //         xmlHttpRequest.onload = () => {
+  //           upload.name = document.name;
+  //           const blob = xmlHttpRequest.response;
+  //           upload.link = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+  //           this.uploads.push(upload);
+  //         };
+  //         xmlHttpRequest.open('GET', url);
+  //         xmlHttpRequest.send();
+  //       });
+  //   });
+  // }
 
   checkStatus() {
     if (this.selectedQuest.status === 'inprogress'
@@ -133,10 +148,6 @@ export class QuestComponent implements OnInit {
   launchClicked() {
     this.questService.launchQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
     this.navigateDashboard();
-  }
-
-  viewClicked() {
-
   }
 
   sliceHasLoginSucceeded() {

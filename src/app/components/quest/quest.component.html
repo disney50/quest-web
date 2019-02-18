@@ -141,10 +141,10 @@
                     <span>No File Uploaded</span>
                   </div>
 
-                  <div *ngIf="uploads.length === 0" class="row justify-content-center align-items-center text-center">
+                  <div *ngIf="uploads.length !== 0" class="row justify-content-center align-items-center text-center">
                     <div class="col-12">
                       <div *ngFor="let upload of uploads" class="card-granny-smith p-2 text-center">
-                          <span [attr.href]="fileWithLink.link" target="_blank" style="cursor: pointer">{{upload.name}}</span>
+                        <span style="cursor: pointer" (click)="fileClicked(upload.name)">{{upload.name}}</span>
                       </div>
                     </div>
                   </div>
@@ -157,10 +157,6 @@
           <div *ngIf="userSignedIn">
             <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
             <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
-          </div>
-
-          <div *ngIf="moderatorSignedIn">
-            <button type="button" class="btn-gothic" (click)="viewClicked()">VIEW</button>
           </div>
 
         </div>
@@ -193,6 +189,29 @@
           <div class="row justify-content-center align-items-center text-center">
             <div class="col-12">
               <span><b>{{message}}</b></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" role="dialog" [ngStyle]="{'display': image ? 'block': 'none', 'opacity': 1}"
+      (click)="image = null">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+          <div class="row">
+            <div class="col-12">
+              <button class="btn-close float-right">
+                <span><b>X</b></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row justify-content-center align-items-center text-center">
+            <div class="col-12">
+              <img src={{image}}>
             </div>
           </div>
 

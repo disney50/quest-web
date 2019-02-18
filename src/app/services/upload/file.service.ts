@@ -34,10 +34,4 @@ export class FileService {
   getCollectionForUpload(planetName: string, userId: string, questId: string): AngularFirestoreCollection {
     return this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/files/');
   }
-
-  downloadFileFromStorage(planetName: string, userId: string, questId: string, selectedFileName: string): Promise<any> {
-    const storageRef = firebase.storage().ref();
-
-    return storageRef.child(planetName + '/' + userId + '/' + questId + '/' + selectedFileName).getDownloadURL();
-  }
 }
