@@ -246,6 +246,7 @@ export class QuestComponent implements OnInit {
         this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.selectedExplorer.userId,
           this.selectedQuest.questId));
         this.sliceAllComments();
+        this.questService.updateLastViewCommentDate(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest);
       }
     });
   }
@@ -254,8 +255,7 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.allComments).subscribe(allComments => {
       if (this.moderatorSignedIn || this.userSignedIn) {
         this.allComments = allComments;
-        console.log(this.allComments);
-
+        console.log('allComments', this.allComments);
       }
     });
   }
