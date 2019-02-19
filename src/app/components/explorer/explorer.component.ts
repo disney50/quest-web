@@ -85,9 +85,7 @@ export class ExplorerComponent implements OnInit {
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if (this.moderatorSignedIn) {
-        explorerQuests.forEach(explorerQuest => {
-          this.explorerQuests = this.questService.getNumberNewCommentsForQuest(this.currentPlanet.name, this.selectedExplorer.userId, explorerQuests);
-        });
+        this.explorerQuests = explorerQuests;
       }
     });
   }
