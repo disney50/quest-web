@@ -9,6 +9,7 @@ import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Quest } from 'src/app/models/quest';
 import { Explorer } from 'src/app/models/explorer';
+import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 
 @Component({
   selector: 'app-planet',
@@ -24,7 +25,8 @@ export class PlanetComponent implements OnInit {
   planetQuests = [];
 
   constructor(private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private explorerService: ExplorerService
   ) { }
 
   navigateLogin() {
@@ -107,7 +109,9 @@ export class PlanetComponent implements OnInit {
   slicePlanetExplorers() {
     this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
       if (this.moderatorSignedIn) {
-        this.planetExplorers = planetExplorers;
+        this.planetExplorers = this.explorerService.getNumberModeratingQuestsForExplorer(this.currentPlanet.name, planetExplorers);
+        console.log(this.planetExplorers);
+
       }
     });
   }
@@ -117,7 +121,7 @@ export class PlanetComponent implements OnInit {
       if (this.moderatorSignedIn) {
         this.planetQuests = planetQuests;
       }
-    })
+    });
   }
 
   ngOnInit() {

@@ -9,6 +9,7 @@ import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { Explorer } from 'src/app/models/explorer';
 import { Quest } from 'src/app/models/quest';
+import { QuestService } from 'src/app/services/quest/quest.service';
 
 @Component({
   selector: 'app-explorer',
@@ -24,7 +25,8 @@ export class ExplorerComponent implements OnInit {
   explorerQuests = [];
 
   constructor(private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private questService: QuestService
   ) { }
 
   navigateLogin() {
@@ -83,7 +85,11 @@ export class ExplorerComponent implements OnInit {
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if (this.moderatorSignedIn) {
-        this.explorerQuests = explorerQuests;
+        explorerQuests.forEach(explorerQuest => {
+          this.explorerQuests = this.questService.getNumberNewCommentsForQuest(this.currentPlanet.name, this.selectedExplorer.userId, explorerQuests);
+          console.log(this.explorerQuests);
+
+        });
       }
     });
   }

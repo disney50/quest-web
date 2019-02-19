@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Quest, QuestData } from 'src/app/models/quest';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { Explorer } from 'src/app/models/explorer';
+import { CommentData, Comment } from 'src/app/models/comment';
 
 @Injectable({
   providedIn: 'root'
@@ -103,5 +105,23 @@ export class QuestService {
     updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(updatedQuest.questId).set(updatedQuest.toData());
+  }
+
+  getNumberNewCommentsForQuest(planetName: string, explorerUserId: string, explorerQuests: Quest[]) {
+    explorerQuests.forEach(explorerQuest => {
+      this.angularFirestore.collection(planetName + '/explorers/entries/' + explorerUserId + '/quests/' + explorerQuest.questId + '/comments/')
+        .get().subscribe(documents => {
+          explorerQuest.newComments = 0;
+          documents.forEach(document => {
+            let comment = {} as Comment;
+            comment = new Comment(document.data() as CommentData);
+            if (comment.timestamp > explorerQuest.comment_last_view_date) {
+              explorerQuest.newComments = explorerQuest.newComments + 1;
+            }
+          });
+        });
+    });
+
+    return explorerQuests;
   }
 }

@@ -69,7 +69,7 @@
               <div class="col-12">
                 <div class="card-granny-smith m-2 py-2" style="cursor: pointer;" (click)="questClicked(quest)">
                   <div class="row justify-content-center align-items-center text-center">
-                    <b class="text-medium">{{quest.title}}</b>
+                    <b class="text-medium"><span *ngIf="quest.newComments > 0 || quest.status === 'moderating'" class="badge badge-light text-white mr-2 pr-2">{{quest.newComments}}</span>{{quest.title}}</b>
                   </div>
 
                   <div class="row justify-content-center align-items-center text-center">

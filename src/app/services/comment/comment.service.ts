@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Comment } from '../../models/comment';
+import { Comment, CommentData } from '../../models/comment';
 import * as firebase from 'firebase';
 import { QuestService } from '../quest/quest.service';
 import { Quest } from 'src/app/models/quest';
