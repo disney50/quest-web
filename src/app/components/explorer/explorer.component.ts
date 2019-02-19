@@ -37,6 +37,10 @@ export class ExplorerComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
+  logOutClicked() {
+    this.store.dispatch(new actions.LogOutUser);
+  }
+
   questClicked(selectedQuest: Quest) {
     this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
     this.router.navigateByUrl('quest');

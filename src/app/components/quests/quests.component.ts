@@ -8,6 +8,7 @@ import { User } from 'src/app/models/user';
 import { Quest } from 'src/app/models/quest';
 import { QuestService } from 'src/app/services/quest/quest.service';
 import * as selectors from '../../store/selectors';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-quests',
@@ -15,9 +16,10 @@ import * as selectors from '../../store/selectors';
   styleUrls: ['./quests.component.css']
 })
 export class QuestsComponent implements OnInit {
+  moderatorSignedIn = false;
+  userSignedIn = false;
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
-  signedIn = false;
   planetQuests: Quest[] = [];
   explorerQuests: Quest[] = [];
   possibleQuests: Quest[] = [];
@@ -60,18 +62,21 @@ export class QuestsComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.userSignedIn).subscribe(signedIn => {
-      if (!signedIn) {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (!this.moderatorSignedIn && !this.userSignedIn) {
         this.navigateLogin();
-      } else {
-        this.signedIn = true;
       }
     });
   }
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.signedInUser = signedInUser;
       }
     });
@@ -79,7 +84,7 @@ export class QuestsComponent implements OnInit {
 
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.currentPlanet = currentPlanet;
       }
     });
@@ -87,7 +92,7 @@ export class QuestsComponent implements OnInit {
 
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.planetQuests = planetQuests;
         this.possibleQuests = this.planetQuests;
       }
@@ -96,7 +101,7 @@ export class QuestsComponent implements OnInit {
 
   sliceExplorerQuests() {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.explorerQuests = explorerQuests;
         this.checkPossibleQuests();
       }

@@ -5,8 +5,7 @@ import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
 import { LoginDetails } from 'src/app/models/login-details';
 import * as selectors from '../../store/selectors';
-import { tap } from 'rxjs/operators';
-import { moderatorSignedIn } from '../../store/selectors';
+import {  combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +14,8 @@ import { moderatorSignedIn } from '../../store/selectors';
 })
 export class LoginComponent implements OnInit {
   message: string = null;
+  moderatorSignedIn = false;
+  userSignedIn = false;
 
   constructor(private router: Router,
     private store: Store<AppState>) {
@@ -49,15 +50,28 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  sliceHasLoginSucceeded() {
-    this.store.select(selectors.moderatorSignedIn).subscribe(moderatorSignedIn => {
-      if (moderatorSignedIn) {
-        this.navigateDashboard();
-      }
-    });
+  // sliceHasLoginSucceeded() {
+  //   this.store.select(selectors.moderatorSignedIn).subscribe(moderatorSignedIn => {
+  //     if (moderatorSignedIn) {
+  //       this.navigateDashboard();
+  //     }
+  //   });
 
-    this.store.select(selectors.userSignedIn).subscribe(userSignedIn => {
-      if (userSignedIn) {
+  //   this.store.select(selectors.userSignedIn).subscribe(userSignedIn => {
+  //     if (userSignedIn) {
+  //       this.navigateDashboard();
+  //     }
+  //   });
+  // }
+
+  sliceHasLoginSucceeded() {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.navigateDashboard();
       }
     });
