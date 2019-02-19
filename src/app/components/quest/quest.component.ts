@@ -81,7 +81,7 @@ export class QuestComponent implements OnInit {
     this.completedStatus = false;
 
     this.moderateQuest();
-    }
+  }
 
   completedClicked() {
     this.failedStatus = false;
@@ -160,15 +160,19 @@ export class QuestComponent implements OnInit {
       || this.selectedQuest.status === 'completed') {
       this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId));
       this.sliceAllComments();
-      if (this.selectedQuest.status === 'inprogress') {
-        this.isInProgress = true;
-      } else if (this.selectedQuest.status === 'moderating') {
-        this.isModerating = true;
-      } else if (this.selectedQuest.status === 'completed') {
-        this.isCompleted = true;
-      }
+      this.setStatus();
     } else {
       this.isUndefined = true;
+    }
+  }
+
+  setStatus() {
+    if (this.selectedQuest.status === 'inprogress') {
+      this.isInProgress = true;
+    } else if (this.selectedQuest.status === 'moderating') {
+      this.isModerating = true;
+    } else if (this.selectedQuest.status === 'completed') {
+      this.isCompleted = true;
     }
   }
 
@@ -239,6 +243,7 @@ export class QuestComponent implements OnInit {
         this.selectedQuest = selectedQuest;
         this.store.dispatch(new actions.RequestGetComments(this.currentPlanet.name, this.selectedExplorer.userId,
           this.selectedQuest.questId));
+        this.setStatus();
         this.sliceAllComments();
         this.questService.updateLastViewCommentDate(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest);
       }
