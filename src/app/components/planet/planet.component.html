@@ -35,11 +35,11 @@
           </div>
 
           <div class="card-body mb-0 pb-0">
-            <div *ngFor="let explorer of planetExplorers" class="row">
+            <div *ngFor="let explorer of explorersRequiringModeratorAction" class="row">
               <div class="col-12">
                 <div class="card-gothic m-2 py-2" style="cursor: pointer;" (click)="explorerClicked(explorer)">
                   <div class="row justify-content-center align-items-center text-center">
-                    <b class="text-medium"><span *ngIf="explorer.moderatingQuests > 0 || explorer.newComments > 0" class="badge badge-light text-white mr-2 pr-2">{{explorer.moderatingQuests}}</span>{{explorer.name}} {{explorer.surname}}</b>
+                    <b class="text-medium"><span *ngIf="explorer.isModerating === true || explorer.newComments === true" class="badge badge-light text-white mr-2 pr-2">0</span>{{explorer.name}} {{explorer.surname}}</b>
                   </div>
 
                   <div class="row justify-content-center align-items-center text-center">
