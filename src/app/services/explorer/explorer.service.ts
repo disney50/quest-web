@@ -19,7 +19,7 @@ export class ExplorerService {
   createExplorer(planetName: string, newUser: User) {
     this.newExplorer.name = newUser.name;
     this.newExplorer.surname = newUser.surname;
-    this.newExplorer.xp = '0';
+    this.newExplorer.xp = 0;
     this.newExplorer.userId = newUser.userId;
     this.addNewExplorerToPlanet(planetName);
   }

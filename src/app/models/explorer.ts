@@ -2,7 +2,7 @@ export class Explorer {
   userId: string;
   name: string;
   surname: string;
-  xp: string;
+  xp: number;
 
   constructor(userId: string, data: ExplorerData) {
     this.userId = userId;
@@ -24,5 +24,5 @@ export class Explorer {
 export class ExplorerData {
   name: string;
   surname: string;
-  xp: string;
+  xp: number;
 }
