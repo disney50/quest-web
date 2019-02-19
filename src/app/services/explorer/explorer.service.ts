@@ -33,7 +33,7 @@ export class ExplorerService {
       this.angularFirestore.collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/')
         .get().subscribe(documents => {
           planetExplorer.moderatingQuests = 0;
-          planetExplorer.newComments = 0;
+          planetExplorer.questsWithNewComments = 0;
           documents.forEach(document => {
             let explorerQuest = {} as Quest;
             let explorerQuests = [];
@@ -48,7 +48,7 @@ export class ExplorerService {
             newExplorerQuests = this.questService.getNumberNewCommentsForQuest(planetName, planetExplorer.userId, explorerQuests);
             newExplorerQuests.forEach(newExplorerQuest => {
               if (newExplorerQuest.newComments > 0) {
-                planetExplorer.newComments = planetExplorer.newComments + 1;
+                planetExplorer.questsWithNewComments = planetExplorer.questsWithNewComments + 1;
               }
             });
           });

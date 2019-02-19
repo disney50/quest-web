@@ -163,12 +163,12 @@
       </div>
 
       <div *ngIf="moderatorSignedIn" class="col-sm-12 col-lg-4 pt-5">
-        <input [(ngModel)]="newXP" class="input mb-3" type="text" placeholder="enter xp...">
+        <input [(ngModel)]="newXP" class="input mb-3" type="number" placeholder="enter xp...">
       </div>
 
     </div>
 
-    <div *ngIf="moderatorSignedIn" class="row justify-content-center align-items-center fixed-bottom">
+    <div *ngIf="moderatorSignedIn && isModerating" class="row justify-content-center align-items-center fixed-bottom">
       <div class="col-12">
         <button class="btn-mosque border" style="width: 33%; border-left: none" (click)="failedClicked()">FAILED</button>
 

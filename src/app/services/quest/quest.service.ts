@@ -30,9 +30,12 @@ export class QuestService {
       .doc(currentQuest.questId).update(currentQuest.toData());
   }
 
-  moderateQuest(planetName: string, userId: string, selectedQuest: Quest) {
-    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
+  moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer + '/quests/')
       .doc(selectedQuest.questId).update(selectedQuest.toData());
+
+    this.angularFirestore.collection(planetName + '/explorers/entries/')
+      .doc(selectedExplorer.userId).update(selectedExplorer.toData());
   }
 
   launchQuest(planetName: string, userId: string, currentQuest: Quest) {

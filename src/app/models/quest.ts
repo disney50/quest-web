@@ -14,7 +14,6 @@ export class Quest {
   questId: string;
   isAvailable = false;
   comment_last_view_date: Timestamp;
-  newComments: number;
 
   constructor(questId: string, data: QuestData) {
     this.questId = questId;
@@ -27,7 +26,6 @@ export class Quest {
     this.level2 = data.level2;
     this.status = data.status;
     this.comment_last_view_date = data.comment_last_view_date;
-    this.newComments = data.newComments;
   }
 
   toData(): QuestData {
@@ -35,13 +33,12 @@ export class Quest {
       title: this.title,
       description: this.description,
       max_xp: this.max_xp,
-      // order: this.order,
-      // prerequisites: this.prerequisites,
+      order: this.order,
+      prerequisites: this.prerequisites,
       level1: this.level1,
       level2: this.level2,
       status: this.status,
       comment_last_view_date: this.comment_last_view_date,
-      newComments: this.newComments
     } as QuestData;
   }
 }
@@ -56,5 +53,4 @@ export class QuestData {
   level2: Level2 = {} as Level2;
   status: string;
   comment_last_view_date: Timestamp;
-  newComments: number;
 }
