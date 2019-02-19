@@ -45,6 +45,7 @@ export class CreateComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+    this.navigateLogin();
   }
 
   createClicked() {
@@ -101,7 +102,7 @@ export class CreateComponent implements OnInit {
         this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
 
         this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
-          if (!fetchedPlanetQuests) {
+          if (this.moderatorSignedIn && !fetchedPlanetQuests) {
             this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
           }
         });

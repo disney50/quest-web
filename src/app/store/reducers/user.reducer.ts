@@ -33,14 +33,6 @@ export function userReducer(state = initialUserState, action: actions.UserAction
             newState.loginFailed = true;
             return newState;
 
-        // case actions.GET_USER_SUCCESS:
-        //     const getUserSuccessAction = action as actions.GetUserSuccess;
-        //     newState.signedInUser = getUserSuccessAction.payload;
-        //     newState.userSignedIn = true;
-        //     newState.moderatorSignedIn = false;
-        //     newState.loginFailed = false;
-        //     return newState;
-
         case actions.CLEAR_USER_STATE:
             newState.signedInUser = {} as User;
             newState.userSignedIn = false;

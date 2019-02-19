@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+    this.navigateLogin();
   }
 
   checkStatus() {
@@ -88,7 +89,7 @@ export class DashboardComponent implements OnInit {
       } else if (this.userSignedIn) {
         this.signedInUser = signedInUser;
         this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
-          if (!fetchedCurrentPlanet) {
+          if (this.userSignedIn && !fetchedCurrentPlanet) {
             this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
           }
         });
@@ -110,19 +111,19 @@ export class DashboardComponent implements OnInit {
         this.currentPlanet = currentPlanet;
 
         this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
-          if (!fetchedCurrentQuest) {
+          if (this.userSignedIn && !fetchedCurrentQuest) {
             this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
           }
         });
 
         this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
-          if (!fetchedPlanetQuests) {
+          if (this.userSignedIn && !fetchedPlanetQuests) {
             this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
           }
         });
 
         this.store.select(selectors.fetchedExplorerQuests).subscribe(fetchedExplorerQuests => {
-          if (!fetchedExplorerQuests) {
+          if (this.userSignedIn && !fetchedExplorerQuests) {
             this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));
           }
         });

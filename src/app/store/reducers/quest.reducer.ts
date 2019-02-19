@@ -54,10 +54,6 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.selectedQuest = {} as Quest;
             return newState;
 
-        case actions.GET_QUESTS_WITH_NEW_COMMENTS_SUCCES:
-            newState.questsWithNewComments = (action as actions.GetQuestsWithNewCommentsSuccess).payload;
-            return newState;
-
         default:
             return state;
     }
@@ -72,5 +68,4 @@ export const initialQuestState = {
     fetchedCurrentQuest: false,
     currentQuestExists: false,
     selectedQuest: {} as Quest,
-    questsWithNewComments: []
 };

@@ -69,6 +69,7 @@ export class QuestComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+    this.navigateLogin();
   }
 
   failedClicked() {

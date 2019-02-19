@@ -39,6 +39,7 @@ export class ExplorerComponent implements OnInit {
 
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+    this.navigateLogin();
   }
 
   questClicked(selectedQuest: Quest) {
