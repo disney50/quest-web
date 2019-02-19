@@ -24,6 +24,8 @@ export class PlanetComponent implements OnInit {
   planetExplorers = [];
   planetQuests = [];
 
+  explorersRequiringModeratorAction = [];
+
   constructor(private store: Store<AppState>,
     private router: Router,
     private explorerService: ExplorerService
@@ -111,6 +113,9 @@ export class PlanetComponent implements OnInit {
     this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
       if (this.moderatorSignedIn) {
         this.planetExplorers = planetExplorers;
+        this.explorersRequiringModeratorAction = this.explorerService
+          .createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
+        console.log(this.explorersRequiringModeratorAction);
       }
     });
   }

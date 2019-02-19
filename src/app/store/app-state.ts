@@ -3,6 +3,7 @@ import { Planet } from '../models/planet';
 import { Explorer } from '../models/explorer';
 import { Quest } from '../models/quest';
 import { Comment } from '../models/comment';
+import { ExplorerRequiringModeratorAction } from '../models/explorers-requiring-moderator-action';
 
 export interface AppState {
 

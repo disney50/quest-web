@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { Quest, QuestData } from 'src/app/models/quest';
 import { Comment, CommentData } from 'src/app/models/comment';
 import { QuestService } from '../quest/quest.service';
+import { ExplorerRequiringModeratorAction } from 'src/app/models/explorers-requiring-moderator-action';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,52 @@ export class ExplorerService {
 
   addNewExplorerToPlanet(planetName: string) {
     this.angularFirestore.collection(planetName + '/explorers/entries').doc(this.newExplorer.userId).set(this.newExplorer);
+  }
+
+  createExplorerRequiringModeratorAction(planetExplorer: Explorer) {
+    let newExplorerRequiringModeratorAction = {} as ExplorerRequiringModeratorAction;
+    newExplorerRequiringModeratorAction.isModerating = false;
+    newExplorerRequiringModeratorAction.name = planetExplorer.name;
+    newExplorerRequiringModeratorAction.newComments = false;
+    newExplorerRequiringModeratorAction.surname = planetExplorer.surname;
+    newExplorerRequiringModeratorAction.userId = planetExplorer.userId;
+    newExplorerRequiringModeratorAction.xp = planetExplorer.xp;
+    return newExplorerRequiringModeratorAction;
+  }
+
+  createExplorersRequiringModeratorActionArray(planetExplorers: Explorer[], planetName: string): ExplorerRequiringModeratorAction[] {
+    let explorersRequiringModeratorAction = [];
+
+    planetExplorers.forEach(planetExplorer => {
+      let newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
+      this.angularFirestore.collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/')
+        .get().subscribe(documents => {
+          documents.forEach(document => {
+            let quest = {} as Quest;
+            quest = new Quest(document.id, document.data() as QuestData);
+            if (quest.status === 'moderating' && newExplorerRequiringModeratorAction.isModerating === false) {
+              newExplorerRequiringModeratorAction.isModerating = true;
+            }
+
+            this.angularFirestore
+              .collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/' + quest.questId + '/comments/')
+              .get().subscribe(documents => {
+                documents.forEach(document => {
+                  let comment = {} as Comment;
+                  comment = new Comment(document.data() as CommentData);
+                  // console.log('time', comment.timestamp > quest.comment_last_view_date);
+                  // console.log('newcomments', newExplorerRequiringModeratorAction.newComments === false);
+
+                  if (comment.timestamp > quest.comment_last_view_date && newExplorerRequiringModeratorAction.newComments === false) {
+                    newExplorerRequiringModeratorAction.newComments = true;
+                  }
+                });
+              });
+          });
+        });
+      explorersRequiringModeratorAction.push(newExplorerRequiringModeratorAction);
+    });
+
+    return explorersRequiringModeratorAction;
   }
 }
