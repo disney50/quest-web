@@ -186,7 +186,11 @@ export class QuestComponent implements OnInit {
     if (!newComment) {
       this.message = 'You forgot to write a comment';
     } else {
-      this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest, newComment);
+      if (this.userSignedIn) {
+        this.commentService.createComment(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest, newComment, false);
+      } else if (this.moderatorSignedIn) {
+        this.commentService.createComment(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest, newComment, true);
+      }
     }
   }
 
@@ -239,6 +243,14 @@ export class QuestComponent implements OnInit {
     });
   }
 
+  sliceSelectedExplorer() {
+    this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
+      if (this.moderatorSignedIn) {
+        this.selectedExplorer = selectedExplorer;
+      }
+    });
+  }
+
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
       if (this.userSignedIn) {
@@ -276,21 +288,13 @@ export class QuestComponent implements OnInit {
     });
   }
 
-  sliceSelectedExplorer() {
-    this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
-      if (this.moderatorSignedIn) {
-        this.selectedExplorer = selectedExplorer;
-      }
-    });
-  }
-
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
+    this.sliceSelectedExplorer();
     this.sliceSelectedQuest();
     this.sliceCurrentQuestExists();
-    this.sliceSelectedExplorer();
     this.getDocuments();
   }
 

@@ -16,13 +16,9 @@ export class CommentService {
 
   }
 
-  createComment(planetName: string, userId: string, quest: Quest, newComment: string) {
+  createComment(planetName: string, userId: string, quest: Quest, newComment: string, isModerator: boolean) {
     this.newComment.comment = newComment;
-    if (userId === 'moderator') {
-      this.newComment.isModerator = true;
-    } else {
-      this.newComment.isModerator = false;
-    }
+    this.newComment.isModerator = isModerator;
     this.newComment.timestamp = firebase.firestore.Timestamp.now();
     this.sendComment(planetName, userId, quest.questId);
   }
