@@ -26,7 +26,8 @@ export class QuestService {
   submitQuest(planetName: string, userId: string, currentQuest: Quest) {
     currentQuest.status = 'moderating';
 
-    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/').doc(currentQuest.questId).update(currentQuest.toData());
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
+      .doc(currentQuest.questId).update(currentQuest.toData());
   }
 
   moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
@@ -39,6 +40,7 @@ export class QuestService {
 
   launchQuest(planetName: string, userId: string, currentQuest: Quest) {
     currentQuest.status = 'inprogress';
+    currentQuest.comment_last_view_date = null;
 
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(currentQuest.questId).set(currentQuest.toData());
@@ -104,7 +106,7 @@ export class QuestService {
   updateLastViewCommentDate(planetName: string, userId: string, currentQuest: Quest) {
     let updatedQuest = {} as Quest;
     updatedQuest = currentQuest;
-    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();    
+    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(updatedQuest.questId).set(updatedQuest.toData());
   }
