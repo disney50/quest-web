@@ -19,7 +19,6 @@ export class CommentService {
   createModeratorComment(planetName: string, selectedExplorerId: string, quest: Quest, newComment: string) {
     this.newComment.comment = newComment;
     this.newComment.isModerator = true;
-    this.questService.updateLastViewCommentDate(planetName, selectedExplorerId, quest);
     this.newComment.timestamp = firebase.firestore.Timestamp.now();
     this.sendComment(planetName, selectedExplorerId, quest.questId);
   }

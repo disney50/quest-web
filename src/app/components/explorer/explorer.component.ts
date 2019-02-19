@@ -87,8 +87,6 @@ export class ExplorerComponent implements OnInit {
       if (this.moderatorSignedIn) {
         explorerQuests.forEach(explorerQuest => {
           this.explorerQuests = this.questService.getNumberNewCommentsForQuest(this.currentPlanet.name, this.selectedExplorer.userId, explorerQuests);
-          console.log('explorerQuests', this.explorerQuests);
-
         });
       }
     });

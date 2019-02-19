@@ -4,6 +4,7 @@ export class Explorer {
   surname: string;
   xp: string;
   moderatingQuests: number;
+  newComments: number;
 
   constructor(userId: string, data: ExplorerData) {
     this.userId = userId;
@@ -11,6 +12,7 @@ export class Explorer {
     this.surname = data.surname;
     this.xp = data.xp;
     this.moderatingQuests = data.moderatingQuests;
+    this.newComments = data.newComments;
   }
 
   toData(): ExplorerData {
@@ -19,7 +21,8 @@ export class Explorer {
       name: this.name,
       surname: this.surname,
       xp: this.xp,
-      moderatingQuests: this.moderatingQuests
+      moderatingQuests: this.moderatingQuests,
+      newComments: this.newComments
     } as ExplorerData;
   }
 }
@@ -29,4 +32,5 @@ export class ExplorerData {
   surname: string;
   xp: string;
   moderatingQuests: number;
+  newComments: number;
 }

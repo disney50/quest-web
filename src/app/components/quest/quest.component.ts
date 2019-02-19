@@ -255,7 +255,6 @@ export class QuestComponent implements OnInit {
     this.store.select(selectors.allComments).subscribe(allComments => {
       if (this.moderatorSignedIn || this.userSignedIn) {
         this.allComments = allComments;
-        console.log('allComments', this.allComments);
       }
     });
   }

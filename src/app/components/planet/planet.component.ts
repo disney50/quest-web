@@ -109,9 +109,8 @@ export class PlanetComponent implements OnInit {
   slicePlanetExplorers() {
     this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
       if (this.moderatorSignedIn) {
-        this.planetExplorers = this.explorerService.getNumberModeratingQuestsForExplorer(this.currentPlanet.name, planetExplorers);
-        console.log('planetExplorers', this.planetExplorers);
-
+        this.planetExplorers = this.explorerService.getModeratingQuestsAndnewCommentsNumber(this.currentPlanet.name, planetExplorers);
+        console.log('1. planetExplorers', this.planetExplorers);
       }
     });
   }
