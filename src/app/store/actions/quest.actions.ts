@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Quest } from 'src/app/models/quest';
+import { QuestWithNewComments } from 'src/app/models/quest-with-new-comments';
 
 export const REQUEST_IN_PROGRESS_QUEST_EXISTS = '[quest] REQUEST_IN_PROGRESS_QUEST_EXISTS';
 export const REQUEST_GET_IN_PROGRESS_QUEST = '[quest] REQUEST_GET_IN_PROGRESS_QUEST';
@@ -13,6 +14,7 @@ export const REQUEST_GET_EXPLORER_QUESTS = '[quest] REQUEST_GET_EXPLORER_QUESTS'
 export const GET_EXPLORER_QUESTS_SUCCESS = '[quest] GET_EXPLORER_QUESTS_SUCCESS';
 export const REQUEST_GET_SELECTED_QUEST = '[quest] REQUEST_GET_SELECTED_QUEST';
 export const GET_SELECTED_QUEST_SUCCESS = '[quest] GET_SELECTED_QUEST_SUCCESS';
+export const GET_QUESTS_WITH_NEW_COMMENTS_SUCCES = '[moderator] GET_QUESTS_WITH_NEW_COMMENTS_SUCCES';
 export const CLEAR_QUEST_STATE = '[logout] CLEAR_QUEST_STATE';
 
 export class RequestInProgressQuestExists implements Action {
@@ -73,6 +75,11 @@ export class RequestGetSelectedQuest implements Action {
 export class GetSelectedQuestSuccess implements Action {
     type = GET_SELECTED_QUEST_SUCCESS;
     constructor(public payload: Quest) { }
+}
+
+export class GetQuestsWithNewCommentsSuccess implements Action {
+    type = GET_QUESTS_WITH_NEW_COMMENTS_SUCCES;
+    constructor(public payload: QuestWithNewComments[]) { }
 }
 
 export class ClearQuestState implements Action {

@@ -31,6 +31,11 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.currentExplorer = {} as Explorer;
             return newState;
 
+        case actions.GET_EXPLORERS_WITH_MODERATING_QUESTS_AND_QUESTS_WITH_NEW_COMMENTS_SUCCESS:
+            newState.explorersWithModeratingQuestsAndQuestsWithNewComments =
+                (action as actions.GetExplorersWithModeratingQuestsAndQuestsWithNewComment).payload;
+            return newState;
+
         default:
             return state;
     }
@@ -39,5 +44,6 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
 export const initialExplorerState = {
     planetExplorers: [],
     currentExplorer: {} as Explorer,
-    selectedExplorer: {} as Explorer
+    selectedExplorer: {} as Explorer,
+    explorersWithModeratingQuestsAndQuestsWithNewComments: []
 };

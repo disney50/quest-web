@@ -3,6 +3,8 @@ import { Planet } from '../models/planet';
 import { Explorer } from '../models/explorer';
 import { Quest } from '../models/quest';
 import { Comment } from '../models/comment';
+import { ExplorerWithModeratingQuestsAndQuestsWithNewComments } from '../models/explorer-with-moderating-quests-and-quests-with-new-comments';
+import { QuestWithNewComments } from '../models/quest-with-new-comments';
 
 export interface AppState {
 
@@ -23,6 +25,7 @@ export interface AppState {
         planetExplorers: Explorer[];
         currentExplorer: Explorer;
         selectedExplorer: Explorer;
+        explorersWithModeratingQuestsAndQuestsWithNewComments: ExplorerWithModeratingQuestsAndQuestsWithNewComments[];
     };
 
     questState: {
@@ -34,6 +37,7 @@ export interface AppState {
         fetchedCurrentQuest: boolean;
         currentQuestExists: boolean;
         selectedQuest: Quest;
+        questsWithNewComments: QuestWithNewComments[];
     };
 
     commentState: {
