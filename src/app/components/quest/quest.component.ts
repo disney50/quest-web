@@ -63,6 +63,10 @@ export class QuestComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
+  navigateExplorer() {
+    this.router.navigateByUrl('explorer');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
   }
@@ -109,6 +113,8 @@ export class QuestComponent implements OnInit {
       this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
 
       this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);
+      
+      this.navigateExplorer();
     }
   }
 
@@ -235,7 +241,7 @@ export class QuestComponent implements OnInit {
 
   sliceSelectedQuest() {
     this.store.select(selectors.selectedQuest).subscribe(selectedQuest => {
-      if (this.moderatorSignedIn || this.userSignedIn) {
+      if (this.userSignedIn) {
         this.selectedQuest = selectedQuest;
         this.checkStatus();
         this.sliceAllComments();
