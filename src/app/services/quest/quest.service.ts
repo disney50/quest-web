@@ -146,8 +146,6 @@ export class QuestService {
       }
     });
 
-    console.log('first', newQuestsWithNewCommentsArray);
-
     newQuestsWithNewCommentsArray.forEach(newQuestWithNewComments => {
       this.angularFirestore
         .collection(
@@ -161,8 +159,6 @@ export class QuestService {
           }
         });
     });
-
-    console.log('last', newQuestsWithNewCommentsArray);
 
     this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(newQuestsWithNewCommentsArray));
   }

@@ -25,6 +25,7 @@ export class ExplorerComponent implements OnInit {
   explorerQuests = [];
 
   questsWithNewComments = [];
+  explorerQuestsIds = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -45,7 +46,13 @@ export class ExplorerComponent implements OnInit {
   }
 
   questClicked(selectedQuest: Quest) {
-    this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedQuest));
+    this.explorerQuests.forEach(explorerQuest => {
+      if (this.explorerQuestsIds.indexOf(explorerQuest.questId) === -1) {
+        this.explorerQuestsIds.push(explorerQuest.questId);
+      }
+    });
+    const selectedExplorerQuest = this.explorerQuests[(this.explorerQuestsIds.indexOf(selectedQuest.questId))];
+    this.store.dispatch(new actions.GetSelectedQuestSuccess(selectedExplorerQuest));
     this.router.navigateByUrl('quest');
   }
 
