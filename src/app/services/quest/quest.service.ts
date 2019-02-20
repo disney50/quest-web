@@ -4,6 +4,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Explorer } from 'src/app/models/explorer';
 import { CommentData, Comment } from 'src/app/models/comment';
+import { QuestWithNewComments } from 'src/app/models/quest-with-new-comments';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app-state';
+import * as actions from '../../store/actions';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,9 @@ export class QuestService {
   possibleQuests: Quest[] = [];
   prerequisiteQuest: Quest = {} as Quest;
 
-  constructor(private angularFirestore: AngularFirestore) { }
+  constructor(private angularFirestore: AngularFirestore,
+    private store: Store<AppState>
+  ) { }
 
   createNewQuest(currentPlanetName: string, newQuest: Quest) {
     newQuest.questId = this.angularFirestore.createId();
@@ -109,5 +115,43 @@ export class QuestService {
     updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(updatedQuest.questId).set(updatedQuest.toData());
+  }
+
+  createQuestWithNewComments(explorerQuest: Quest) {
+    let newQuestWithNewComments = {} as QuestWithNewComments;
+    newQuestWithNewComments.comment_last_view_date = explorerQuest.comment_last_view_date;
+    newQuestWithNewComments.description = explorerQuest.description;
+    newQuestWithNewComments.isAvailable = explorerQuest.isAvailable;
+    newQuestWithNewComments.level1 = explorerQuest.level1;
+    newQuestWithNewComments.level2 = explorerQuest.level2;
+    newQuestWithNewComments.max_xp = explorerQuest.max_xp;
+    newQuestWithNewComments.newComments = false;
+    newQuestWithNewComments.order = explorerQuest.order;
+    newQuestWithNewComments.prerequisites = explorerQuest.prerequisites;
+    newQuestWithNewComments.questId = explorerQuest.questId;
+    newQuestWithNewComments.status = explorerQuest.status;
+    newQuestWithNewComments.title = explorerQuest.title;
+    return newQuestWithNewComments;
+  }
+
+  createQuestsWithNewCommentsArray(explorerQuests: Quest[], planetName: string, selectedExplorerUserId: string) {
+    let questsWithNewComments = [];
+
+    explorerQuests.forEach(explorerQuest => {
+      let newQuestWithNewComments = this.createQuestWithNewComments(explorerQuest);
+      this.angularFirestore
+      .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + explorerQuest.questId + '/comments/')
+      .get().subscribe(documents => {
+        documents.forEach(document => {
+          let comment = {} as Comment;
+          comment = new Comment(document.data() as CommentData);
+          if (comment.timestamp > explorerQuest.comment_last_view_date && newQuestWithNewComments.newComments === false) {
+            newQuestWithNewComments.newComments = true;
+          }
+        });
+      });
+      questsWithNewComments.push(newQuestWithNewComments);
+    });
+    this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(questsWithNewComments));
   }
 }

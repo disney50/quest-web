@@ -24,6 +24,8 @@ export class ExplorerComponent implements OnInit {
   selectedExplorer = {} as Explorer;
   explorerQuests = [];
 
+  questsWithNewComments = [];
+
   constructor(private store: Store<AppState>,
     private router: Router,
     private questService: QuestService
@@ -91,6 +93,15 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if (this.moderatorSignedIn) {
         this.explorerQuests = explorerQuests;
+        this.questService.createQuestsWithNewCommentsArray(this.explorerQuests, this.currentPlanet.name, this.selectedExplorer.userId);
+      }
+    });
+  }
+
+  sliceQuestsWithNewComments() {
+    this.store.select(selectors.questsWithNewComments).subscribe(questsWithNewComments => {
+      if (this.moderatorSignedIn) {
+        this.questsWithNewComments = questsWithNewComments;
       }
     });
   }
@@ -101,6 +112,7 @@ export class ExplorerComponent implements OnInit {
     this.sliceCurrentPlanet();
     this.sliceSelectedExplorer();
     this.sliceExplorerQuests();
+    this.sliceQuestsWithNewComments();
   }
 
 }

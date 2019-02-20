@@ -4,6 +4,7 @@ import { Explorer } from '../models/explorer';
 import { Quest } from '../models/quest';
 import { Comment } from '../models/comment';
 import { ExplorerRequiringModeratorAction } from '../models/explorers-requiring-moderator-action';
+import { QuestWithNewComments } from '../models/quest-with-new-comments';
 
 export interface AppState {
 
@@ -36,6 +37,7 @@ export interface AppState {
         fetchedCurrentQuest: boolean;
         currentQuestExists: boolean;
         selectedQuest: Quest;
+        questsWithNewComments: QuestWithNewComments[];
     };
 
     commentState: {

@@ -74,7 +74,6 @@ export class ExplorerService {
         });
       explorersRequiringModeratorAction.push(newExplorerRequiringModeratorAction);
     });
-
     this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(explorersRequiringModeratorAction));
   }
 }

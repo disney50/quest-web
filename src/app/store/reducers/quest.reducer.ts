@@ -43,6 +43,10 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.selectedQuest = getSelectedQuestAction.payload;
             return newState;
 
+        case actions.GET_QUESTS_WITH_NEW_COMMENTS_SUCCESS:
+            newState.explorersRequiringModeratorAction = (action as actions.GetQuestsWithNewCommentsSuccess).payload;
+            return newState;
+
         case actions.CLEAR_QUEST_STATE:
             newState.planetQuests = [];
             newState.fetchedPlanetQuests = false;
@@ -68,4 +72,5 @@ export const initialQuestState = {
     fetchedCurrentQuest: false,
     currentQuestExists: false,
     selectedQuest: {} as Quest,
+    explorersRequiringModeratorAction: []
 };

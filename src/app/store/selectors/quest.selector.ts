@@ -17,3 +17,5 @@ export const fetchedCurrentQuest = (state: AppState) => questBase(state).fetched
 export const currentQuestExists = (state: AppState) => questBase(state).currentQuestExists;
 
 export const selectedQuest = (state: AppState) => questBase(state).selectedQuest;
+
+export const questsWithNewComments = (state: AppState) => questBase(state).questsWithNewComments;
