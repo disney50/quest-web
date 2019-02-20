@@ -52,17 +52,14 @@ export class UserEffects {
     @Effect()
     RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
         switchMap((action: actions.RequestUserExistsUsers) => {
-
             this.email = action.payload.email;
             this.password = action.payload.password;
             return this.angularFirestore.collection('users', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
-
                 return new actions.RequestUserExistsExplorers();
             } else {
-
                 if (snapShot.docs[0].data().password === undefined) {
                     this.user = new User(snapShot.docs[0].data().userId, snapShot.docs[0].data() as UserData);
                     this.user.password = this.password;
@@ -79,17 +76,13 @@ export class UserEffects {
     @Effect()
     RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_EXPLORERS).pipe(
         switchMap((action: actions.RequestUserExistsExplorers) => {
-
             return this.angularFirestore.collection('codeez/explorers/entries', ref => ref.where('email', '==', this.email)).get();
         }),
         map(snapShot => {
             if (snapShot.size === 0) {
-
                 return new actions.LoginFailed();
             } else {
-
                 if (snapShot.docs[0].data().password === undefined) {
-
                     this.user = new User(snapShot.docs[0].id, {
                         gender: snapShot.docs[0].data().gender,
                         name: snapShot.docs[0].data().name,
@@ -116,14 +109,14 @@ export class UserEffects {
     GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
         switchMap((action: actions.RequestGetUserByLoginDetails) => {
             return this.angularFirestore.collection('users', ref => ref
-                .where('email', '==', this.email).where('password', '==', this.password).limit(1)).stateChanges();
+                .where('email', '==', this.email).where('password', '==', this.password).limit(1)).get();
         }),
-        mergeMap(actions => actions),
-        map(action => {
-            if (action.type === 'added') {
-                return new actions.LoginSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+        map(snapShot => {
+            if (snapShot.size === 0) {
+                return new actions.LoginFailed();
+            } else {
+                return new actions.LoginSuccess(new User(snapShot.docs[0].id, snapShot.docs[0].data() as UserData));
             }
-            return new actions.UnimplementedAction('');
         })
     );
 
