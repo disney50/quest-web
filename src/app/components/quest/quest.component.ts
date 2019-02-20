@@ -102,13 +102,10 @@ export class QuestComponent implements OnInit {
     } else {
       if (this.failedStatus) {
         this.selectedQuest.status = 'inprogress';
-        console.log(this.selectedQuest);
       } else if (this.relaunchStatus) {
         this.selectedQuest.status = 'inprogress';
-        console.log(this.selectedQuest);
       } else if (this.completedStatus) {
         this.selectedQuest.status = 'completed';
-        console.log(this.selectedQuest);
       }
 
       this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
@@ -124,7 +121,6 @@ export class QuestComponent implements OnInit {
       .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName);
     storageRef.getDownloadURL().then(url => {
       this.image = url;
-      console.log(this.image);
     });
   }
 

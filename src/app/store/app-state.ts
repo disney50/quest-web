@@ -24,6 +24,7 @@ export interface AppState {
         planetExplorers: Explorer[];
         currentExplorer: Explorer;
         selectedExplorer: Explorer;
+        explorersRequiringModeratorAction: ExplorerRequiringModeratorAction[];
     };
 
     questState: {

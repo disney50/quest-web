@@ -6,6 +6,10 @@ import { Quest, QuestData } from 'src/app/models/quest';
 import { Comment, CommentData } from 'src/app/models/comment';
 import { QuestService } from '../quest/quest.service';
 import { ExplorerRequiringModeratorAction } from 'src/app/models/explorers-requiring-moderator-action';
+import { AppState } from 'src/app/store/app-state';
+import { Store } from '@ngrx/store';
+import * as actions from '../../store/actions';
+import * as selectors from '../../store/selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +18,8 @@ export class ExplorerService {
   newExplorer: Explorer = {} as Explorer;
 
   constructor(private angularFirestore: AngularFirestore,
-    private questService: QuestService
+    private questService: QuestService,
+    private store: Store<AppState>
   ) { }
 
   createExplorer(planetName: string, newUser: User) {
@@ -40,7 +45,7 @@ export class ExplorerService {
     return newExplorerRequiringModeratorAction;
   }
 
-  createExplorersRequiringModeratorActionArray(planetExplorers: Explorer[], planetName: string): ExplorerRequiringModeratorAction[] {
+  createExplorersRequiringModeratorActionArray(planetExplorers: Explorer[], planetName: string) {
     let explorersRequiringModeratorAction = [];
 
     planetExplorers.forEach(planetExplorer => {
@@ -60,9 +65,6 @@ export class ExplorerService {
                 documents.forEach(document => {
                   let comment = {} as Comment;
                   comment = new Comment(document.data() as CommentData);
-                  // console.log('time', comment.timestamp > quest.comment_last_view_date);
-                  // console.log('newcomments', newExplorerRequiringModeratorAction.newComments === false);
-
                   if (comment.timestamp > quest.comment_last_view_date && newExplorerRequiringModeratorAction.newComments === false) {
                     newExplorerRequiringModeratorAction.newComments = true;
                   }
@@ -73,6 +75,6 @@ export class ExplorerService {
       explorersRequiringModeratorAction.push(newExplorerRequiringModeratorAction);
     });
 
-    return explorersRequiringModeratorAction;
+    this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(explorersRequiringModeratorAction));
   }
 }

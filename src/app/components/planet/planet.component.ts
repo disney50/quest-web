@@ -23,6 +23,7 @@ export class PlanetComponent implements OnInit {
   moderatorSignedIn = true;
   planetExplorers = [];
   planetQuests = [];
+  planetExplorersIds = [];
 
   explorersRequiringModeratorAction = [];
 
@@ -62,7 +63,13 @@ export class PlanetComponent implements OnInit {
   }
 
   explorerClicked(selectedExplorer: Explorer) {
-    this.store.dispatch(new actions.GetSelectedExplorerSuccess(selectedExplorer));
+    this.planetExplorers.forEach(planetExplorer => {
+      if (this.planetExplorersIds.indexOf(planetExplorer) === -1) {
+        this.planetExplorersIds.push(planetExplorer.userId);
+      }
+    });
+    let selectedPlanetExplorer = this.planetExplorers[(this.planetExplorersIds.indexOf(selectedExplorer.userId))];
+    this.store.dispatch(new actions.GetSelectedExplorerSuccess(selectedPlanetExplorer));
     this.navigateExplorer();
   }
 
@@ -113,9 +120,15 @@ export class PlanetComponent implements OnInit {
     this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
       if (this.moderatorSignedIn) {
         this.planetExplorers = planetExplorers;
-        this.explorersRequiringModeratorAction = this.explorerService
-          .createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
-        console.log(this.explorersRequiringModeratorAction);
+        this.explorerService.createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
+      }
+    });
+  }
+
+  sliceExplorersRequiringModeratorAction() {
+    this.store.select(selectors.explorersRequiringModeratorAction).subscribe(explorersRequiringModeratorAction => {
+      if (this.moderatorSignedIn) {
+        this.explorersRequiringModeratorAction = explorersRequiringModeratorAction;
       }
     });
   }
@@ -133,6 +146,7 @@ export class PlanetComponent implements OnInit {
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
     this.slicePlanetExplorers();
+    this.sliceExplorersRequiringModeratorAction();
     this.slicePlanetQuests();
   }
 

@@ -1,11 +1,13 @@
 import { Action } from '@ngrx/store';
 import { Explorer } from 'src/app/models/explorer';
+import { ExplorerRequiringModeratorAction } from 'src/app/models/explorers-requiring-moderator-action';
 
 export const REQUEST_GET_EXPLORER = '[explorer] REQUEST_GET_EXPLORER';
 export const GET_EXPLORER_SUCCESS = '[explorer] GET_EXPLORER_SUCCESS';
 export const REQUEST_GET_EXPLORERS = '[explorer] REQUEST_GET_EXPLORERS';
 export const GET_EXPLORERS_SUCCESS = '[explorer] GET_EXPLORERS_SUCCESS';
 export const GET_SELECTED_EXPLORER_SUCCESS = '[explorer] GET_SELECTED_EXPLORER_SUCCESS';
+export const GET_EXPLORERS_REQUIRING_MODERATOR_ACTION_SUCCESS = '[moderator] GET_EXPLORERS_REQUIRING_MODERATOR_ACTION_SUCCESS';
 export const CLEAR_EXPLORER_STATE = '[logout] CLEAR_EXPLORER_STATE';
 
 export class RequestGetExplorer implements Action {
@@ -33,6 +35,11 @@ export class GetSelectedExplorerSuccess implements Action {
     constructor(public payload: Explorer) { }
 }
 
+export class GetExplorersRequiringModeratorActionSuccess implements Action {
+    type = GET_EXPLORERS_REQUIRING_MODERATOR_ACTION_SUCCESS;
+    constructor(public payload: ExplorerRequiringModeratorAction[]) {}
+}
+
 export class ClearExplorerState implements Action {
     type = CLEAR_EXPLORER_STATE;
     constructor() { }
@@ -44,4 +51,5 @@ export type ExplorerActions =
     | RequestGetExplorers
     | GetExplorersSuccess
     | GetSelectedExplorerSuccess
+    | GetExplorersRequiringModeratorActionSuccess
     | ClearExplorerState;

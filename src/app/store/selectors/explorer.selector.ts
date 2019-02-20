@@ -7,3 +7,5 @@ export const planetExplorers = (state: AppState) => explorerBase(state).planetEx
 export const currentExplorer = (state: AppState) => explorerBase(state).currentExplorer;
 
 export const selectedExplorer = (state: AppState) => explorerBase(state).selectedExplorer;
+
+export const explorersRequiringModeratorAction = (state: AppState) => explorerBase(state).explorersRequiringModeratorAction;

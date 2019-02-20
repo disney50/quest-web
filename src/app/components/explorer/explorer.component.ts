@@ -82,8 +82,6 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.selectedExplorer).subscribe(selectedExplorer => {
       if (this.moderatorSignedIn) {
         this.selectedExplorer = selectedExplorer;
-        console.log('sliceSelectedExplorer', this.currentPlanet.name, this.selectedExplorer.userId);
-        
         this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.selectedExplorer.userId));
       }
     });
