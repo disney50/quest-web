@@ -143,8 +143,8 @@
 
                   <div *ngIf="uploads.length !== 0" class="row justify-content-center align-items-center text-center">
                     <div class="col-12">
-                      <div *ngFor="let upload of uploads" class="card-granny-smith p-2 mb-2 text-center">
-                        <span style="cursor: pointer" (click)="fileClicked(upload.name)">{{upload.name}}</span>
+                      <div *ngFor="let upload of uploads" class="card-granny-smith p-2 mb-2 text-center" (click)="fileClicked(upload.name)">
+                        <span style="cursor: pointer">{{upload.name}}</span>
                       </div>
                     </div>
                   </div>
