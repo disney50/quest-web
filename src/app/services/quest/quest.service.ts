@@ -38,7 +38,7 @@ export class QuestService {
   }
 
   moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
-    this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer + '/quests/')
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer.userId + '/quests/')
       .doc(selectedQuest.questId).update(selectedQuest.toData());
 
     this.angularFirestore.collection(planetName + '/explorers/entries/')

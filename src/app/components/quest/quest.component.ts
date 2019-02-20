@@ -111,7 +111,7 @@ export class QuestComponent implements OnInit {
       this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
 
       this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);
-      
+
       this.navigateExplorer();
     }
   }
