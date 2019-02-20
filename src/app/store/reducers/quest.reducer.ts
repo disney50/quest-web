@@ -68,6 +68,7 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.fetchedCurrentQuest = false;
             newState.currentQuestExists = false;
             newState.selectedQuest = {} as Quest;
+            newState.questsWithNewComments = [];
             return newState;
 
         default:

@@ -42,6 +42,7 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.planetExplorers = [];
             newState.currentExplorer = {} as Explorer;
             newState.selectedExplorer = {} as Explorer;
+            newState.explorersRequiringModeratorAction = [];
             return newState;
 
         default:
