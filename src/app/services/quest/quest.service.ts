@@ -31,6 +31,7 @@ export class QuestService {
 
   submitQuest(planetName: string, userId: string, currentQuest: Quest) {
     currentQuest.status = 'moderating';
+    currentQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
 
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(currentQuest.questId).update(currentQuest.toData());
@@ -146,10 +147,7 @@ export class QuestService {
       }
     });
 
-    console.log('before', newQuestsWithNewCommentsArray);
-
     newQuestsWithNewCommentsArray.forEach(newQuestWithNewComments => {
-
       this.angularFirestore
         .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + newQuestWithNewComments.questId + '/comments/', ref => ref
           .where('timestamp', '>', newQuestWithNewComments.comment_last_view_date))
