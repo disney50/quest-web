@@ -135,23 +135,35 @@ export class QuestService {
   }
 
   createQuestsWithNewCommentsArray(explorerQuests: Quest[], planetName: string, selectedExplorerUserId: string) {
-    const questsWithNewComments = [];
+    const newQuestsWithNewCommentsArray = [];
+    const newQuestsWithNewCommentsIds = [];
 
     explorerQuests.forEach(explorerQuest => {
       const newQuestWithNewComments = this.createQuestWithNewComments(explorerQuest);
-      this.angularFirestore
-        .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + explorerQuest.questId + '/comments/')
-        .get().subscribe(documents => {
-          documents.forEach(document => {
-            let comment = {} as Comment;
-            comment = new Comment(document.data() as CommentData);
-            if (comment.timestamp > explorerQuest.comment_last_view_date && newQuestWithNewComments.newComments === false) {
-              newQuestWithNewComments.newComments = true;
-            }
-          });
-        });
-      questsWithNewComments.push(newQuestWithNewComments);
+      if (newQuestsWithNewCommentsIds.indexOf(newQuestWithNewComments.questId) === -1) {
+        newQuestsWithNewCommentsArray.push(newQuestWithNewComments);
+        newQuestsWithNewCommentsIds.push(newQuestWithNewComments.questId);
+      }
     });
-    this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(questsWithNewComments));
+
+    console.log('first', newQuestsWithNewCommentsArray);
+
+    newQuestsWithNewCommentsArray.forEach(newQuestWithNewComments => {
+      this.angularFirestore
+        .collection(
+          planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + newQuestWithNewComments.questId + '/comments/',
+          ref => ref
+            .where('timestamp', '>', newQuestWithNewComments.comment_last_view_date))
+        .get()
+        .subscribe(newComments => {
+          if (newComments.size > 0) {
+            newQuestWithNewComments.newComments = true;
+          }
+        });
+    });
+
+    console.log('last', newQuestsWithNewCommentsArray);
+
+    this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(newQuestsWithNewCommentsArray));
   }
 }

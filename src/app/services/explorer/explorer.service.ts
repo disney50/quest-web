@@ -46,34 +46,46 @@ export class ExplorerService {
   }
 
   createExplorersRequiringModeratorActionArray(planetExplorers: Explorer[], planetName: string) {
-    const explorersRequiringModeratorAction = [];
+    const newExplorersRequiringModeratorActionArray = [];
+    const newExplorersRequiringModeratorActionIds = [];
 
     planetExplorers.forEach(planetExplorer => {
       const newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
-      this.angularFirestore.collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/')
-        .get().subscribe(documents => {
-          documents.forEach(document => {
-            let quest = {} as Quest;
-            quest = new Quest(document.id, document.data() as QuestData);
-            if (quest.status === 'moderating' && newExplorerRequiringModeratorAction.isModerating === false) {
-              newExplorerRequiringModeratorAction.isModerating = true;
-            }
-
-            this.angularFirestore
-              .collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/' + quest.questId + '/comments/')
-              .get().subscribe(documents => {
-                documents.forEach(document => {
-                  let comment = {} as Comment;
-                  comment = new Comment(document.data() as CommentData);
-                  if (comment.timestamp > quest.comment_last_view_date && newExplorerRequiringModeratorAction.newComments === false) {
-                    newExplorerRequiringModeratorAction.newComments = true;
-                  }
-                });
-              });
-          });
-        });
-      explorersRequiringModeratorAction.push(newExplorerRequiringModeratorAction);
+      if (newExplorersRequiringModeratorActionIds.indexOf(newExplorerRequiringModeratorAction.userId) === -1) {
+        newExplorersRequiringModeratorActionArray.push(newExplorerRequiringModeratorAction);
+        newExplorersRequiringModeratorActionIds.push(newExplorerRequiringModeratorAction.userId);
+      }
     });
-    this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(explorersRequiringModeratorAction));
+
+    console.log('first', newExplorersRequiringModeratorActionArray);
+
+    newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
+          .where('status', '==', 'moderating'))
+        .get()
+        .subscribe(moderatingQuests => {
+          if (moderatingQuests.size > 0) {
+            newExplorerRequiringModeratorAction.isModerating = true;
+          }
+
+          // this.angularFirestore
+          //   .collection
+          // (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + quest.questId + '/comments/')
+          //   .get().subscribe(documents => {
+          //     documents.forEach(document => {
+          //       let comment = {} as Comment;
+          //       comment = new Comment(document.data() as CommentData);
+          //       if (comment.timestamp > quest.comment_last_view_date && newExplorerRequiringModeratorAction.newComments === false) {
+          //         newExplorerRequiringModeratorAction.newComments = true;
+          //       }
+          //     });
+          //   });
+        });
+    });
+
+    console.log('last', newExplorersRequiringModeratorActionArray);
+
+    this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(newExplorersRequiringModeratorActionArray));
   }
 }
