@@ -36,7 +36,7 @@ export class QuestService {
       .doc(currentQuest.questId).update(currentQuest.toData());
   }
 
-  moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {    
+  moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
     this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer + '/quests/')
       .doc(selectedQuest.questId).update(selectedQuest.toData());
 
@@ -118,7 +118,7 @@ export class QuestService {
   }
 
   createQuestWithNewComments(explorerQuest: Quest) {
-    let newQuestWithNewComments = {} as QuestWithNewComments;
+    const newQuestWithNewComments = {} as QuestWithNewComments;
     newQuestWithNewComments.comment_last_view_date = explorerQuest.comment_last_view_date;
     newQuestWithNewComments.description = explorerQuest.description;
     newQuestWithNewComments.isAvailable = explorerQuest.isAvailable;
@@ -135,21 +135,21 @@ export class QuestService {
   }
 
   createQuestsWithNewCommentsArray(explorerQuests: Quest[], planetName: string, selectedExplorerUserId: string) {
-    let questsWithNewComments = [];
+    const questsWithNewComments = [];
 
     explorerQuests.forEach(explorerQuest => {
-      let newQuestWithNewComments = this.createQuestWithNewComments(explorerQuest);
+      const newQuestWithNewComments = this.createQuestWithNewComments(explorerQuest);
       this.angularFirestore
-      .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + explorerQuest.questId + '/comments/')
-      .get().subscribe(documents => {
-        documents.forEach(document => {
-          let comment = {} as Comment;
-          comment = new Comment(document.data() as CommentData);
-          if (comment.timestamp > explorerQuest.comment_last_view_date && newQuestWithNewComments.newComments === false) {
-            newQuestWithNewComments.newComments = true;
-          }
+        .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + explorerQuest.questId + '/comments/')
+        .get().subscribe(documents => {
+          documents.forEach(document => {
+            let comment = {} as Comment;
+            comment = new Comment(document.data() as CommentData);
+            if (comment.timestamp > explorerQuest.comment_last_view_date && newQuestWithNewComments.newComments === false) {
+              newQuestWithNewComments.newComments = true;
+            }
+          });
         });
-      });
       questsWithNewComments.push(newQuestWithNewComments);
     });
     this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(questsWithNewComments));

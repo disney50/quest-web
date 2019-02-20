@@ -1,6 +1,13 @@
 import * as actions from '../actions';
 import { Explorer } from 'src/app/models/explorer';
 
+export const initialExplorerState = {
+    planetExplorers: [],
+    currentExplorer: {} as Explorer,
+    selectedExplorer: {} as Explorer,
+    explorersRequiringModeratorAction: []
+};
+
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
     const newState = { ...state };
 
@@ -42,9 +49,3 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
     }
 }
 
-export const initialExplorerState = {
-    planetExplorers: [],
-    currentExplorer: {} as Explorer,
-    selectedExplorer: {} as Explorer,
-    explorersRequiringModeratorAction: []
-};

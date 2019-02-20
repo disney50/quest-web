@@ -68,7 +68,7 @@ export class PlanetComponent implements OnInit {
         this.planetExplorersIds.push(planetExplorer.userId);
       }
     });
-    let selectedPlanetExplorer = this.planetExplorers[(this.planetExplorersIds.indexOf(selectedExplorer.userId))];
+    const selectedPlanetExplorer = this.planetExplorers[(this.planetExplorersIds.indexOf(selectedExplorer.userId))];
     this.store.dispatch(new actions.GetSelectedExplorerSuccess(selectedPlanetExplorer));
     this.navigateExplorer();
   }

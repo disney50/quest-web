@@ -35,7 +35,7 @@ export class ExplorerService {
   }
 
   createExplorerRequiringModeratorAction(planetExplorer: Explorer) {
-    let newExplorerRequiringModeratorAction = {} as ExplorerRequiringModeratorAction;
+    const newExplorerRequiringModeratorAction = {} as ExplorerRequiringModeratorAction;
     newExplorerRequiringModeratorAction.isModerating = false;
     newExplorerRequiringModeratorAction.name = planetExplorer.name;
     newExplorerRequiringModeratorAction.newComments = false;
@@ -46,10 +46,10 @@ export class ExplorerService {
   }
 
   createExplorersRequiringModeratorActionArray(planetExplorers: Explorer[], planetName: string) {
-    let explorersRequiringModeratorAction = [];
+    const explorersRequiringModeratorAction = [];
 
     planetExplorers.forEach(planetExplorer => {
-      let newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
+      const newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
       this.angularFirestore.collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/')
         .get().subscribe(documents => {
           documents.forEach(document => {

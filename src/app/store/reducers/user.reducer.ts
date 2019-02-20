@@ -1,6 +1,13 @@
 import * as actions from '../actions';
 import { User } from 'src/app/models/user';
 
+export const initialUserState = {
+    signedInUser: {} as User,
+    userSignedIn: false,
+    moderatorSignedIn: false,
+    loginFailed: false
+};
+
 export function userReducer(state = initialUserState, action: actions.UserActions) {
 
     const newState = { ...state };
@@ -45,9 +52,3 @@ export function userReducer(state = initialUserState, action: actions.UserAction
     }
 }
 
-export const initialUserState = {
-    signedInUser: {} as User,
-    userSignedIn: false,
-    moderatorSignedIn: false,
-    loginFailed: false
-};
