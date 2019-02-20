@@ -100,6 +100,8 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if (this.moderatorSignedIn) {
         this.explorerQuests = explorerQuests;
+        console.log('explorerQuests', this.explorerQuests);
+
         this.questService.createQuestsWithNewCommentsArray(this.explorerQuests, this.currentPlanet.name, this.selectedExplorer.userId);
       }
     });
@@ -109,6 +111,8 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.questsWithNewComments).subscribe(questsWithNewComments => {
       if (this.moderatorSignedIn) {
         this.questsWithNewComments = questsWithNewComments;
+        console.log('questsWithNewComments', questsWithNewComments);
+
       }
     });
   }

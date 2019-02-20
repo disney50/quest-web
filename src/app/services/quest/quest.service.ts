@@ -46,7 +46,7 @@ export class QuestService {
 
   launchQuest(planetName: string, userId: string, currentQuest: Quest) {
     currentQuest.status = 'inprogress';
-    currentQuest.comment_last_view_date = null;
+    currentQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
 
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
       .doc(currentQuest.questId).set(currentQuest.toData());
@@ -146,12 +146,13 @@ export class QuestService {
       }
     });
 
+    console.log('before', newQuestsWithNewCommentsArray);
+
     newQuestsWithNewCommentsArray.forEach(newQuestWithNewComments => {
+
       this.angularFirestore
-        .collection(
-          planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + newQuestWithNewComments.questId + '/comments/',
-          ref => ref
-            .where('timestamp', '>', newQuestWithNewComments.comment_last_view_date))
+        .collection(planetName + '/explorers/entries/' + selectedExplorerUserId + '/quests/' + newQuestWithNewComments.questId + '/comments/', ref => ref
+          .where('timestamp', '>', newQuestWithNewComments.comment_last_view_date))
         .get()
         .subscribe(newComments => {
           if (newComments.size > 0) {
