@@ -5,7 +5,7 @@ import { AppState } from 'src/app/store/app-state';
 import * as actions from '../../store/actions';
 import { LoginDetails } from 'src/app/models/login-details';
 import * as selectors from '../../store/selectors';
-import {  combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       this.message = 'You forgot to fill in some fields';
     } else {
       if (email === 'moderator') {
-        this.store.dispatch(new actions.RequestGetModeratorByLoginDetails({email: email, password: password} as LoginDetails));
+        this.store.dispatch(new actions.RequestGetModeratorByLoginDetails({ email: email, password: password } as LoginDetails));
       } else {
         this.store.dispatch(new actions.RequestUserExistsUsers({ email: email, password: password } as LoginDetails));
       }

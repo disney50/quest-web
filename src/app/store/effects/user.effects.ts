@@ -19,18 +19,33 @@ export class UserEffects {
         private planetService: PlanetService
     ) { }
 
+    // @Effect()
+    // GetModeratorByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS).pipe(
+    //     switchMap((action: actions.RequestGetModeratorByLoginDetails) => {
+    //         return this.angularFirestore.collection('users', ref => ref
+    //             .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
+    //     }),
+    //     mergeMap(actions => actions),
+    //     map(action => {
+    //         if (action.type === 'added') {
+    //             return new actions.LoginModeratorSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+    //         }
+    //         return new actions.UnimplementedAction('');
+    //     })
+    // );
+
     @Effect()
     GetModeratorByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS).pipe(
         switchMap((action: actions.RequestGetModeratorByLoginDetails) => {
             return this.angularFirestore.collection('users', ref => ref
-                .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
+                .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).get();
         }),
-        mergeMap(actions => actions),
-        map(action => {
-            if (action.type === 'added') {
-                return new actions.LoginModeratorSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
+        map(snapShot => {
+            if (snapShot.size === 0) {
+                return new actions.LoginFailed();
+            } else {
+                return new actions.LoginModeratorSuccess(new User(snapShot.docs[0].id, snapShot.docs[0].data() as UserData));
             }
-            return new actions.UnimplementedAction('');
         })
     );
 
