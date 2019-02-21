@@ -77,6 +77,33 @@
     border-style: solid;
 }
 
+.border-right-left {
+    border-width: 1px;
+    border-top-color: transparent;
+    border-right-color: rgb(232,227,240);
+    border-bottom-color: transparent;
+    border-left-color: rgb(232,227,240);
+    border-style: solid;
+}
+
+.border-left {
+    border-width: 1px;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: rgb(232,227,240);
+    border-style: solid;
+}
+
+.border-right {
+    border-width: 1px;
+    border-top-color: transparent;
+    border-right-color: rgb(232,227,240);
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-style: solid;
+}
+
 .border-gothic {
     border-width: 1px;
     border-color: rgb(107,157,160);

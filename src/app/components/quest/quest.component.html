@@ -179,12 +179,12 @@
 
     <div *ngIf="moderatorSignedIn && isModerating" class="row justify-content-center align-items-center fixed-bottom">
       <div class="col-12">
-        <button class="btn-mosque border" style="width: 33%; border-left: none"
+        <button class="btn-mosque border-right" style="width: 33%"
           (click)="failedClicked()">FAILED</button>
 
-        <button class="btn-mosque border" style="width: 34%" (click)="relaunchClicked()">RELAUNCH</button>
+        <button class="btn-mosque border-right-left" style="width: 34%" (click)="relaunchClicked()">RELAUNCH</button>
 
-        <button class="btn-mosque border" style="width: 33%; border-right: none"
+        <button class="btn-mosque border-left" style="width: 33%"
           (click)="completedClicked()">COMPLETE</button>
       </div>
     </div>
