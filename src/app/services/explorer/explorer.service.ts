@@ -83,7 +83,7 @@ export class ExplorerService {
     });
 
     console.log('2', newExplorersRequiringModeratorActionArray);
-    
+
 
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
@@ -96,6 +96,9 @@ export class ExplorerService {
             const newActiveQuestsArray = [];
             activeQuests.forEach(activeQuest => {
               const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
+              if (newActiveQuest.comment_last_view_date === undefined) {
+                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest);
+              }
               newActiveQuestsArray.push(newActiveQuest);
               this.angularFirestore
                 .collection
@@ -125,6 +128,9 @@ export class ExplorerService {
             const newActiveQuestsArray = [];
             activeQuests.forEach(activeQuest => {
               const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
+              if (newActiveQuest.comment_last_view_date === undefined) {
+                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest);
+              }
               newActiveQuestsArray.push(newActiveQuest);
               this.angularFirestore
                 .collection
