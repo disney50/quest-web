@@ -17,6 +17,10 @@
     padding: 20px;
 }
 
+.img-xlarge {
+    max-width: auto;
+}
+
 .img-large {
     width: 200px;
     height: 200px;
