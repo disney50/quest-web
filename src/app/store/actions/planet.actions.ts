@@ -20,7 +20,7 @@ export class GetPlanetsSuccess implements Action {
 
 export class RequestGetSelectedPlanet implements Action {
     type = REQUEST_GET_SELECTED_PLANET;
-    constructor() { }
+    constructor(public payload: Planet) { }
 }
 
 export class RequestGetDefaultPlanet implements Action {

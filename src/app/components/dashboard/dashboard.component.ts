@@ -7,6 +7,7 @@ import * as selectors from '../../store/selectors';
 import { Planet } from 'src/app/models/planet';
 import { Quest } from 'src/app/models/quest';
 import { Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,9 @@ export class DashboardComponent implements OnInit {
   currentQuest: Quest = {} as Quest;
   currentQuestExists = false;
   status: string;
-  signedIn = false;
+  userSignedIn = false;
+  moderatorSignedIn = false;
+  allPlanets = [];
 
   constructor(private store: Store<AppState>,
     private router: Router) {
@@ -38,8 +41,13 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+  navigatePlanet() {
+    this.router.navigateByUrl('planet');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
+    this.navigateLogin();
   }
 
   checkStatus() {
@@ -50,27 +58,38 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  viewClicked() {
+  viewQuestClicked() {
     this.store.dispatch(new actions.GetSelectedQuestSuccess(this.currentQuest));
     this.navigateQuest();
   }
 
+  viewPlanetClicked(selectedPlanet: Planet) {
+    this.store.dispatch(new actions.GetPlanetSuccess(selectedPlanet));
+    this.navigatePlanet();
+  }
+
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if (!signedIn) {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (!this.moderatorSignedIn && !this.userSignedIn) {
         this.navigateLogin();
-      } else {
-        this.signedIn = true;
       }
     });
   }
 
   sliceSignedInUser() {
     this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.signedIn) {
+      if (this.moderatorSignedIn) {
+        this.signedInUser = signedInUser;
+        this.store.dispatch(new actions.RequestGetPlanets());
+      } else if (this.userSignedIn) {
         this.signedInUser = signedInUser;
         this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
-          if (!fetchedCurrentPlanet) {
+          if (this.userSignedIn && !fetchedCurrentPlanet) {
             this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
           }
         });
@@ -78,25 +97,33 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  sliceAllPlanets() {
+    this.store.select(selectors.allPlanets).subscribe(allPlanets => {
+      if (this.moderatorSignedIn) {
+        this.allPlanets = allPlanets;
+      }
+    });
+  }
+
   sliceCurrentPlanet() {
     this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if (this.signedIn) {
+      if (this.userSignedIn) {
         this.currentPlanet = currentPlanet;
 
         this.store.select(selectors.fetchedCurrentQuest).subscribe(fetchedCurrentQuest => {
-          if (!fetchedCurrentQuest) {
+          if (this.userSignedIn && !fetchedCurrentQuest) {
             this.store.dispatch(new actions.RequestInProgressQuestExists(this.currentPlanet.name, this.signedInUser.userId));
           }
         });
 
         this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
-          if (!fetchedPlanetQuests) {
+          if (this.userSignedIn && !fetchedPlanetQuests) {
             this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
           }
         });
 
         this.store.select(selectors.fetchedExplorerQuests).subscribe(fetchedExplorerQuests => {
-          if (!fetchedExplorerQuests) {
+          if (this.userSignedIn && !fetchedExplorerQuests) {
             this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.signedInUser.userId));
           }
         });
@@ -106,7 +133,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentQuestExists() {
     this.store.select(selectors.currentQuestExists).subscribe(currentQuestExists => {
-      if (this.signedIn) {
+      if (this.userSignedIn) {
         if (currentQuestExists) {
           this.currentQuestExists = true;
         } else if (!currentQuestExists) {
@@ -118,7 +145,7 @@ export class DashboardComponent implements OnInit {
 
   sliceCurrentQuest() {
     this.store.select(selectors.currentQuest).subscribe(currentQuest => {
-      if (this.signedIn && this.currentQuestExists) {
+      if (this.userSignedIn && this.currentQuestExists) {
         this.currentQuest = currentQuest;
         this.checkStatus();
       }
@@ -128,6 +155,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
+
+    this.sliceAllPlanets();
+
     this.sliceCurrentPlanet();
     this.sliceCurrentQuestExists();
     this.sliceCurrentQuest();

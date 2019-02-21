@@ -30,9 +30,11 @@
 
         <div class="row justify-content-center align-items-center">
           <div class="col-12">
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()" [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
+            <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()"
+              [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
 
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()" [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
+            <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()"
+              [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
           </div>
         </div>
 
@@ -63,7 +65,8 @@
       </div>
     </div>
 
-    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}" (click)="message = null">
+    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+      (click)="message = null">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 

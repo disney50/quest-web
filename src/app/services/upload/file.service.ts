@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Upload } from 'src/app/models/upload';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UploadService {
+export class FileService {
   upload: Upload = {} as Upload;
 
   constructor(private angularFirestore: AngularFirestore) { }
@@ -22,12 +22,16 @@ export class UploadService {
       console.log(error);
     });
 
-    this.addDocumentForUploadedFile(planetName, userId, questId);
+    this.addDocumentForUpload(planetName, userId, questId);
   }
 
-  addDocumentForUploadedFile(planetName: string, userId: string, questId: string) {
+  addDocumentForUpload(planetName: string, userId: string, questId: string) {
     this.upload.timestamp = firebase.firestore.Timestamp.now();
 
-    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/files/').add(this.upload);
+    this.getCollectionForUpload(planetName, userId, questId).add(this.upload);
+  }
+
+  getCollectionForUpload(planetName: string, userId: string, questId: string): AngularFirestoreCollection {
+    return this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/files/');
   }
 }

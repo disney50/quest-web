@@ -7,7 +7,8 @@
       </a>
 
       <a class="navbar-text text-large">
-        <b>{{currentPlanet.name}}</b>
+        <b *ngIf="userSignedIn">{{currentPlanet.name}}</b>
+        <b *ngIf="moderatorSignedIn">dashboard</b>
       </a>
 
       <ul class="navbar-nav ml-auto">
@@ -25,7 +26,7 @@
       </ul>
     </nav>
 
-    <div class="row justify-content-center align-items-center">
+    <div *ngIf="userSignedIn" class="row justify-content-center align-items-center">
       <div class="col-sm-12 col-lg-6">
 
         <div *ngIf="currentQuestExists" class="card-cutty-sark border-gothic">
@@ -62,7 +63,7 @@
             </div>
           </div>
 
-          <button class="btn-gothic" (click)="viewClicked()">
+          <button class="btn-gothic" (click)="viewQuestClicked()">
             VIEW
           </button>
 
@@ -91,9 +92,33 @@
       </div>
     </div>
 
-    <button class="btn-mosque fixed-bottom" (click)="navigateQuests()">
+    <button *ngIf="userSignedIn" class="btn-mosque fixed-bottom" (click)="navigateQuests()">
       EXPLORE
     </button>
+
+    <div *ngIf="moderatorSignedIn" class="row justify-content-center align-items-center">
+      <div class="col-12">
+
+        <div class="row justify-content-center align-items-center">
+          <div class="col-sm-6 col-lg-3" *ngFor="let planet of allPlanets">
+            <div class="card-transparent border mb-3">
+
+              <div class="card-body text-center">
+                <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
+                <h4>{{planet.name}}</h4>
+                <span>{{planet.description}}</span>
+              </div>
+
+              <button class="btn-mosque" (click)="viewPlanetClicked(planet)">
+                VIEW
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 </div>

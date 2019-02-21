@@ -7,7 +7,8 @@
       </a>
 
       <a class="navbar-text text-large">
-        <b>{{currentPlanet.name}}</b>
+        <b *ngIf="userSignedIn">{{currentPlanet.name}}</b>
+        <b *ngIf="moderatorSignedIn">{{selectedQuest.title}}</b>
       </a>
 
       <ul class="navbar-nav ml-auto">
@@ -57,7 +58,8 @@
         </div>
       </div>
 
-      <div *ngIf="isInProgress || isModerating || isCompleted" class="col-sm-12 col-lg-4 align-self-start pt-5">
+      <div *ngIf="moderatorSignedIn || isInProgress || isModerating || isCompleted"
+        class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
 
           <div class="card-header border-bottom">
@@ -102,7 +104,8 @@
                   type="text" placeholder="enter comment...">
               </div>
 
-              <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''" style="cursor: pointer">
+              <div class="col-3 my-auto" (click)="sendClicked(comment.value); comment.value = ''"
+                style="cursor: pointer">
                 <span>SEND</span>
               </div>
 
@@ -112,7 +115,7 @@
         </div>
       </div>
 
-      <div *ngIf="isInProgress" class="col-sm-12 col-lg-4 align-self-start pt-5">
+      <div *ngIf="moderatorSignedIn || isInProgress" class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border-gothic">
 
           <div class="card-header border-bottom-gothic">
@@ -123,35 +126,69 @@
             <div class="row">
               <div class="col-12">
 
-                <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
-                  <span>No File Chosen</span>
-                </div>
+                <ng-container *ngIf="userSignedIn">
+                  <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
+                    <span>No File Chosen</span>
+                  </div>
 
-                <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
-                  <span>{{selectedFile.name}}</span>
-                </div>
+                  <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
+                    <span>{{selectedFile.name}}</span>
+                  </div>
+                </ng-container>
+
+                <ng-container *ngIf="moderatorSignedIn">
+                  <div *ngIf="uploads.length === 0" class="row justify-content-center align-items-center text-center">
+                    <span>No File Uploaded</span>
+                  </div>
+
+                  <div *ngIf="uploads.length !== 0" class="row justify-content-center align-items-center text-center">
+                    <div class="col-12">
+                      <div *ngFor="let upload of uploads" class="card-granny-smith p-2 mb-2 text-center">
+                        <span style="cursor: pointer" (click)="fileClicked(upload.name)">{{upload.name}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
 
               </div>
             </div>
           </div>
 
-          <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
-          <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
+          <div *ngIf="userSignedIn">
+            <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
+            <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
+          </div>
 
         </div>
       </div>
 
+      <div *ngIf="moderatorSignedIn" class="col-sm-12 col-lg-4 pt-5">
+        <input [(ngModel)]="newXP" class="input mb-3" type="number" placeholder="enter xp...">
+      </div>
+
     </div>
 
-    <button *ngIf="isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
+    <div *ngIf="moderatorSignedIn && isModerating" class="row justify-content-center align-items-center fixed-bottom">
+      <div class="col-12">
+        <button class="btn-mosque border" style="width: 33%; border-left: none" (click)="failedClicked()">FAILED</button>
+
+        <button class="btn-mosque border" style="width: 34%" (click)="relaunchClicked()">RELAUNCH</button>
+
+        <button class="btn-mosque border" style="width: 33%; border-right: none" (click)="completedClicked()">COMPLETE</button>
+      </div>
+    </div>
+
+    <button *ngIf="userSignedIn && isInProgress" class="btn-mosque fixed-bottom" (click)="submitClicked()">
       SUBMIT
     </button>
 
-    <button *ngIf="selectedQuest.isAvailable && !currentQuestExists" class="btn-mosque fixed-bottom" (click)="launchClicked()">
+    <button *ngIf="userSignedIn && selectedQuest.isAvailable && !currentQuestExists" class="btn-mosque fixed-bottom"
+      (click)="launchClicked()">
       LAUNCH
     </button>
 
-    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}" (click)="message = null">
+    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+      (click)="message = null">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
 
@@ -166,6 +203,29 @@
           <div class="row justify-content-center align-items-center text-center">
             <div class="col-12">
               <span><b>{{message}}</b></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" role="dialog" [ngStyle]="{'display': image ? 'block': 'none', 'opacity': 1}"
+      (click)="image = null">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+          <div class="row">
+            <div class="col-12">
+              <button class="btn-close float-right">
+                <span><b>X</b></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row justify-content-center align-items-center text-center">
+            <div class="col-12">
+              <img src={{image}}>
             </div>
           </div>
 

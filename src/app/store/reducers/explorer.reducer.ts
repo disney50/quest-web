@@ -1,6 +1,13 @@
 import * as actions from '../actions';
 import { Explorer } from 'src/app/models/explorer';
 
+export const initialExplorerState = {
+    planetExplorers: [],
+    currentExplorer: {} as Explorer,
+    selectedExplorer: {} as Explorer,
+    explorersRequiringModeratorAction: []
+};
+
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
     const newState = { ...state };
 
@@ -14,8 +21,27 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.currentExplorer = getExplorerSuccessAction.payload;
             return newState;
 
+        case actions.REQUEST_GET_EXPLORERS:
+            newState.planetExplorers = [];
+            return newState;
+
+        case actions.GET_EXPLORERS_SUCCESS:
+            const getExplorersSuccessAction = action as actions.GetExplorersSuccess;
+            newState.planetExplorers = [...newState.planetExplorers, getExplorersSuccessAction.payload];
+            return newState;
+
+        case actions.GET_SELECTED_EXPLORER_SUCCESS:
+            newState.selectedExplorer = (action as actions.GetSelectedExplorerSuccess).payload;
+            return newState;
+
+        case actions.GET_EXPLORERS_REQUIRING_MODERATOR_ACTION_SUCCESS:
+            newState.explorersRequiringModeratorAction = (action as actions.GetExplorersRequiringModeratorActionSuccess).payload;
+            return newState;
+
         case actions.CLEAR_EXPLORER_STATE:
+            newState.planetExplorers = [];
             newState.currentExplorer = {} as Explorer;
+            newState.selectedExplorer = {} as Explorer;
             return newState;
 
         default:
@@ -23,6 +49,3 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
     }
 }
 
-export const initialExplorerState = {
-    currentExplorer: {} as Explorer
-};

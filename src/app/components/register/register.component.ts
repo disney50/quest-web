@@ -4,13 +4,13 @@ import { Planet } from 'src/app/models/planet';
 import { PlanetService } from 'src/app/services/planet/planet.service';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service'; import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
-import * as selectors from '../../store/selectors';
 import * as actions from '../../store/actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app-state';
 import { LoginDetails } from 'src/app/models/login-details';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import * as selectors from '../../store/selectors';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +25,8 @@ export class RegisterComponent implements OnInit {
   allPlanets: Planet[];
   selectedPlanet: Planet = {} as Planet;
   message: string = null;
+  moderatorSignedIn = false;
+  userSignedIn = false;
 
   constructor(private userService: UserService,
     private router: Router,
@@ -115,8 +117,13 @@ export class RegisterComponent implements OnInit {
   }
 
   sliceHasLoginSucceeded() {
-    this.store.select(selectors.hasLoginSucceeded).subscribe(signedIn => {
-      if (signedIn) {
+    combineLatest(
+      this.store.select(selectors.moderatorSignedIn),
+      this.store.select(selectors.userSignedIn)
+    ).subscribe(combinedValue => {
+      this.moderatorSignedIn = combinedValue[0];
+      this.userSignedIn = combinedValue[1];
+      if (this.moderatorSignedIn || this.userSignedIn) {
         this.navigateDashboard();
       }
     });

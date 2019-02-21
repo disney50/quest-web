@@ -1,6 +1,18 @@
 import * as actions from '../actions';
 import { Quest } from 'src/app/models/quest';
 
+export const initialQuestState = {
+    planetQuests: [],
+    fetchedPlanetQuests: false,
+    explorerQuests: [],
+    fetchedExplorerQuests: false,
+    currentQuest: {} as Quest,
+    fetchedCurrentQuest: false,
+    currentQuestExists: false,
+    selectedQuest: {} as Quest,
+    questsWithNewComments: []
+};
+
 export function questReducer(state = initialQuestState, action: actions.QuestActions) {
     const newState = { ...state };
 
@@ -43,6 +55,10 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             newState.selectedQuest = getSelectedQuestAction.payload;
             return newState;
 
+        case actions.GET_QUESTS_WITH_NEW_COMMENTS_SUCCESS:
+            newState.questsWithNewComments = (action as actions.GetQuestsWithNewCommentsSuccess).payload;
+            return newState;
+
         case actions.CLEAR_QUEST_STATE:
             newState.planetQuests = [];
             newState.fetchedPlanetQuests = false;
@@ -58,14 +74,3 @@ export function questReducer(state = initialQuestState, action: actions.QuestAct
             return state;
     }
 }
-
-export const initialQuestState = {
-    planetQuests: [],
-    fetchedPlanetQuests: false,
-    explorerQuests: [],
-    fetchedExplorerQuests: false,
-    currentQuest: {} as Quest,
-    fetchedCurrentQuest: false,
-    currentQuestExists: false,
-    selectedQuest: {} as Quest
-};

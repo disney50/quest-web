@@ -14,11 +14,14 @@ import { StoreModule } from '@ngrx/store';
 import * as reducers from './store/reducers';
 import * as effects from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule} from '@ngrx/store-devtools';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RegisterComponent } from './components/register/register.component';
 import { QuestComponent } from './components/quest/quest.component';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { QuestsComponent } from './components/quests/quests.component';
+import { PlanetComponent } from './components/planet/planet.component';
+import { CreateComponent } from './components/create/create.component';
+import { ExplorerComponent } from './components/explorer/explorer.component';
 
 
 @NgModule({
@@ -28,15 +31,22 @@ import { QuestsComponent } from './components/quests/quests.component';
     DashboardComponent,
     RegisterComponent,
     QuestComponent,
-    QuestsComponent
+    QuestsComponent,
+    PlanetComponent,
+    CreateComponent,
+    ExplorerComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     FormsModule,
-    StoreModule.forRoot({userState: reducers.userReducer, planetState: reducers.planetReducer, explorerState: reducers.explorerReducer, questState: reducers.questReducer, commentState: reducers.commentReducer}),
-    EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects, effects.ExplorerEffects, effects.QuestEffects, effects.CommentEffects]),
+    StoreModule.forRoot({
+      userState: reducers.userReducer, planetState: reducers.planetReducer,
+      explorerState: reducers.explorerReducer, questState: reducers.questReducer, commentState: reducers.commentReducer
+    }),
+    EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects, effects.ExplorerEffects,
+    effects.QuestEffects, effects.CommentEffects]),
     StoreDevtoolsModule.instrument(),
     AngularFireStorageModule
   ],
