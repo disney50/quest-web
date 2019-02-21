@@ -108,6 +108,8 @@ export class QuestComponent implements OnInit {
         this.selectedQuest.status = 'completed';
       }
 
+      this.selectedExplorer.xp = +this.selectedExplorer.xp;
+
       this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
 
       this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);

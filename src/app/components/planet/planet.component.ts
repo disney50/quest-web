@@ -121,9 +121,9 @@ export class PlanetComponent implements OnInit {
       if (this.moderatorSignedIn) {
         this.planetExplorers = planetExplorers;
 
-        this.planetExplorers.forEach(planetExplorer => {
-          planetExplorer.xp = +planetExplorer.xp;
-        });
+        // this.planetExplorers.forEach(planetExplorer => {
+        //   planetExplorer.xp = +planetExplorer.xp;
+        // });
 
         this.explorerService.createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
       }
