@@ -29,6 +29,7 @@ export class CreateComponent implements OnInit {
   newPrerequisite = '';
   newPrerequisites = [];
   message: string = null;
+  fetchedPlanetQuests = false;
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -71,7 +72,7 @@ export class CreateComponent implements OnInit {
     this.questService.createNewQuest(this.currentPlanet.name, this.newQuest);
   }
 
-  sliceHasLoginSucceeded() {
+  sliceAppState() {
     combineLatest(
       this.store.select(selectors.moderatorSignedIn),
       this.store.select(selectors.userSignedIn)
@@ -84,45 +85,87 @@ export class CreateComponent implements OnInit {
         this.navigatDashboard();
       }
     });
-  }
 
-  sliceSignedInUser() {
-    this.store.select(selectors.signedInUser).subscribe(signedInUser => {
-      if (this.moderatorSignedIn) {
+    if (this.moderatorSignedIn) {
+      this.store.select(selectors.signedInUser).subscribe(signedInUser => {
         this.signedInUser = signedInUser;
-      }
-    });
+      });
+
+      this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
+          this.currentPlanet = currentPlanet;
+      });
+
+      this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
+        this.fetchedPlanetQuests = fetchedPlanetQuests;
+      });
+
+      this.store.select(selectors.planetQuests).subscribe(planetQuests => {
+          this.planetQuests = planetQuests;
+      });
+    }
+
+    if (this.moderatorSignedIn) {
+      this.dispatchActions();
+    }
   }
 
-  sliceCurrentPlanet() {
-    this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
-      if (this.moderatorSignedIn) {
-        this.currentPlanet = currentPlanet;
+  dispatchActions() {
+    this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
 
-        this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
-
-        this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
-          if (this.moderatorSignedIn && !fetchedPlanetQuests) {
-            this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
-          }
-        });
-      }
-    });
+    if (!this.fetchedPlanetQuests) {
+      this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
+    }
   }
 
-  slicePlanetQuests() {
-    this.store.select(selectors.planetQuests).subscribe(planetQuests => {
-      if (this.moderatorSignedIn) {
-        this.planetQuests = planetQuests;
-      }
-    })
-  }
+  // sliceHasLoginSucceeded() {
+  //   combineLatest(
+  //     this.store.select(selectors.moderatorSignedIn),
+  //     this.store.select(selectors.userSignedIn)
+  //   ).subscribe(combinedValue => {
+  //     this.moderatorSignedIn = combinedValue[0];
+  //     this.userSignedIn = combinedValue[1];
+  //     if (!this.moderatorSignedIn && !this.userSignedIn) {
+  //       this.navigateLogin();
+  //     } else if (this.userSignedIn) {
+  //       this.navigatDashboard();
+  //     }
+  //   });
+  // }
+
+  // sliceSignedInUser() {
+  //   this.store.select(selectors.signedInUser).subscribe(signedInUser => {
+  //     if (this.moderatorSignedIn) {
+  //       this.signedInUser = signedInUser;
+  //     }
+  //   });
+  // }
+
+  // sliceCurrentPlanet() {
+  //   this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
+  //     if (this.moderatorSignedIn) {
+  //       this.currentPlanet = currentPlanet;
+
+  //       this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
+
+  //       this.store.select(selectors.fetchedPlanetQuests).subscribe(fetchedPlanetQuests => {
+  //         if (this.moderatorSignedIn && !fetchedPlanetQuests) {
+  //           this.store.dispatch(new actions.RequestGetPlanetQuests(this.currentPlanet.name));
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
+  // slicePlanetQuests() {
+  //   this.store.select(selectors.planetQuests).subscribe(planetQuests => {
+  //     if (this.moderatorSignedIn) {
+  //       this.planetQuests = planetQuests;
+  //     }
+  //   });
+  // }
 
   ngOnInit() {
-    this.sliceHasLoginSucceeded();
-    this.sliceSignedInUser();
-    this.sliceCurrentPlanet();
-    this.slicePlanetQuests();
+    this.sliceAppState();
   }
 
 }
