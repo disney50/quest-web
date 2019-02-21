@@ -109,6 +109,8 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.questsWithNewComments).subscribe(questsWithNewComments => {
       if (this.moderatorSignedIn) {
         this.questsWithNewComments = questsWithNewComments;
+        console.log(this.questsWithNewComments);
+
       }
     });
   }
