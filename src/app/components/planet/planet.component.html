@@ -39,11 +39,18 @@
               <div class="col-12">
                 <div class="card-gothic m-2 py-2" style="cursor: pointer;" (click)="explorerClicked(explorer)">
                   <div class="row justify-content-center align-items-center text-center">
-                    <b class="text-medium"><span *ngIf="explorer.isModerating || explorer.newComments" class="badge badge-light text-white mr-2 pr-2">0</span>{{explorer.name}} {{explorer.surname}}</b>
+                    <b class="text-medium">
+                      {{explorer.name}} {{explorer.surname}}
+                    </b>
                   </div>
 
                   <div class="row justify-content-center align-items-center text-center">
                     <span class="text-medium text-uppercase">XP: {{explorer.xp}}</span>
+                  </div>
+
+                  <div claxss="row justify-content-center align-items-center text-center">
+                    <span *ngIf="explorer.isModerating" class="badge badge-dark p-2 mr-2">moderating quest</span>
+                    <span *ngIf="explorer.newComments" class="badge badge-light p-2">new comments</span>
                   </div>
                 </div>
               </div>

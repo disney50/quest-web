@@ -69,11 +69,16 @@
               <div class="col-12">
                 <div class="card-granny-smith m-2 py-2" style="cursor: pointer;" (click)="questClicked(quest)">
                   <div class="row justify-content-center align-items-center text-center">
-                    <b class="text-medium"><span *ngIf="quest.newComments || quest.status === 'moderating'" class="badge badge-light text-white mr-2 pr-2">0</span>{{quest.title}}</b>
+                    <b class="text-medium">{{quest.title}}</b>
                   </div>
 
                   <div class="row justify-content-center align-items-center text-center">
                     <span class="text-medium">{{quest.level1.name}} | {{quest.level2.name}}</span>
+                  </div>
+
+                  <div class="row justify-content-center align-items-center text-center">
+                    <span *ngIf="quest.status === 'moderating'" class="badge badge-dark p-2 mr-2">moderating quest</span>
+                    <span *ngIf="quest.newComments" class="badge badge-light p-2">new comments</span>
                   </div>
                 </div>
               </div>
