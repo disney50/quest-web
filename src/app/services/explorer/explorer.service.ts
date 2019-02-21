@@ -57,6 +57,8 @@ export class ExplorerService {
       }
     });
 
+    console.log('1', newExplorersRequiringModeratorActionArray);
+
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
         .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
@@ -69,18 +71,77 @@ export class ExplorerService {
 
           // this.angularFirestore
           //   .collection
-          // (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + quest.questId + '/comments/')
-          //   .get().subscribe(documents => {
-          //     documents.forEach(document => {
-          //       let comment = {} as Comment;
-          //       comment = new Comment(document.data() as CommentData);
-          //       if (comment.timestamp > quest.comment_last_view_date && newExplorerRequiringModeratorAction.newComments === false) {
-          //         newExplorerRequiringModeratorAction.newComments = true;
-          //       }
-          //     });
+          //   (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + quest.questId + '/comments/', ref => ref
+          //     .where('timestamp', '>', quest.comment_last_view_date))
+          //   .get()
+          //   .subscribe(newComments => {
+          //     if (newComments.size > 0) {
+          //       newExplorerRequiringModeratorAction.newComments = true;
+          //     }
           //   });
         });
     });
+
+    console.log('2', newExplorersRequiringModeratorActionArray);
+    
+
+    newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
+          .where('status', '==', 'moderating'))
+        // .where('status', '==', 'inprogress'))
+        .get()
+        .subscribe(activeQuests => {
+          if (activeQuests.size > 0) {
+            const newActiveQuestsArray = [];
+            activeQuests.forEach(activeQuest => {
+              const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
+              newActiveQuestsArray.push(newActiveQuest);
+              this.angularFirestore
+                .collection
+                (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + newActiveQuest.questId + '/comments/',
+                  ref => ref.where('timestamp', '>', newActiveQuest.comment_last_view_date))
+                .get()
+                .subscribe(newComments => {
+                  if (newComments.size > 0) {
+                    newExplorerRequiringModeratorAction.newComments = true;
+                  }
+                });
+            })
+          }
+        });
+    });
+
+    console.log('3', newExplorersRequiringModeratorActionArray);
+
+    newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
+          .where('status', '==', 'inprogress'))
+        // .where('status', '==', 'inprogress'))
+        .get()
+        .subscribe(activeQuests => {
+          if (activeQuests.size > 0) {
+            const newActiveQuestsArray = [];
+            activeQuests.forEach(activeQuest => {
+              const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
+              newActiveQuestsArray.push(newActiveQuest);
+              this.angularFirestore
+                .collection
+                (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + newActiveQuest.questId + '/comments/',
+                  ref => ref.where('timestamp', '>', newActiveQuest.comment_last_view_date))
+                .get()
+                .subscribe(newComments => {
+                  if (newComments.size > 0) {
+                    newExplorerRequiringModeratorAction.newComments = true;
+                  }
+                });
+            })
+          }
+        });
+    });
+
+    console.log('4', newExplorersRequiringModeratorActionArray);
 
     this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(newExplorersRequiringModeratorActionArray));
   }
