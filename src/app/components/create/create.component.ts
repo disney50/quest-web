@@ -43,6 +43,10 @@ export class CreateComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
+  navigatePlanet() {
+    this.router.navigateByUrl('planet');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
     this.navigateLogin();
@@ -59,6 +63,7 @@ export class CreateComponent implements OnInit {
       this.message = 'You forgot to fill in some fields';
     } else {
       this.createNewQuest();
+      this.navigatePlanet();
     }
 
   }
