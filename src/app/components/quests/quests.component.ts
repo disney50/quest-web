@@ -20,6 +20,7 @@ export class QuestsComponent implements OnInit {
   userSignedIn = false;
   signedInUser: User = {} as User;
   currentPlanet: Planet = {} as Planet;
+  currentQuestExists = false;
   planetQuests: Quest[] = [];
   explorerQuests: Quest[] = [];
   possibleQuests: Quest[] = [];
@@ -91,6 +92,14 @@ export class QuestsComponent implements OnInit {
     });
   }
 
+  sliceCurrentQuestExists() {
+    this.store.select(selectors.currentQuestExists).subscribe(currentQuestsExists => {
+      if (this.userSignedIn) {
+        this.currentQuestExists = currentQuestsExists;
+      }
+    })
+  }
+
   slicePlanetQuests() {
     this.store.select(selectors.planetQuests).subscribe(planetQuests => {
       if (this.moderatorSignedIn || this.userSignedIn) {
@@ -105,6 +114,11 @@ export class QuestsComponent implements OnInit {
       if (this.moderatorSignedIn || this.userSignedIn) {
         this.explorerQuests = explorerQuests;
         this.checkPossibleQuests();
+        if (this.currentQuestExists) {
+          this.possibleQuests.forEach(possibleQuest => {
+            possibleQuest.isAvailable = false;
+          });
+        }
       }
     });
   }
@@ -113,6 +127,7 @@ export class QuestsComponent implements OnInit {
     this.sliceHasLoginSucceeded();
     this.sliceSignedInUser();
     this.sliceCurrentPlanet();
+    this.sliceCurrentQuestExists();
     this.slicePlanetQuests();
     this.sliceExplorerQuests();
   }
