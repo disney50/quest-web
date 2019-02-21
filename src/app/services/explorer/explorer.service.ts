@@ -57,8 +57,6 @@ export class ExplorerService {
       }
     });
 
-    console.log('1', newExplorersRequiringModeratorActionArray);
-
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
         .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
@@ -81,8 +79,6 @@ export class ExplorerService {
           //   });
         });
     });
-
-    console.log('2', newExplorersRequiringModeratorActionArray);
 
 
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
@@ -114,8 +110,6 @@ export class ExplorerService {
           }
         });
     });
-
-    console.log('3', newExplorersRequiringModeratorActionArray);
 
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
@@ -146,8 +140,6 @@ export class ExplorerService {
           }
         });
     });
-
-    console.log('4', newExplorersRequiringModeratorActionArray);
 
     this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(newExplorersRequiringModeratorActionArray));
   }

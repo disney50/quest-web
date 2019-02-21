@@ -38,6 +38,8 @@ export class QuestService {
   }
 
   moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
+    this.updateLastViewCommentDate(planetName, selectedExplorer.userId, selectedQuest);
+
     this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer.userId + '/quests/')
       .doc(selectedQuest.questId).update(selectedQuest.toData());
 
