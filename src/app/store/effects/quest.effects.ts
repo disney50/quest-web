@@ -97,7 +97,8 @@ export class QuestEffects {
     GetExplorerQuests$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER_QUESTS).pipe(
         switchMap((action: actions.RequestGetExplorerQuests) => {
             return this.angularFirestore
-                .collection(action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/').stateChanges();
+                .collection(action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/', ref => ref
+                .orderBy('comment_last_view_date')).stateChanges();
         }),
         mergeMap(actions => actions),
         map(action => {
