@@ -27,7 +27,6 @@
     </nav>
 
     <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
-
       <div class="col-sm-12 col-lg-4 align-self-start pt-5">
         <div class="card-cutty-sark border">
 
@@ -116,65 +115,77 @@
       </div>
 
       <div *ngIf="moderatorSignedIn || isInProgress" class="col-sm-12 col-lg-4 align-self-start pt-5">
-        <div class="card-cutty-sark border-gothic">
 
-          <div class="card-header border-bottom-gothic">
-            <b class="text-large">UPLOADS</b>
-          </div>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-12">
+            <div class="card-cutty-sark border-gothic">
 
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-
-                <ng-container *ngIf="userSignedIn">
-                  <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
-                    <span>No File Chosen</span>
-                  </div>
-
-                  <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
-                    <span>{{selectedFile.name}}</span>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="moderatorSignedIn">
-                  <div *ngIf="uploads.length === 0" class="row justify-content-center align-items-center text-center">
-                    <span>No File Uploaded</span>
-                  </div>
-
-                  <div *ngIf="uploads.length !== 0" class="row justify-content-center align-items-center text-center">
-                    <div class="col-12">
-                      <div *ngFor="let upload of uploads" class="card-granny-smith p-2 mb-2 text-center" (click)="fileClicked(upload.name)">
-                        <span style="cursor: pointer">{{upload.name}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </ng-container>
-
+              <div class="card-header border-bottom-gothic">
+                <b class="text-large">UPLOADS</b>
               </div>
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+
+                    <ng-container *ngIf="userSignedIn">
+                      <div *ngIf="!selectedFile" class="row justify-content-center align-items-center text-center">
+                        <span>No File Chosen</span>
+                      </div>
+
+                      <div *ngIf="selectedFile" class="card-granny-smith p-2 text-center">
+                        <span>{{selectedFile.name}}</span>
+                      </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="moderatorSignedIn">
+                      <div *ngIf="uploads.length === 0"
+                        class="row justify-content-center align-items-center text-center">
+                        <span>No File Uploaded</span>
+                      </div>
+
+                      <div *ngIf="uploads.length !== 0"
+                        class="row justify-content-center align-items-center text-center">
+                        <div class="col-12">
+                          <div *ngFor="let upload of uploads" class="card-granny-smith p-2 mb-2 text-center"
+                            (click)="fileClicked(upload.name)">
+                            <span style="cursor: pointer">{{upload.name}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="userSignedIn">
+                <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
+                <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
+              </div>
+
             </div>
           </div>
-
-          <div *ngIf="userSignedIn">
-            <input type="file" multiple="false" style="display: none" #upload (change)="fileSelected($event)" />
-            <button type="button" class="btn-gothic" (click)="upload.click()">UPLOAD</button>
-          </div>
-
         </div>
-      </div>
 
-      <div *ngIf="moderatorSignedIn" class="col-sm-12 col-lg-4 pt-5">
-        <input [(ngModel)]="newXP" class="input mb-3" type="number" placeholder="enter xp...">
-      </div>
+        <div class="row justify-content-center align-items-center">
+          <div *ngIf="moderatorSignedIn && isModerating" class="col-12 pt-5">
+            <input [(ngModel)]="newXP" class="input mb-3" type="number" placeholder="enter xp...">
+          </div>
+        </div>
 
+      </div>
     </div>
 
     <div *ngIf="moderatorSignedIn && isModerating" class="row justify-content-center align-items-center fixed-bottom">
       <div class="col-12">
-        <button class="btn-mosque border" style="width: 33%; border-left: none" (click)="failedClicked()">FAILED</button>
+        <button class="btn-mosque border" style="width: 33%; border-left: none"
+          (click)="failedClicked()">FAILED</button>
 
         <button class="btn-mosque border" style="width: 34%" (click)="relaunchClicked()">RELAUNCH</button>
 
-        <button class="btn-mosque border" style="width: 33%; border-right: none" (click)="completedClicked()">COMPLETE</button>
+        <button class="btn-mosque border" style="width: 33%; border-right: none"
+          (click)="completedClicked()">COMPLETE</button>
       </div>
     </div>
 
