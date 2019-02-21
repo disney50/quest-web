@@ -139,8 +139,6 @@ export class QuestService {
     const newQuestsWithNewCommentsArray = [];
     const newQuestsWithNewCommentsIds = [];
 
-    console.log('1', newQuestsWithNewCommentsArray);
-
     explorerQuests.forEach(explorerQuest => {
       const newQuestWithNewComments = this.createQuestWithNewComments(explorerQuest);
       if (newQuestsWithNewCommentsIds.indexOf(newQuestWithNewComments.questId) === -1) {
@@ -148,8 +146,6 @@ export class QuestService {
         newQuestsWithNewCommentsIds.push(newQuestWithNewComments.questId);
       }
     });
-
-    console.log('2', newQuestsWithNewCommentsArray);
 
     newQuestsWithNewCommentsArray.forEach(newQuestWithNewComments => {
       this.angularFirestore
@@ -162,8 +158,6 @@ export class QuestService {
           }
         });
     });
-
-    console.log('3', newQuestsWithNewCommentsArray);
 
     this.store.dispatch(new actions.GetQuestsWithNewCommentsSuccess(newQuestsWithNewCommentsArray));
   }
