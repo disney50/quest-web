@@ -107,9 +107,7 @@ export class CreateComponent implements OnInit {
       this.store.select(selectors.planetQuests).subscribe(planetQuests => {
           this.planetQuests = planetQuests;
       });
-    }
 
-    if (this.moderatorSignedIn) {
       this.dispatchActions();
     }
   }
