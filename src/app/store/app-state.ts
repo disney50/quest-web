@@ -26,6 +26,7 @@ export interface AppState {
         currentExplorer: Explorer;
         selectedExplorer: Explorer;
         explorersRequiringModeratorAction: ExplorerRequiringModeratorAction[];
+        explorersRequiringModeration: Explorer[];
     };
 
     questState: {

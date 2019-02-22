@@ -7,6 +7,7 @@ import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
+import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 
 @Component({
   selector: 'app-moderation',
@@ -18,9 +19,12 @@ export class ModerationComponent implements OnInit {
   userSignedIn = false;
   signedInUser = {} as User;
   currentPlanet = {} as Planet;
+  planetExplorers = [];
+  explorersRequiringModeration = [];
 
   constructor(private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private explorerService: ExplorerService
   ) { }
 
   navigateLogin() {
@@ -57,17 +61,22 @@ export class ModerationComponent implements OnInit {
 
       this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
         this.currentPlanet = currentPlanet;
+        this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
       });
 
-      this.dispatchActions();
+      this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
+        this.planetExplorers = planetExplorers;
+        this.explorerService.createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
+      });
+
+      this.store.select(selectors.explorersRequiringModeration).subscribe(explorersRequiringModeration => {
+        this.explorersRequiringModeration = explorersRequiringModeration;
+      });
     }
   }
 
-  dispatchActions() {
-
-  }
-
   ngOnInit() {
+    this.sliceAppState();
   }
 
 }

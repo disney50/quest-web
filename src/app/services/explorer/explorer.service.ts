@@ -104,9 +104,10 @@ export class ExplorerService {
                 .subscribe(newComments => {
                   if (newComments.size > 0) {
                     newExplorerRequiringModeratorAction.newComments = true;
+                    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(newExplorerRequiringModeratorAction));
                   }
                 });
-            })
+            });
           }
         });
     });
@@ -136,7 +137,7 @@ export class ExplorerService {
                     newExplorerRequiringModeratorAction.newComments = true;
                   }
                 });
-            })
+            });
           }
         });
     });

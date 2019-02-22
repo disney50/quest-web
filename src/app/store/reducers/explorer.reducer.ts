@@ -5,7 +5,8 @@ export const initialExplorerState = {
     planetExplorers: [],
     currentExplorer: {} as Explorer,
     selectedExplorer: {} as Explorer,
-    explorersRequiringModeratorAction: []
+    explorersRequiringModeratorAction: [],
+    explorersRequiringModeration: []
 };
 
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
@@ -38,11 +39,17 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.explorersRequiringModeratorAction = (action as actions.GetExplorersRequiringModeratorActionSuccess).payload;
             return newState;
 
+        case actions.GET_EXPLORER_REQUIRING_MODERATION_SUCCESS:
+            newState.explorersRequiringModeration = 
+                [...newState.explorersRequiringModeration, (action as actions.GetExplorerRequiringModerationSuccess).payload];
+            return newState;
+
         case actions.CLEAR_EXPLORER_STATE:
             newState.planetExplorers = [];
             newState.currentExplorer = {} as Explorer;
             newState.selectedExplorer = {} as Explorer;
             newState.explorersRequiringModeratorAction = [];
+            newState.explorersRequiringModeration = [];
             return newState;
 
         default:

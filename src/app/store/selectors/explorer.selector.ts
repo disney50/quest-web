@@ -9,3 +9,5 @@ export const currentExplorer = (state: AppState) => explorerBase(state).currentE
 export const selectedExplorer = (state: AppState) => explorerBase(state).selectedExplorer;
 
 export const explorersRequiringModeratorAction = (state: AppState) => explorerBase(state).explorersRequiringModeratorAction;
+
+export const explorersRequiringModeration = (state: AppState) => explorerBase(state).explorersRequiringModeration;
