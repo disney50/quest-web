@@ -22,6 +22,7 @@ import { QuestsComponent } from './components/quests/quests.component';
 import { PlanetComponent } from './components/planet/planet.component';
 import { CreateComponent } from './components/create/create.component';
 import { ExplorerComponent } from './components/explorer/explorer.component';
+import { ModerationComponent } from './components/moderation/moderation.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ExplorerComponent } from './components/explorer/explorer.component';
     QuestsComponent,
     PlanetComponent,
     CreateComponent,
-    ExplorerComponent
+    ExplorerComponent,
+    ModerationComponent
   ],
   imports: [
     BrowserModule,
