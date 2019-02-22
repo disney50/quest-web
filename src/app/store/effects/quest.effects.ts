@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as actions from '../actions/';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
@@ -14,7 +14,8 @@ export class QuestEffects {
     userId: string;
 
     @Effect()
-    CheckInProgressQuestExists$ = this.actions$.ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS).pipe(
+    CheckInProgressQuestExists$ = this.actions$.pipe(
+        ofType(actions.REQUEST_IN_PROGRESS_QUEST_EXISTS),
         switchMap((action: actions.RequestInProgressQuestExists) => {
             this.planetName = action.planetNamePayload;
             this.userId = action.userIdPayload;
@@ -32,7 +33,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    GetInProgressQuest$ = this.actions$.ofType(actions.REQUEST_GET_IN_PROGRESS_QUEST).pipe(
+    GetInProgressQuest$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_IN_PROGRESS_QUEST),
         switchMap((action: actions.RequestGetInProgressQuest) => {
             return this.angularFirestore
                 .collection(this.planetName + '/explorers/entries/' + this.userId + '/quests', ref => ref
@@ -48,7 +50,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    CheckModeratingQuestExists$ = this.actions$.ofType(actions.REQUEST_MODERATING_QUEST_EXISTS).pipe(
+    CheckModeratingQuestExists$ = this.actions$.pipe(
+        ofType(actions.REQUEST_MODERATING_QUEST_EXISTS),
         switchMap((action: actions.RequestModeratingQuestExists) => {
             return this.angularFirestore
                 .collection(this.planetName + '/explorers/entries/' + this.userId + '/quests', ref => ref
@@ -63,7 +66,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    GetModeratingQuest$ = this.actions$.ofType(actions.REQUEST_GET_MODERATING_QUEST).pipe(
+    GetModeratingQuest$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_MODERATING_QUEST),
         switchMap((action: actions.RequestGetModeratingQuest) => {
             return this.angularFirestore
                 .collection(this.planetName + '/explorers/entries/' + this.userId + '/quests', ref => ref
@@ -79,7 +83,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    GetPlanetQuests$ = this.actions$.ofType(actions.REQUEST_GET_PLANET_QUESTS).pipe(
+    GetPlanetQuests$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_PLANET_QUESTS),
         switchMap((action: actions.RequestGetPlanetQuests) => {
 
             return this.angularFirestore.collection(action.payload + '/quests/entries/', ref => ref.orderBy('order')).stateChanges();
@@ -94,7 +99,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    GetExplorerQuests$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER_QUESTS).pipe(
+    GetExplorerQuests$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_EXPLORER_QUESTS),
         switchMap((action: actions.RequestGetExplorerQuests) => {
             return this.angularFirestore
                 .collection(action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/', ref => ref
@@ -110,7 +116,8 @@ export class QuestEffects {
     );
 
     @Effect()
-    GetSelectedQuest$ = this.actions$.ofType(actions.REQUEST_GET_SELECTED_QUEST).pipe(
+    GetSelectedQuest$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_SELECTED_QUEST),
         switchMap((action: actions.RequestGetSelectedQuest) => {
             return this.angularFirestore.collection(action.planetNamePayload + '/quests/entries/').doc(action.questIdPayload).get();
         }),
