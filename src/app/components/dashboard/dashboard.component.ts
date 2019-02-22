@@ -24,10 +24,10 @@ export class DashboardComponent implements OnInit {
   moderatorSignedIn = false;
   allPlanets = [];
 
-  constructor(private store: Store<AppState>,
-    private router: Router) {
-
-  }
+  constructor(
+    private store: Store<AppState>,
+    private router: Router
+  ) { }
 
   navigateQuest() {
     this.router.navigateByUrl('quest');

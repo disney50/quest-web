@@ -290,3 +290,5 @@
 ::-ms-input-placeholder { /* Microsoft Edge */
     color: rgb(232,227,240);
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
