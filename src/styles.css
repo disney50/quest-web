@@ -8,11 +8,19 @@ body, html {
   background: url('/assets/bg_one.jpg') no-repeat center center;
   background-size: cover;
   background-attachment: fixed;
+  min-height: calc(100% - 64px);
+  flex: 1 1 auto;
 }
 
-.center {
-    min-height: calc(100% - 64px);
-    flex: 1 1 auto;
+.toolbar {
+    background: rgb(4, 101, 101);
+    color: rgb(255,255,255);
+}
+
+.sidenav {
+    background: rgb(107, 157, 160);
+    color: rgb(232,227,240);
+    width: 15%;
 }
 
 .img-xlarge {
@@ -245,17 +253,6 @@ body, html {
     background: rgb(141, 162, 164, 0.9);
     color: rgb(232,227,240);
     border-radius: 0% !important;
-}
-
-.navbar {
-    background: rgb(4, 101, 101, 0.9);
-    color: rgb(255,255,255);
-}
-
-.sidenav {
-    background: rgb(107, 157, 160);
-    color: rgb(232,227,240);
-    width: 15%;
 }
 
 .dropdown:hover {

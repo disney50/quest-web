@@ -32,6 +32,9 @@ export class NavigationComponent implements OnInit {
   }
 
   logOutClicked() {
+    this.moderatorSignedIn = false;
+    this.userSignedIn = false;
+    this.signedInUser = {} as User;
     this.store.dispatch(new actions.LogOutUser);
     this.navigateLogin();
   }
