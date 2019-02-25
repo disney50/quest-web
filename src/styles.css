@@ -18,9 +18,11 @@ body, html {
 }
 
 .sidenav {
+    margin-top: 64px;
     background: rgb(107, 157, 160);
     color: rgb(232,227,240);
     width: 15%;
+    position: fixed !important;
 }
 
 .img-xlarge {
