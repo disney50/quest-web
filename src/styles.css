@@ -254,6 +254,12 @@
     color: rgb(255,255,255);
 }
 
+.sidenav {
+    background: rgb(107, 157, 160);
+    color: rgb(232,227,240);
+    width: 15%
+}
+
 .dropdown:hover {
     cursor: pointer;
 }

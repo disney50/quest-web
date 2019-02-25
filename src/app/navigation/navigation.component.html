@@ -25,7 +25,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="example-container">
-  <mat-sidenav *ngIf="userSignedIn || moderatorSignedIn" #drawer mode="side" opened role="navigation">
+  <mat-sidenav *ngIf="userSignedIn || moderatorSignedIn" class="sidenav" #drawer mode="side" opened role="navigation">
     <mat-nav-list *ngIf="moderatorSignedIn">
       <a *ngFor="let component of moderatorComponents" mat-list-item (click)="navigateComponent(component)">{{component}}</a>
     </mat-nav-list>
