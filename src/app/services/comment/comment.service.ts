@@ -9,21 +9,21 @@ import { Quest } from 'src/app/models/quest';
   providedIn: 'root'
 })
 export class CommentService {
-  newComment: Comment = {} as Comment;
 
   constructor(private angularFirestore: AngularFirestore,
     private questService: QuestService) {
 
   }
 
-  createComment(planetName: string, userId: string, quest: Quest, newComment: string, isModerator: boolean) {
-    this.newComment.comment = newComment;
-    this.newComment.isModerator = isModerator;
-    this.newComment.timestamp = firebase.firestore.Timestamp.now();
-    this.sendComment(planetName, userId, quest.questId);
+  createComment(planetName: string, userId: string, quest: Quest, comment: string, isModerator: boolean) {
+    const newComment = {} as Comment;
+    newComment.comment = comment;
+    newComment.isModerator = isModerator;
+    newComment.timestamp = firebase.firestore.Timestamp.now();
+    this.sendComment(planetName, userId, quest.questId, newComment);
   }
 
-  sendComment(planetName: string, userId: string, questId: string) {
-    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/comments').add(this.newComment);
+  sendComment(planetName: string, userId: string, questId: string, newComment: Comment) {
+    this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/' + questId + '/comments').add(newComment);
   }
 }

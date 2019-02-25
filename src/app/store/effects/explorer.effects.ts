@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as actions from '../actions';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -12,7 +12,8 @@ export class ExplorerEffects {
         private angularFirestore: AngularFirestore) { }
 
     @Effect()
-    GetExplorer$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORER).pipe(
+    GetExplorer$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_EXPLORER),
         switchMap((action: actions.RequestGetExplorer) => {
             return this.angularFirestore.collection(action.planetNamePayload + '/explorers/entries', ref => ref
                 .where('userId', '==', action.userIdPayload)).stateChanges();
@@ -27,7 +28,8 @@ export class ExplorerEffects {
     );
 
     @Effect()
-    GetExplorers$ = this.actions$.ofType(actions.REQUEST_GET_EXPLORERS).pipe(
+    GetExplorers$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_EXPLORERS),
         switchMap((action: actions.RequestGetExplorers) => {
             return this.angularFirestore.collection(action.payload + '/explorers/entries').stateChanges();
         }),

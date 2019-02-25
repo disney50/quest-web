@@ -1,0 +1,47 @@
+<mat-toolbar color="warn">
+  <mat-toolbar-row class="toolbar fixed-top">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+      <img class="img-small" src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
+    </button>
+
+    <span class="text-medium text-white ml-3">
+      <b>QUEST</b>
+    </span>
+
+    <div *ngIf="userSignedIn || moderatorSignedIn" class="ml-auto">
+      <div class="nav-item dropdown">
+        <span class="nav-link text-white text-small" role="button" data-toggle="dropdown">
+          {{signedInUser.name}}
+          <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
+        </span>
+
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item text-white" (click)="logOutClicked()">Log Out</a>
+        </div>
+      </div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="bg center">
+  <mat-sidenav #drawer mode="side" opened role="navigation" class="sidenav">
+    <mat-nav-list *ngIf="moderatorSignedIn">
+      <a *ngFor="let component of moderatorComponents" mat-list-item class="text-white"
+        (click)="navigateComponent(component)">{{component}}</a>
+    </mat-nav-list>
+
+    <mat-nav-list *ngIf="userSignedIn">
+      <a *ngFor="let component of userComponents" mat-list-item class="text-white"
+        (click)="navigateComponent(component)">{{component}}</a>
+    </mat-nav-list>
+
+    <mat-nav-list *ngIf="!userSignedIn && !moderatorSignedIn">
+      <a *ngFor="let component of signedOutComponents" mat-list-item class="text-white"
+        (click)="navigateComponent(component)">{{component}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

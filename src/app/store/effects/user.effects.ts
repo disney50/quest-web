@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as actions from '../actions';
-import { switchMap, mergeMap, map } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User, UserData } from 'src/app/models/user';
 import { PlanetService } from 'src/app/services/planet/planet.service';
@@ -14,28 +14,15 @@ export class UserEffects {
     user: User = {} as User;
 
 
-    constructor(private actions$: Actions,
+    constructor(
+        private actions$: Actions,
         private angularFirestore: AngularFirestore,
         private planetService: PlanetService
     ) { }
 
-    // @Effect()
-    // GetModeratorByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS).pipe(
-    //     switchMap((action: actions.RequestGetModeratorByLoginDetails) => {
-    //         return this.angularFirestore.collection('users', ref => ref
-    //             .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).stateChanges();
-    //     }),
-    //     mergeMap(actions => actions),
-    //     map(action => {
-    //         if (action.type === 'added') {
-    //             return new actions.LoginModeratorSuccess(new User(action.payload.doc.id, action.payload.doc.data() as UserData));
-    //         }
-    //         return new actions.UnimplementedAction('');
-    //     })
-    // );
-
     @Effect()
-    GetModeratorByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS).pipe(
+    GetModeratorByLoginDetails$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_MODERATOR_BY_LOGIN_DETAILS),
         switchMap((action: actions.RequestGetModeratorByLoginDetails) => {
             return this.angularFirestore.collection('users', ref => ref
                 .where('email', '==', action.payload.email).where('password', '==', action.payload.password).limit(1)).get();
@@ -50,7 +37,8 @@ export class UserEffects {
     );
 
     @Effect()
-    RequestUserExistsUsers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_USERS).pipe(
+    RequestUserExistsUsers$ = this.actions$.pipe(
+        ofType(actions.REQUEST_USER_EXISTS_USERS),
         switchMap((action: actions.RequestUserExistsUsers) => {
             this.email = action.payload.email;
             this.password = action.payload.password;
@@ -74,7 +62,8 @@ export class UserEffects {
 
 
     @Effect()
-    RequestUserExistsExplorers$ = this.actions$.ofType(actions.REQUEST_USER_EXISTS_EXPLORERS).pipe(
+    RequestUserExistsExplorers$ = this.actions$.pipe(
+        ofType(actions.REQUEST_USER_EXISTS_EXPLORERS),
         switchMap((action: actions.RequestUserExistsExplorers) => {
             return this.angularFirestore.collection('codeez/explorers/entries', ref => ref.where('email', '==', this.email)).get();
         }),
@@ -106,7 +95,8 @@ export class UserEffects {
     );
 
     @Effect()
-    GetUserByLoginDetails$ = this.actions$.ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS).pipe(
+    GetUserByLoginDetails$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_USER_BY_LOGIN_DETAILS),
         switchMap((action: actions.RequestGetUserByLoginDetails) => {
             return this.angularFirestore.collection('users', ref => ref
                 .where('email', '==', this.email).where('password', '==', this.password).limit(1)).get();
@@ -121,7 +111,8 @@ export class UserEffects {
     );
 
     @Effect()
-    LogOutUser$ = this.actions$.ofType(actions.LOG_OUT_USER).pipe(
+    LogOutUser$ = this.actions$.pipe(
+        ofType(actions.LOG_OUT_USER),
         switchMap(action => {
             return [new actions.ClearUserState(),
             new actions.ClearPlanetState(),

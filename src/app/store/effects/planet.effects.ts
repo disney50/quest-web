@@ -1,6 +1,6 @@
 import * as actions from '../actions';
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
 import { Planet, PlanetData } from 'src/app/models/planet';
@@ -12,7 +12,8 @@ export class PlanetEffects {
         private angularFirestore: AngularFirestore) { }
 
     @Effect()
-    GetPlanets$ = this.actions$.ofType(actions.REQUEST_GET_PLANETS).pipe(
+    GetPlanets$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_PLANETS),
         switchMap((action: actions.RequestGetPlanets) => {
             return this.angularFirestore.collection('planets').stateChanges();
         }),
@@ -26,7 +27,8 @@ export class PlanetEffects {
     );
 
     @Effect()
-    GetDefaultPlanet$ = this.actions$.ofType(actions.REQUEST_GET_DEFAULT_PLANET).pipe(
+    GetDefaultPlanet$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_DEFAULT_PLANET),
         switchMap((action: actions.RequestGetDefaultPlanet) => {
             return this.angularFirestore.collection('users/' + action.payload + '/planets').doc('codeez').get();
         }),

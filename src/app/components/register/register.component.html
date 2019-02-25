@@ -1,92 +1,90 @@
-<div class="center bg">
-  <div class="container-fluid">
+<div class="container-fluid pt-1">
 
-    <div class="row justify-content-center align-items-center pb-3">
-      <img class="img-medium" src="../../../assets/ic_logo.png" />
-    </div>
-
-    <div class="row justify-content-center align-items-center">
-      <div class="col-sm-12 col-lg-6">
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.email" class="input mb-3" type="email" placeholder="enter email...">
-          </div>
-
-          <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.password" class="input mb-3" type="password" placeholder="enter password...">
-          </div>
-        </div>
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.name" class="input mb-3" type="text" placeholder="enter name...">
-          </div>
-
-          <div class="col-sm-12 col-lg-6">
-            <input [(ngModel)]="newUser.surname" class="input mb-3" type="text" placeholder="enter surname...">
-          </div>
-        </div>
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-12">
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()"
-              [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
-
-            <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()"
-              [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="row justify-content-center align-items-center">
-      <div class="col-12">
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-sm-6 col-lg-3" *ngFor="let planet of allPlanets">
-            <div class="card-transparent border mb-3">
-
-              <div class="card-body text-center">
-                <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
-                <h4>{{planet.name}}</h4>
-                <span>{{planet.description}}</span>
-              </div>
-
-              <button class="btn-mosque" (click)="registerClicked(planet)">
-                REGISTER
-              </button>
-
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
-      (click)="message = null">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-close float-right">
-                <span><b>X</b></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="row justify-content-center align-items-center text-center">
-            <div class="col-12">
-              <span><b>{{message}}</b></span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
+  <div class="row justify-content-center align-items-center pb-2">
+    <img class="img-medium" src="../../../assets/ic_logo.png" />
   </div>
+
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-12 col-lg-6">
+
+      <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-lg-6">
+          <input [(ngModel)]="newUser.email" class="input mb-3" type="email" placeholder="enter email...">
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+          <input [(ngModel)]="newUser.password" class="input mb-3" type="password" placeholder="enter password...">
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-lg-6">
+          <input [(ngModel)]="newUser.name" class="input mb-3" type="text" placeholder="enter name...">
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+          <input [(ngModel)]="newUser.surname" class="input mb-3" type="text" placeholder="enter surname...">
+        </div>
+      </div>
+
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+          <button class="btn-mosque border mb-3" style="width: 50%" (click)="maleClicked()"
+            [ngClass]="maleStatus ? 'btn-mosque border' : 'btn-transparent border'">MALE</button>
+
+          <button class="btn-mosque border mb-3" style="width: 50%" (click)="femaleClicked()"
+            [ngClass]="femaleStatus ? 'btn-mosque border' : 'btn-transparent border'">FEMALE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12">
+
+      <div class="row justify-content-center align-items-center">
+        <div class="col-sm-6 col-lg-3" *ngFor="let planet of allPlanets">
+          <div class="card-transparent border mb-3">
+
+            <div class="card-body text-center">
+              <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
+              <h4>{{planet.name}}</h4>
+              <span>{{planet.description}}</span>
+            </div>
+
+            <button class="btn-mosque" (click)="registerClicked(planet)">
+              REGISTER
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+    (click)="message = null">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right">
+              <span><b>X</b></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center text-center">
+          <div class="col-12">
+            <span><b>{{message}}</b></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

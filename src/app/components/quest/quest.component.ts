@@ -16,6 +16,7 @@ import { Explorer } from 'src/app/models/explorer';
 import { Upload } from 'src/app/models/upload';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as firebase from 'firebase';
+import { Timestamp } from '@firebase/firestore-types';
 
 @Component({
   selector: 'app-quest',

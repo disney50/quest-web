@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as actions from '../../store/actions';
 import { switchMap, mergeMap, map } from 'rxjs/operators';
@@ -14,7 +14,8 @@ export class CommentEffects {
     }
 
     @Effect()
-    GetComments$ = this.actions$.ofType(actions.REQUEST_GET_COMMENTS).pipe(
+    GetComments$ = this.actions$.pipe(
+        ofType(actions.REQUEST_GET_COMMENTS),
         switchMap((action: actions.RequestGetComments) => {
             return this.angularFirestore.collection
                 (action.planetNamePayload + '/explorers/entries/' + action.userIdPayload + '/quests/' + action.questIdPayload + '/comments',

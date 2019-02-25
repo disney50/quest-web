@@ -23,7 +23,10 @@ import { PlanetComponent } from './components/planet/planet.component';
 import { CreateComponent } from './components/create/create.component';
 import { ExplorerComponent } from './components/explorer/explorer.component';
 import { ModerationComponent } from './components/moderation/moderation.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatToolbarModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { ModerationComponent } from './components/moderation/moderation.componen
     PlanetComponent,
     CreateComponent,
     ExplorerComponent,
-    ModerationComponent
+    ModerationComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,24 @@ import { ModerationComponent } from './components/moderation/moderation.componen
     EffectsModule.forRoot([effects.UserEffects, effects.PlanetEffects, effects.ExplorerEffects,
     effects.QuestEffects, effects.CommentEffects]),
     StoreDevtoolsModule.instrument(),
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    BrowserAnimationsModule,
+    CommonModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
+  ],
+  exports: [
+    CommonModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     AngularFireAuth,
