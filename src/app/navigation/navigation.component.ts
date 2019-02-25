@@ -21,6 +21,7 @@ export class NavigationComponent implements OnInit {
 
   moderatorComponents = ['dashboard', 'moderate', 'comment'];
   userComponents = ['dashboard', 'quests'];
+  signedOutComponents = ['login', 'register'];
 
   constructor(
     private store: Store<AppState>,

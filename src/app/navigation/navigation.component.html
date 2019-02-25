@@ -8,7 +8,7 @@
       <b>QUEST</b>
     </span>
 
-    <div class="ml-auto">
+    <div *ngIf="userSignedIn || moderatorSignedIn" class="ml-auto">
       <div class="nav-item dropdown">
         <span class="nav-link text-white text-small" role="button" data-toggle="dropdown">
           {{signedInUser.name}}
@@ -32,7 +32,13 @@
 
     <mat-nav-list *ngIf="userSignedIn">
       <a *ngFor="let component of userComponents" mat-list-item class="text-white"
-        (click)="navigateComponent(component)">{{component}}</a> </mat-nav-list>
+        (click)="navigateComponent(component)">{{component}}</a>
+    </mat-nav-list>
+
+    <mat-nav-list *ngIf="!userSignedIn && !moderatorSignedIn">
+      <a *ngFor="let component of signedOutComponents" mat-list-item class="text-white"
+        (click)="navigateComponent(component)">{{component}}</a>
+    </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
