@@ -24,10 +24,11 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container class="example-container">
+<mat-sidenav-container class="example-container bg center">
   <mat-sidenav *ngIf="userSignedIn || moderatorSignedIn" class="sidenav" #drawer mode="side" opened role="navigation">
     <mat-nav-list *ngIf="moderatorSignedIn">
-      <a *ngFor="let component of moderatorComponents" mat-list-item (click)="navigateComponent(component)">{{component}}</a>
+      <a *ngFor="let component of moderatorComponents" mat-list-item
+        (click)="navigateComponent(component)">{{component}}</a>
     </mat-nav-list>
 
     <mat-nav-list *ngIf="userSignedIn">
@@ -35,7 +36,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content class="bg center">
+  <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

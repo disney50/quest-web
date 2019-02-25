@@ -1,78 +1,54 @@
-<div class="center bg">
-  <div class="container-fluid">
+<div class="container-fluid pt-5">
 
-    <nav class="row navbar fixed-top navbar-expand navbar-dark mx-auto">
-      <a class="navbar-brand nav-brand ml-2" routerLink="currentquests">
-        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
-      </a>
+  <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+    <div class="col-12">
 
-      <a class="navbar-text text-large">
-        <b>create</b>
-      </a>
+      <div class="row justify-content-center align-items-center pb-3">
+        <img class="img-medium" src="../../../assets/ic_logo.png" />
+      </div>
 
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
-            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
-            {{signedInUser.name}}
-            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
-          </a>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-lg-6">
 
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item text-white" (click)="logOutClicked()">Log Out</a>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newQuest.title" class="input mb-3" type="text" placeholder="enter title...">
+            </div>
+
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newQuest.description" class="input mb-3" type="text"
+                placeholder="enter description...">
+            </div>
           </div>
-        </li>
-      </ul>
-    </nav>
 
-    <div class="row justify-content-center align-itmes-center text-center mt-5 mb-5">
-      <div class="col-12">
-
-        <div class="row justify-content-center align-items-center pb-3">
-          <img class="img-medium" src="../../../assets/ic_logo.png" />
-        </div>
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-sm-12 col-lg-6">
-
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newQuest.title" class="input mb-3" type="text" placeholder="enter title...">
-              </div>
-
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newQuest.description" class="input mb-3" type="text"
-                  placeholder="enter description...">
-              </div>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newLevel1.name" class="input mb-3" type="text" placeholder="enter level 1...">
             </div>
 
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newLevel1.name" class="input mb-3" type="text" placeholder="enter level 1...">
-              </div>
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newLevel2.name" class="input mb-3" type="text" placeholder="enter level 2...">
+            </div>
+          </div>
 
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newLevel2.name" class="input mb-3" type="text" placeholder="enter level 2...">
-              </div>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newQuest.max_xp" class="input mb-3" type="text" placeholder="enter xp...">
             </div>
 
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newQuest.max_xp" class="input mb-3" type="text" placeholder="enter xp...">
-              </div>
-
-              <div class="col-sm-12 col-lg-6">
-                <input [(ngModel)]="newQuest.order" class="input mb-3" type="number" placeholder="enter order...">
-              </div>
+            <div class="col-sm-12 col-lg-6">
+              <input [(ngModel)]="newQuest.order" class="input mb-3" type="number" placeholder="enter order...">
             </div>
+          </div>
 
-            <div class="row justify-content-center align-items-center">
-              <div class="col-12">
-                <select class="custom-select mb-3" [(ngModel)]="newPrerequisite">
-                  <option *ngFor="let quest of planetQuests" [ngValue]="quest.questId" style="border-radius: 0">{{quest.title}}</option>
-                </select>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-12">
+              <select class="custom-select mb-3" [(ngModel)]="newPrerequisite">
+                <option *ngFor="let quest of planetQuests" [ngValue]="quest.questId" style="border-radius: 0">
+                  {{quest.title}}</option>
+              </select>
 
-                <!-- <div class="dropdown mb-3">
+              <!-- <div class="dropdown mb-3">
                   <button class="btn-gothic dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dropdown button
@@ -81,43 +57,42 @@
                     <a *ngFor="let quest of planetQuests" class="dropdown-item text-white" href="#">{{quest.title}}</a>
                   </div>
                 </div> -->
-              </div>
-            </div>
-
-            <div class="row justify-content-center align-items-center">
-              <div class="col-12">
-                <button class="btn-mosque boder mb-3" (click)="createClicked()">CREATE</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
-          (click)="message = null">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-
-              <div class="row">
-                <div class="col-12">
-                  <button class="btn-close float-right">
-                    <span><b>X</b></span>
-                  </button>
-                </div>
-              </div>
-
-              <div class="row justify-content-center align-items-center text-center">
-                <div class="col-12">
-                  <span><b>{{message}}</b></span>
-                </div>
-              </div>
-
             </div>
           </div>
-        </div>
 
+          <div class="row justify-content-center align-items-center">
+            <div class="col-12">
+              <button class="btn-mosque boder mb-3" (click)="createClicked()">CREATE</button>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
 
+      <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+        (click)="message = null">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-close float-right">
+                  <span><b>X</b></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row justify-content-center align-items-center text-center">
+              <div class="col-12">
+                <span><b>{{message}}</b></span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
 </div>
