@@ -1,75 +1,76 @@
-<div class="center bg">
-  <div class="container-fluid">
+<div class="container-fluid">
 
-    <div class="row justify-content-center align-items-center">
-      <div class="col-sm-12 col-lg-6">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-sm-12 col-lg-6">
 
-        <div class="row justify-content-center align-items-center pb-2">
-          <img src="../../../assets/sign_in_title.png" />
-        </div>
-
-        <div class="row justify-content-center align-items-center pb-4">
-          <img class="img-medium" src="../../../assets/ic_logo.png" />
-        </div>
-
-        <div class="row justify-content-center align-items-center">
-          <div class="col-12">
-
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-lg-6">
-                <input #email (keyup.enter)="signInClicked(email.value, password.value)" class="input mb-3" type="email" placeholder="enter email...">
-              </div>
-
-              <div class="col-sm-12 col-lg-6">
-                <input #password (keyup.enter)="signInClicked(email.value, password.value)" class="input mb-3" type="password" placeholder="enter password...">
-              </div>
-            </div>
-
-            <div class="row justify-content-center align-items-center">
-              <button class="btn-mosque mr-3 ml-3 mb-3" (click)="signInClicked(email.value, password.value)">
-                SIGN IN
-              </button>
-            </div>
-
-            <div class="row justify-content-center align-items-center text-center">
-              <div class="col-sm-12 col-lg-6 mb-3">
-                <span class="text-snuff">No account?</span>
-              </div>
-
-              <div class="col-sm-12 col-lg-6">
-                <button class="btn-gothic mb-3" (click)="navigateRegister()">
-                  REGISTER
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
+      <div class="row justify-content-center align-items-center pb-2">
+        <img src="../../../assets/sign_in_title.png" />
       </div>
-    </div>
 
-    <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}" (click)="message = null">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+      <div class="row justify-content-center align-items-center pb-4">
+        <img class="img-medium" src="../../../assets/ic_logo.png" />
+      </div>
 
-          <div class="row">
-            <div class="col-12">
-              <button class="btn-close float-right">
-                <span><b>X</b></span>
-              </button>
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+
+          <div class="row justify-content-center align-items-center">
+            <div class="col-sm-12 col-lg-6">
+              <input #email (keyup.enter)="signInClicked(email.value, password.value)" class="input mb-3" type="email"
+                placeholder="enter email...">
             </div>
+
+            <div class="col-sm-12 col-lg-6">
+              <input #password (keyup.enter)="signInClicked(email.value, password.value)" class="input mb-3"
+                type="password" placeholder="enter password...">
+            </div>
+          </div>
+
+          <div class="row justify-content-center align-items-center">
+            <button class="btn-mosque mr-3 ml-3 mb-3" (click)="signInClicked(email.value, password.value)">
+              SIGN IN
+            </button>
           </div>
 
           <div class="row justify-content-center align-items-center text-center">
-            <div class="col-12">
-              <span><b>{{message}}</b></span>
+            <div class="col-sm-12 col-lg-6 mb-3">
+              <span class="text-snuff">No account?</span>
+            </div>
+
+            <div class="col-sm-12 col-lg-6">
+              <button class="btn-gothic mb-3" (click)="navigateRegister()">
+                REGISTER
+              </button>
             </div>
           </div>
 
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
+
+  <div class="modal" role="dialog" [ngStyle]="{'display': message ? 'block': 'none', 'opacity': 1}"
+    (click)="message = null">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right">
+              <span><b>X</b></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center text-center">
+          <div class="col-12">
+            <span><b>{{message}}</b></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>

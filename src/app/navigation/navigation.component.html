@@ -12,7 +12,7 @@
       <b *ngIf="moderatorSignedIn">dashboard</b>
     </span>
 
-    <ul class="ml-auto">
+    <!-- <ul class="ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
           <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
@@ -24,7 +24,7 @@
           <a class="dropdown-item text-white" (click)="logOutClicked()">Log Out</a>
         </div>
       </li>
-    </ul>
+    </ul> -->
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -35,7 +35,7 @@
       <a mat-list-item routerLink='/second'>Second Component</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="bg center">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
