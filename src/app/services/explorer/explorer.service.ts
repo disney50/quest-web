@@ -133,30 +133,31 @@ export class ExplorerService {
     this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(newExplorersRequiringModeratorActionArray));
   }
 
+  createExplorerRequiringModeration(explorer: Explorer): ExplorerRequiringModeratorAction {
+    const explorerRequiringModeration = {} as ExplorerRequiringModeratorAction;
+    explorerRequiringModeration.isModerating = true;
+    explorerRequiringModeration.name = explorer.name;
+    explorerRequiringModeration.newComments = false;
+    explorerRequiringModeration.surname = explorer.surname;
+    explorerRequiringModeration.userId = explorer.userId;
+    explorerRequiringModeration.xp = explorer.xp;
+    return explorerRequiringModeration;
+  }
+
   createExplorersRequiringModerationArray(planetExplorers: Explorer[], planetName: string) {
-    const newExplorersRequiringModeratorActionArray = [];
-    const newExplorersRequiringModeratorActionIds = [];
+    const explorersRequiringModerationArray = [];
 
     planetExplorers.forEach(planetExplorer => {
-      const newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
-      if (newExplorersRequiringModeratorActionIds.indexOf(newExplorerRequiringModeratorAction.userId) === -1) {
-        newExplorersRequiringModeratorActionArray.push(newExplorerRequiringModeratorAction);
-        newExplorersRequiringModeratorActionIds.push(newExplorerRequiringModeratorAction.userId);
-      }
-    });
-
-    newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
-        .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
+        .collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/', ref => ref
           .where('status', '==', 'moderating'))
         .get()
         .subscribe(moderatingQuests => {
           if (moderatingQuests.size > 0) {
-            newExplorerRequiringModeratorAction.isModerating = true;
+            explorersRequiringModerationArray.push(this.createExplorerRequiringModeration(planetExplorer));
           }
         });
     });
-
-    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(newExplorersRequiringModeratorActionArray));
+    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(explorersRequiringModerationArray));
   }
 }
