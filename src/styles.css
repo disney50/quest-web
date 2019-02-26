@@ -28,7 +28,10 @@ body, html {
 }
 
 .img-xlarge {
-    max-width: 450px;
+    max-height: 50%;
+    max-width: 450;
+    height: auto;
+    width: auto;
 }
 
 .img-large {
@@ -224,8 +227,16 @@ body, html {
     font-size: 75%;
 }
 
+.modal-img {
+    background: rgba(0,0,0,0.9);
+    top: 64px;
+    overflow: auto;
+    height: calc(100% - 64px);
+}
+
 .modal {
     background: rgba(0,0,0,0.9);
+    top: 64px;
 }
 
 .modal-content {
