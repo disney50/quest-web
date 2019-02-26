@@ -2,26 +2,22 @@
 
   <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
 
-    <div class="col-sm-12 col-lg-6 align-self-start mb-2">
+    <div class="col-sm-12 col-lg-6 align-self-start mb-5">
       <div class="card-cutty-sark border">
 
         <div class="card-header border-bottom">
-          <b class="text-large">{{selectedExplorer.name}} {{selectedExplorer.surname}}</b>
+          <b class="text-large">EXPLORER</b>
         </div>
 
         <div class="card-body">
 
           <div class="row justify-content-center align-items-center text-center mb-2">
-            <b class="text-medium">PLANET: {{currentPlanet.name}}</b>
+            <b class="text-large">{{selectedExplorer.name}} {{selectedExplorer.surname}}</b>
           </div>
 
           <div class="row justify-content-center align-items-center text-center mb-2">
-            <span class="text-medium text-uppercase">XP: {{selectedExplorer.xp}}</span>
-          </div>
-
-          <!-- <div class="row justify-content-center align-items-center text-center mb-2">
-              <span>{{currentPlanet.name}}</span>
-            </div> -->
+              <span class="text-medium text-uppercase">XP: {{selectedExplorer.xp}}</span>
+            </div>
 
           <div class="row justify-content-center align-items-center">
             <img class="img-small" src="../../../assets/{{currentPlanet.name}}.png" />
@@ -32,7 +28,7 @@
       </div>
     </div>
 
-    <div class="col-sm-12 col-lg-6 align-self-start mb-2">
+    <div class="col-sm-12 col-lg-6 align-self-start">
       <div class="card-cutty-sark border-gothic">
 
         <div class="card-header border-bottom-gothic">
@@ -59,9 +55,7 @@
             </div>
           </div>
         </div>
-
-        <!-- <button type="button" class="btn-gothic" (click)="createClicked()">CREATE</button> -->
-
+        
       </div>
     </div>
 
