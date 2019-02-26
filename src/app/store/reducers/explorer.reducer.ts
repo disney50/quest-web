@@ -6,7 +6,8 @@ export const initialExplorerState = {
     currentExplorer: {} as Explorer,
     selectedExplorer: {} as Explorer,
     explorersRequiringModeratorAction: [],
-    explorersRequiringModeration: []
+    explorersRequiringModeration: [],
+    explorersWithNewComments: []
 };
 
 export function explorerReducer(state = initialExplorerState, action: actions.ExplorerActions) {
@@ -39,8 +40,12 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.explorersRequiringModeratorAction = (action as actions.GetExplorersRequiringModeratorActionSuccess).payload;
             return newState;
 
-        case actions.GET_EXPLORER_REQUIRING_MODERATION_SUCCESS:
-            newState.explorersRequiringModeration = (action as actions.GetExplorerRequiringModerationSuccess).payload;
+        case actions.GET_EXPLORERS_REQUIRING_MODERATION_SUCCESS:
+            newState.explorersRequiringModeration = (action as actions.GetExplorersRequiringModerationSuccess).payload;
+            return newState;
+
+        case actions.GET_EXPLORERS_WITH_NEW_COMMENTS_SUCCESS:
+            newState.explorersWithNewComments = (action as actions.GetExplorersWithNewCommentsSuccess).payload;
             return newState;
 
         case actions.CLEAR_EXPLORER_STATE:
@@ -49,6 +54,7 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             newState.selectedExplorer = {} as Explorer;
             newState.explorersRequiringModeratorAction = [];
             newState.explorersRequiringModeration = [];
+            newState.explorersWithNewComments = [];
             return newState;
 
         default:

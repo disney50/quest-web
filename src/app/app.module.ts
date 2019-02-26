@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatToolbarModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     CreateComponent,
     ExplorerComponent,
     ModerationComponent,
-    NavigationComponent
+    NavigationComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

@@ -86,13 +86,14 @@ export class ExplorerService {
               newActiveQuestsArray.push(newActiveQuest);
               this.angularFirestore
                 .collection
+                // tslint:disable-next-line: max-line-length
                 (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + newActiveQuest.questId + '/comments/',
                   ref => ref.where('timestamp', '>', newActiveQuest.comment_last_view_date))
                 .get()
                 .subscribe(newComments => {
                   if (newComments.size > 0) {
                     newExplorerRequiringModeratorAction.newComments = true;
-                    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(newExplorerRequiringModeratorAction));
+                    this.store.dispatch(new actions.GetExplorersRequiringModerationSuccess(newExplorerRequiringModeratorAction));
                   }
                 });
             });
@@ -158,6 +159,89 @@ export class ExplorerService {
           }
         });
     });
-    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(explorersRequiringModerationArray));
+    this.store.dispatch(new actions.GetExplorersRequiringModerationSuccess(explorersRequiringModerationArray));
+  }
+
+  createExplorerWithNewComments(explorer: Explorer): ExplorerRequiringModeratorAction {
+    const explorerWithNewComments = {} as ExplorerRequiringModeratorAction;
+    explorerWithNewComments.isModerating = false;
+    explorerWithNewComments.name = explorer.name;
+    explorerWithNewComments.newComments = true;
+    explorerWithNewComments.surname = explorer.surname;
+    explorerWithNewComments.userId = explorer.userId;
+    explorerWithNewComments.xp = explorer.xp;
+    return explorerWithNewComments;
+  }
+
+  createExplorersWithNewCommentsArray(planetExplorers: Explorer[], planetName: string) {
+    const explorersWithNewCommentsArray = [];
+    const explorersWithNewCommentsIds = [];
+
+    planetExplorers.forEach(planetExplorer => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/', ref => ref
+          .where('status', '==', 'moderating'))
+        .get()
+        .subscribe(moderatingQuests => {
+          if (moderatingQuests.size > 0) {
+            moderatingQuests.forEach(moderatingQuest => {
+              const newModeratingQuest = new Quest(moderatingQuest.id, moderatingQuest.data() as QuestData);
+
+              if (newModeratingQuest.comment_last_view_date === undefined) {
+                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newModeratingQuest);
+              }
+
+              this.angularFirestore
+                .collection
+                (planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/' + newModeratingQuest.questId + '/comments/',
+                  ref => ref.where('timestamp', '>', newModeratingQuest.comment_last_view_date))
+                .get()
+                .subscribe(newComments => {
+                  if (newComments.size > 0) {
+                    if (explorersWithNewCommentsIds.indexOf(planetExplorer.userId) === -1) {
+                      explorersWithNewCommentsIds.push(planetExplorer.userId);
+
+                      explorersWithNewCommentsArray.push(this.createExplorerWithNewComments(planetExplorer));
+                    }
+                  }
+                });
+            });
+          }
+        });
+    });
+
+    planetExplorers.forEach(planetExplorer => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/', ref => ref
+          .where('status', '==', 'inprogress'))
+        .get()
+        .subscribe(inProgressQuests => {
+          if (inProgressQuests.size > 0) {
+            inProgressQuests.forEach(inProgressQuest => {
+              const newInProgressQuest = new Quest(inProgressQuest.id, inProgressQuest.data() as QuestData);
+
+              if (newInProgressQuest.comment_last_view_date === undefined) {
+                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newInProgressQuest);
+              }
+
+              this.angularFirestore
+                .collection
+                (planetName + '/explorers/entries/' + planetExplorer.userId + '/quests/' + newInProgressQuest.questId + '/comments/',
+                  ref => ref.where('timestamp', '>', newInProgressQuest.comment_last_view_date))
+                .get()
+                .subscribe(newComments => {
+                  if (newComments.size > 0) {
+                    if (explorersWithNewCommentsIds.indexOf(planetExplorer.userId) === -1) {
+                      explorersWithNewCommentsIds.push(planetExplorer.userId);
+
+                      explorersWithNewCommentsArray.push(this.createExplorerWithNewComments(planetExplorer));
+                    }
+                  }
+                });
+            });
+          }
+        });
+    });
+    // dispatch here
   }
 }

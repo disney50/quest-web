@@ -11,3 +11,5 @@ export const selectedExplorer = (state: AppState) => explorerBase(state).selecte
 export const explorersRequiringModeratorAction = (state: AppState) => explorerBase(state).explorersRequiringModeratorAction;
 
 export const explorersRequiringModeration = (state: AppState) => explorerBase(state).explorersRequiringModeration;
+
+export const explorersWithNewCommetns = (state: AppState) => explorerBase(state).explorersWithNewComments;

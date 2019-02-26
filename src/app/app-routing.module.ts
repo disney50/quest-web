@@ -9,6 +9,7 @@ import { PlanetComponent } from './components/planet/planet.component';
 import { CreateComponent } from './components/create/create.component';
 import { ExplorerComponent } from './components/explorer/explorer.component';
 import { ModerationComponent } from './components/moderation/moderation.component';
+import { CommentsComponent } from './components/comments/comments.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'planet', component: PlanetComponent },
   { path: 'create', component: CreateComponent },
   { path: 'explorer', component: ExplorerComponent },
-  { path: 'moderation', component: ModerationComponent }
+  { path: 'moderation', component: ModerationComponent },
+  { path: 'comments', component: CommentsComponent }
 ];
 
 @NgModule({
