@@ -9,6 +9,7 @@ import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';
 import { fetchedCurrentPlanet } from '../../store/selectors';
+import { Explorer } from 'src/app/models/explorer';
 
 @Component({
   selector: 'app-moderation',
@@ -25,6 +26,7 @@ export class ModerationComponent implements OnInit {
   fetchedCurrentPlanet = false;
 
   allPlanets = [];
+  planetExplorersIds = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -39,6 +41,10 @@ export class ModerationComponent implements OnInit {
     this.router.navigateByUrl('dashboard');
   }
 
+  navigateExplorer() {
+    this.router.navigateByUrl('explorer');
+  }
+
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
     this.navigateLogin();
@@ -46,6 +52,17 @@ export class ModerationComponent implements OnInit {
 
   selectPlanetClicked(selectedPlanet: Planet) {
     this.store.dispatch(new actions.GetPlanetSuccess(selectedPlanet));
+  }
+
+  explorerClicked(selectedExplorer: Explorer) {
+    this.planetExplorers.forEach(planetExplorer => {
+      if (this.planetExplorersIds.indexOf(planetExplorer) === -1) {
+        this.planetExplorersIds.push(planetExplorer.userId);
+      }
+    });
+    const selectedPlanetExplorer = this.planetExplorers[(this.planetExplorersIds.indexOf(selectedExplorer.userId))];
+    this.store.dispatch(new actions.GetSelectedExplorerSuccess(selectedPlanetExplorer));
+    this.navigateExplorer();
   }
 
   sliceAppState() {

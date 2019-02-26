@@ -69,7 +69,9 @@ export class NavigationComponent implements OnInit {
     this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
       this.fetchedCurrentPlanet = fetchedCurrentPlanet;
 
-      if (this.userSignedIn || this.moderatorSignedIn && !fetchedCurrentPlanet) {
+      if (this.moderatorSignedIn && !fetchedCurrentPlanet) {
+        this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
+      } else if (this.userSignedIn && !fetchedCurrentPlanet) {
         this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
       }
     });
