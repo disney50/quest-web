@@ -242,6 +242,6 @@ export class ExplorerService {
           }
         });
     });
-    // dispatch here
+    this.store.dispatch(new actions.GetExplorersWithNewCommentsSuccess(explorersWithNewCommentsArray));
   }
 }

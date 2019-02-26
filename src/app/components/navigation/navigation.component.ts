@@ -20,7 +20,7 @@ export class NavigationComponent implements OnInit {
   currentPlanet = {} as Planet;
   fetchedCurrentPlanet = false;
 
-  moderatorComponents = ['dashboard', 'moderation', 'comment'];
+  moderatorComponents = ['dashboard', 'moderation', 'comments'];
   userComponents = ['dashboard', 'quests'];
   signedOutComponents = ['login', 'register'];
 

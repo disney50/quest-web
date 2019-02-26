@@ -12,4 +12,4 @@ export const explorersRequiringModeratorAction = (state: AppState) => explorerBa
 
 export const explorersRequiringModeration = (state: AppState) => explorerBase(state).explorersRequiringModeration;
 
-export const explorersWithNewCommetns = (state: AppState) => explorerBase(state).explorersWithNewComments;
+export const explorersWithNewComments = (state: AppState) => explorerBase(state).explorersWithNewComments;

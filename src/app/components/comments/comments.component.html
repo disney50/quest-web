@@ -1,3 +1,82 @@
-<p>
-  comments works!
-</p>
+<div class="container-fluid">
+
+  <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+
+    <div class="col-sm-12 col-lg-6 align-self-start">
+      <div class="card-cutty-sark border">
+
+        <div class="card-header border-bottom">
+          <b class="text-large">EXPLORERS</b>
+        </div>
+
+        <div class="card-body mb-0 pb-0">
+          <div *ngFor="let explorer of explorersWithNewComments" class="row">
+            <div class="col-12">
+              <div class="card-gothic m-2 py-2" style="cursor: pointer;" (click)="explorerClicked(explorer)">
+                <div class="row justify-content-center align-items-center text-center">
+                  <b class="text-medium">
+                    {{explorer.name}} {{explorer.surname}}
+                  </b>
+                </div>
+
+                <div class="row justify-content-center align-items-center text-center">
+                  <span class="text-medium text-uppercase">XP: {{explorer.xp}}</span>
+                </div>
+
+                <div class="row justify-content-center align-items-center text-center">
+                  <span *ngIf="explorer.newComments" class="badge badge-light p-2">new comments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer" style="border-top: none"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal" role="dialog" [ngStyle]="{'display': !fetchedCurrentPlanet ? 'block': 'none', 'opacity': 1}"
+    (click)="image = null">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right">
+              <span><b>X</b></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center text-center">
+          <div class="col-12">
+
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-lg-6" *ngFor="let planet of allPlanets">
+                <div class="card-cutty-sark border-gothic mb-3">
+
+                  <div class="card-body text-center">
+                    <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
+                    <h4>{{planet.name}}</h4>
+                    <span>{{planet.description}}</span>
+                  </div>
+
+                  <button class="btn-gothic" (click)="selectPlanetClicked(planet)">
+                    SELECT
+                  </button>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
