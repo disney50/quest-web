@@ -1,17 +1,16 @@
 <mat-toolbar color="warn" style="height: 64px; min-height: 64px; max-height: 64px">
   <mat-toolbar-row class="toolbar fixed-top">
-    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
       <img class="img-small" src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
     </button>
 
     <span class="text-medium text-white ml-3">
-      <!-- <b *ngIf="fetchedCurrentPlanet">{{currentPlanet.name}}</b> -->
       <b>QUEST</b>
     </span>
 
     <div *ngIf="userSignedIn || moderatorSignedIn" class="ml-auto">
       <div class="nav-item dropdown">
-        <span class="nav-link text-white text-small" role="button" data-toggle="dropdown">
+        <span class="nav-link text-white text-small p-0" role="button" data-toggle="dropdown">
           {{signedInUser.name}}
           <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
         </span>
@@ -24,7 +23,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container class="bg center">
+<mat-sidenav-container class="bg">
   <mat-sidenav #drawer mode="side" opened role="navigation" class="sidenav">
     <mat-nav-list *ngIf="moderatorSignedIn">
       <a *ngFor="let component of moderatorComponents" mat-list-item class="text-white"
