@@ -14,10 +14,13 @@ body, html {
 .toolbar {
     background: rgb(4, 101, 101);
     color: rgb(255,255,255);
+    height: 64px;
+    min-height: 64px;
+    max-height: 64px;
 }
 
 .sidenav {
-    margin-top: 55px;
+    margin-top: 64px;
     background: rgb(107, 157, 160);
     color: rgb(232,227,240);
     min-width: 15%;
