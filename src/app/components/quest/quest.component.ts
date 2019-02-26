@@ -89,6 +89,10 @@ export class QuestComponent implements OnInit {
   moderateQuest() {
     if (this.relaunchStatus) {
       this.selectedQuest.status = 'inprogress';
+
+      this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);
+
+      this.navigateExplorer();
     } else if (this.completedStatus) {
       if (this.newXP === 0) {
         this.message = 'You forgot to assign XP...';

@@ -58,7 +58,7 @@ export class QuestService {
   checkIfPrerequisiteQuestCompleted(planetName: string, userId: string, possibleQuest: Quest): boolean {
     this.prerequisiteQuest = {} as Quest;
 
-    if (possibleQuest.prerequisites.length !== 0) {
+    if (possibleQuest.prerequisites.length > 0) {
       this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
         .doc(possibleQuest.prerequisites[0]).ref.onSnapshot(snapShot => {
 

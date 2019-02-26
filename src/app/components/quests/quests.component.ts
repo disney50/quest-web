@@ -56,6 +56,12 @@ export class QuestsComponent implements OnInit {
           .checkIfPrerequisiteQuestCompleted(this.currentPlanet.name, this.signedInUser.userId, possibleQuest);
       });
     }
+
+    if (this.currentQuestExists) {
+      this.possibleQuests.forEach(possibleQuest => {
+        possibleQuest.isAvailable = false;
+      });
+    }
   }
 
   questClicked(selectedQuest: Quest) {
@@ -114,11 +120,6 @@ export class QuestsComponent implements OnInit {
       if (this.moderatorSignedIn || this.userSignedIn) {
         this.explorerQuests = explorerQuests;
         this.checkPossibleQuests();
-        if (this.currentQuestExists) {
-          this.possibleQuests.forEach(possibleQuest => {
-            possibleQuest.isAvailable = false;
-          });
-        }
       }
     });
   }
