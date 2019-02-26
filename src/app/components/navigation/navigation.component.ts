@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AppState } from '../store/app-state';
+import { AppState } from '../../store/app-state';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import * as selectors from '../store/selectors';
-import * as actions from '../store/actions';
+import * as selectors from '../../store/selectors';
+import * as actions from '../../store/actions';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
-import { Planet } from '../models/planet';
+import { User } from '../../models/user';
+import { Planet } from '../../models/planet';
 
 @Component({
   selector: 'app-navigation',

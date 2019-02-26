@@ -1,4 +1,4 @@
-<div class="container-fluid pt-5">
+<div class="container-fluid">
 
   <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
     <div class="col-12">
@@ -47,16 +47,6 @@
                 <option *ngFor="let quest of planetQuests" [ngValue]="quest.questId" style="border-radius: 0">
                   {{quest.title}}</option>
               </select>
-
-              <!-- <div class="dropdown mb-3">
-                  <button class="btn-gothic dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a *ngFor="let quest of planetQuests" class="dropdown-item text-white" href="#">{{quest.title}}</a>
-                  </div>
-                </div> -->
             </div>
           </div>
 
