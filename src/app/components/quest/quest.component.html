@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
-  <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
-    <div class="col-sm-12 col-lg-4 align-self-start">
+  <div class="row justify-content-center align-items-center text-center mt-5 mb-3">
+    <div class="col-sm-12 col-lg-4 align-self-start mb-5">
       <div class="card-cutty-sark border">
 
         <div class="card-header border-bottom">
@@ -32,7 +32,7 @@
     </div>
 
     <div *ngIf="moderatorSignedIn || isInProgress || isModerating || isCompleted"
-      class="col-sm-12 col-lg-4 align-self-start">
+      class="col-sm-12 col-lg-4 align-self-start mb-5">
       <div class="card-cutty-sark border">
 
         <div class="card-header border-bottom">
@@ -89,7 +89,7 @@
 
     <div *ngIf="moderatorSignedIn || isInProgress" class="col-sm-12 col-lg-4 align-self-start">
 
-      <div class="row justify-content-center align-items-center">
+      <div class="row justify-content-center align-items-center mb-5">
         <div class="col-12">
           <div class="card-cutty-sark border-gothic">
 
@@ -139,7 +139,7 @@
         </div>
       </div>
 
-      <div class="row justify-content-center align-items-center">
+      <div class="row justify-content-center align-items-center mb-5">
         <div *ngIf="moderatorSignedIn && isModerating" class="col-12">
           <input [(ngModel)]="newXP" class="input mb-3" type="number" placeholder="enter xp...">
         </div>
