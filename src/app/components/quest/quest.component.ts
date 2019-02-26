@@ -94,16 +94,16 @@ export class QuestComponent implements OnInit {
         this.message = 'You forgot to assign XP...';
       } else {
         this.selectedQuest.status = 'completed';
+
+        this.selectedExplorer.xp = +this.selectedExplorer.xp;
+
+        this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
+
+        this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);
+
+        this.navigateExplorer();
       }
     }
-
-    this.selectedExplorer.xp = +this.selectedExplorer.xp;
-
-    this.selectedExplorer.xp = this.selectedExplorer.xp + this.newXP;
-
-    this.questService.moderateQuest(this.currentPlanet.name, this.selectedExplorer, this.selectedQuest);
-
-    this.navigateExplorer();
   }
 
   fileClicked(selectedUploadName: string) {
