@@ -40,8 +40,7 @@ export function explorerReducer(state = initialExplorerState, action: actions.Ex
             return newState;
 
         case actions.GET_EXPLORER_REQUIRING_MODERATION_SUCCESS:
-            newState.explorersRequiringModeration = 
-                [...newState.explorersRequiringModeration, (action as actions.GetExplorerRequiringModerationSuccess).payload];
+            newState.explorersRequiringModeration = (action as actions.GetExplorerRequiringModerationSuccess).payload;
             return newState;
 
         case actions.CLEAR_EXPLORER_STATE:

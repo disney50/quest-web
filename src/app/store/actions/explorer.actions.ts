@@ -43,7 +43,7 @@ export class GetExplorersRequiringModeratorActionSuccess implements Action {
 
 export class GetExplorerRequiringModerationSuccess implements Action {
     type = GET_EXPLORER_REQUIRING_MODERATION_SUCCESS;
-    constructor(public payload: Explorer) {}
+    constructor(public payload: ExplorerRequiringModeratorAction[]) {}
 }
 
 export class ClearExplorerState implements Action {

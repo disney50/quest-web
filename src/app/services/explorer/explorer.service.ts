@@ -66,20 +66,8 @@ export class ExplorerService {
           if (moderatingQuests.size > 0) {
             newExplorerRequiringModeratorAction.isModerating = true;
           }
-
-          // this.angularFirestore
-          //   .collection
-          //   (planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/' + quest.questId + '/comments/', ref => ref
-          //     .where('timestamp', '>', quest.comment_last_view_date))
-          //   .get()
-          //   .subscribe(newComments => {
-          //     if (newComments.size > 0) {
-          //       newExplorerRequiringModeratorAction.newComments = true;
-          //     }
-          //   });
         });
     });
-
 
     newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
       this.angularFirestore
@@ -143,5 +131,32 @@ export class ExplorerService {
     });
 
     this.store.dispatch(new actions.GetExplorersRequiringModeratorActionSuccess(newExplorersRequiringModeratorActionArray));
+  }
+
+  createExplorersRequiringModerationArray(planetExplorers: Explorer[], planetName: string) {
+    const newExplorersRequiringModeratorActionArray = [];
+    const newExplorersRequiringModeratorActionIds = [];
+
+    planetExplorers.forEach(planetExplorer => {
+      const newExplorerRequiringModeratorAction = this.createExplorerRequiringModeratorAction(planetExplorer);
+      if (newExplorersRequiringModeratorActionIds.indexOf(newExplorerRequiringModeratorAction.userId) === -1) {
+        newExplorersRequiringModeratorActionArray.push(newExplorerRequiringModeratorAction);
+        newExplorersRequiringModeratorActionIds.push(newExplorerRequiringModeratorAction.userId);
+      }
+    });
+
+    newExplorersRequiringModeratorActionArray.forEach(newExplorerRequiringModeratorAction => {
+      this.angularFirestore
+        .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
+          .where('status', '==', 'moderating'))
+        .get()
+        .subscribe(moderatingQuests => {
+          if (moderatingQuests.size > 0) {
+            newExplorerRequiringModeratorAction.isModerating = true;
+          }
+        });
+    });
+
+    this.store.dispatch(new actions.GetExplorerRequiringModerationSuccess(newExplorersRequiringModeratorActionArray));
   }
 }

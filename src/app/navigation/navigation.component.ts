@@ -18,8 +18,9 @@ export class NavigationComponent implements OnInit {
   moderatorSignedIn = false;
   signedInUser = {} as User;
   currentPlanet = {} as Planet;
+  fetchedCurrentPlanet = false;
 
-  moderatorComponents = ['dashboard', 'moderate', 'comment'];
+  moderatorComponents = ['dashboard', 'moderation', 'comment'];
   userComponents = ['dashboard', 'quests'];
   signedOutComponents = ['login', 'register'];
 
@@ -66,7 +67,9 @@ export class NavigationComponent implements OnInit {
     });
 
     this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
-      if (this.userSignedIn && !fetchedCurrentPlanet) {
+      this.fetchedCurrentPlanet = fetchedCurrentPlanet;
+
+      if (this.userSignedIn || this.moderatorSignedIn && !fetchedCurrentPlanet) {
         this.store.dispatch(new actions.RequestGetDefaultPlanet(this.signedInUser.userId));
       }
     });

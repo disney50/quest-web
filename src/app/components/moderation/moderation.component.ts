@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { Planet } from 'src/app/models/planet';
 import { ExplorerService } from 'src/app/services/explorer/explorer.service';
+import { fetchedCurrentPlanet } from '../../store/selectors';
 
 @Component({
   selector: 'app-moderation',
@@ -21,6 +22,9 @@ export class ModerationComponent implements OnInit {
   currentPlanet = {} as Planet;
   planetExplorers = [];
   explorersRequiringModeration = [];
+  fetchedCurrentPlanet = false;
+
+  allPlanets = [];
 
   constructor(private store: Store<AppState>,
     private router: Router,
@@ -38,6 +42,10 @@ export class ModerationComponent implements OnInit {
   logOutClicked() {
     this.store.dispatch(new actions.LogOutUser);
     this.navigateLogin();
+  }
+
+  selectPlanetClicked(selectedPlanet: Planet) {
+    this.store.dispatch(new actions.GetPlanetSuccess(selectedPlanet));
   }
 
   sliceAppState() {
@@ -59,14 +67,28 @@ export class ModerationComponent implements OnInit {
         this.signedInUser = signedInUser;
       });
 
+      this.store.select(selectors.fetchedCurrentPlanet).subscribe(fetchedCurrentPlanet => {
+        this.fetchedCurrentPlanet = fetchedCurrentPlanet;
+
+        if (!this.fetchedCurrentPlanet) {
+          this.store.dispatch(new actions.RequestGetPlanets);
+
+          this.store.select(selectors.allPlanets).subscribe(allPlanets => {
+            this.allPlanets = allPlanets;
+          });
+        }
+      });
+
       this.store.select(selectors.currentPlanet).subscribe(currentPlanet => {
         this.currentPlanet = currentPlanet;
+
         this.store.dispatch(new actions.RequestGetExplorers(this.currentPlanet.name));
       });
 
       this.store.select(selectors.planetExplorers).subscribe(planetExplorers => {
         this.planetExplorers = planetExplorers;
-        this.explorerService.createExplorersRequiringModeratorActionArray(this.planetExplorers, this.currentPlanet.name);
+
+        this.explorerService.createExplorersRequiringModerationArray(this.planetExplorers, this.currentPlanet.name);
       });
 
       this.store.select(selectors.explorersRequiringModeration).subscribe(explorersRequiringModeration => {

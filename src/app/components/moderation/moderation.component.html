@@ -1,68 +1,83 @@
-<div class="center bg">
-  <div class="container-fluid">
+<div class="container-fluid">
 
-    <nav class="row navbar fixed-top navbar-expand navbar-dark mx-auto">
-      <a class="navbar-brand nav-brand ml-2" routerLink="currentquests">
-        <img src="../../../assets/baseline-menu-white-48/1x/baseline_menu_white_48dp.png" />
-      </a>
+  <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
 
-      <a class="navbar-text text-large">
-        <b>{{currentPlanet.name}}</b>
-      </a>
+    <div class="col-sm-12 col-lg-6 align-self-start">
+      <div class="card-cutty-sark border">
 
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link text-white text-small" role="button" data-toggle="dropdown">
-            <img src="../../../assets/baseline-account_circle-white-48/1x/baseline_account_circle_white_48dp.png" />
-            {{signedInUser.name}}
-            <img src="../../../assets/baseline-arrow_drop_down-white-48/1x/baseline_arrow_drop_down_white_48dp.png" />
-          </a>
+        <div class="card-header border-bottom">
+          <b class="text-large">EXPLORERS</b>
+        </div>
 
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item text-white" (click)="logOutClicked()">Log Out</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
+        <div class="card-body mb-0 pb-0">
+          <div *ngFor="let explorer of explorersRequiringModeration" class="row">
+            <div class="col-12">
+              <div class="card-gothic m-2 py-2" style="cursor: pointer;" (click)="explorerClicked(explorer)">
+                <div class="row justify-content-center align-items-center text-center">
+                  <b class="text-medium">
+                    {{explorer.name}} {{explorer.surname}}
+                  </b>
+                </div>
 
-    <div class="row justify-content-center align-items-center text-center mt-5 mb-5">
+                <div class="row justify-content-center align-items-center text-center">
+                  <span class="text-medium text-uppercase">XP: {{explorer.xp}}</span>
+                </div>
 
-      <div class="col-sm-12 col-lg-4 align-self-start pt-5 mb-2">
-        <div class="card-cutty-sark border">
-
-          <div class="card-header border-bottom">
-            <b class="text-large">EXPLORERS</b>
-          </div>
-
-          <div class="card-body mb-0 pb-0">
-            <div *ngFor="let explorer of explorersRequiringModeration" class="row">
-              <div class="col-12">
-                <div class="card-gothic m-2 py-2" style="cursor: pointer;" (click)="explorerClicked(explorer)">
-                  <div class="row justify-content-center align-items-center text-center">
-                    <b class="text-medium">
-                      {{explorer.name}} {{explorer.surname}}
-                    </b>
-                  </div>
-
-                  <div class="row justify-content-center align-items-center text-center">
-                    <span class="text-medium text-uppercase">XP: {{explorer.xp}}</span>
-                  </div>
-
-                  <div claxss="row justify-content-center align-items-center text-center">
-                    <span *ngIf="explorer.isModerating" class="badge badge-dark p-2 mr-2">moderating quest</span>
-                    <span *ngIf="explorer.newComments" class="badge badge-light p-2">new comments</span>
-                  </div>
+                <div class="row justify-content-center align-items-center text-center">
+                  <span *ngIf="explorer.isModerating" class="badge badge-dark p-2 mr-2">moderating quest</span>
+                  <span *ngIf="explorer.newComments" class="badge badge-light p-2">new comments</span>
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="card-footer" style="border-top: none"></div>
-
         </div>
-      </div>
 
+        <div class="card-footer" style="border-top: none"></div>
+
+      </div>
     </div>
 
   </div>
+
+  <div class="modal" role="dialog" [ngStyle]="{'display': !fetchedCurrentPlanet ? 'block': 'none', 'opacity': 1}"
+    (click)="image = null">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right">
+              <span><b>X</b></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center text-center">
+          <div class="col-12">
+
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-lg-6" *ngFor="let planet of allPlanets">
+                <div class="card-cutty-sark border-gothic mb-3">
+
+                  <div class="card-body text-center">
+                    <img class="img-small mx-auto" src="../../../assets/{{planet.name}}.png" />
+                    <h4>{{planet.name}}</h4>
+                    <span>{{planet.description}}</span>
+                  </div>
+
+                  <button class="btn-gothic" (click)="selectPlanetClicked(planet)">
+                    SELECT
+                  </button>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>
