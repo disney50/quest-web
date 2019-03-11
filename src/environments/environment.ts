@@ -4,31 +4,31 @@
 
 // dev environment
 
-// export const environment = {
-//   production: false,
-//   firebase: {
-//     apiKey: 'AIzaSyCu8Wuh_LKX4-l-RsWIp9iDRhkTMuc0qv0',
-//     authDomain: 'questdevelop.firebaseapp.com',
-//     databaseURL: 'https://questdevelop.firebaseio.com',
-//     projectId: 'questdevelop',
-//     storageBucket: 'questdevelop.appspot.com',
-//     messagingSenderId: '832647462899'
-//   }
-// };
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyCu8Wuh_LKX4-l-RsWIp9iDRhkTMuc0qv0',
+    authDomain: 'questdevelop.firebaseapp.com',
+    databaseURL: 'https://questdevelop.firebaseio.com',
+    projectId: 'questdevelop',
+    storageBucket: 'questdevelop.appspot.com',
+    messagingSenderId: '832647462899'
+  }
+};
 
 // prod environment
 
-export const environment = {
-  production: true,
-  firebase: {
-    apiKey: 'AIzaSyDTnl6-D3P_ACn2PE1hQnLKmK9WV74MzCs',
-    authDomain: 'quest-98e6d.firebaseapp.com',
-    databaseURL: 'https://quest-98e6d.firebaseio.com',
-    projectId: 'quest-98e6d',
-    storageBucket: 'quest-98e6d.appspot.com',
-    messagingSenderId: '94325588580'
-  }
-};
+// export const environment = {
+//   production: true,
+//   firebase: {
+//     apiKey: 'AIzaSyDTnl6-D3P_ACn2PE1hQnLKmK9WV74MzCs',
+//     authDomain: 'quest-98e6d.firebaseapp.com',
+//     databaseURL: 'https://quest-98e6d.firebaseio.com',
+//     projectId: 'quest-98e6d',
+//     storageBucket: 'quest-98e6d.appspot.com',
+//     messagingSenderId: '94325588580'
+//   }
+// };
 
 /*
  * For easier debugging in development mode, you can import the following file
