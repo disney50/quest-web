@@ -100,6 +100,14 @@ export class ExplorerComponent implements OnInit {
     this.store.select(selectors.explorerQuests).subscribe(explorerQuests => {
       if (this.moderatorSignedIn) {
         this.explorerQuests = explorerQuests;
+
+        this.explorerQuests.forEach(explorerQuest => {
+          if (explorerQuest.comment_last_view_date === undefined) {
+            this.questService.updateLastViewCommentDate(this.currentPlanet.name, this.selectedExplorer.userId, explorerQuest.questId);
+            this.store.dispatch(new actions.RequestGetExplorerQuests(this.currentPlanet.name, this.selectedExplorer.userId));
+          }
+        });
+
         this.questService.createQuestsWithNewCommentsArray(this.explorerQuests, this.currentPlanet.name, this.selectedExplorer.userId);
       }
     });

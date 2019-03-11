@@ -254,7 +254,7 @@ export class QuestComponent implements OnInit {
           this.selectedQuest.questId));
         this.setStatus();
         this.sliceAllComments();
-        this.questService.updateLastViewCommentDate(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest);
+        this.questService.updateLastViewCommentDate(this.currentPlanet.name, this.selectedExplorer.userId, this.selectedQuest.questId);
       }
     });
   }

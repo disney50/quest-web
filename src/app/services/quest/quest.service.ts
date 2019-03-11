@@ -38,7 +38,7 @@ export class QuestService {
   }
 
   moderateQuest(planetName: string, selectedExplorer: Explorer, selectedQuest: Quest) {
-    this.updateLastViewCommentDate(planetName, selectedExplorer.userId, selectedQuest);
+    this.updateLastViewCommentDate(planetName, selectedExplorer.userId, selectedQuest.questId);
 
     this.angularFirestore.collection(planetName + '/explorers/entries/' + selectedExplorer.userId + '/quests/')
       .doc(selectedQuest.questId).update(selectedQuest.toData());
@@ -112,12 +112,18 @@ export class QuestService {
     return this.possibleQuests;
   }
 
-  updateLastViewCommentDate(planetName: string, userId: string, currentQuest: Quest) {
-    let updatedQuest = {} as Quest;
-    updatedQuest = currentQuest;
-    updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
+  updateLastViewCommentDate(planetName: string, userId: string, questId: string) {
+    // let updatedQuest = {} as Quest;
+    // updatedQuest = currentQuest;
+    // updatedQuest.comment_last_view_date = firebase.firestore.Timestamp.now();
+
+    // this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
+    //   .doc(updatedQuest.questId).set(updatedQuest.toData());
+
+    const comment_last_view_date = firebase.firestore.Timestamp.now();
+
     this.angularFirestore.collection(planetName + '/explorers/entries/' + userId + '/quests/')
-      .doc(updatedQuest.questId).set(updatedQuest.toData());
+      .doc(questId).update({ comment_last_view_date: comment_last_view_date });
   }
 
   createQuestWithNewComments(explorerQuest: Quest) {

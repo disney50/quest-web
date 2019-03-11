@@ -81,7 +81,7 @@ export class ExplorerService {
             activeQuests.forEach(activeQuest => {
               const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
               if (newActiveQuest.comment_last_view_date === undefined) {
-                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest);
+                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest.questId);
               }
               newActiveQuestsArray.push(newActiveQuest);
               this.angularFirestore
@@ -105,7 +105,6 @@ export class ExplorerService {
       this.angularFirestore
         .collection(planetName + '/explorers/entries/' + newExplorerRequiringModeratorAction.userId + '/quests/', ref => ref
           .where('status', '==', 'inprogress'))
-        // .where('status', '==', 'inprogress'))
         .get()
         .subscribe(activeQuests => {
           if (activeQuests.size > 0) {
@@ -113,7 +112,7 @@ export class ExplorerService {
             activeQuests.forEach(activeQuest => {
               const newActiveQuest = new Quest(activeQuest.id, activeQuest.data() as QuestData);
               if (newActiveQuest.comment_last_view_date === undefined) {
-                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest);
+                this.questService.updateLastViewCommentDate(planetName, newExplorerRequiringModeratorAction.userId, newActiveQuest.questId);
               }
               newActiveQuestsArray.push(newActiveQuest);
               this.angularFirestore
@@ -188,7 +187,7 @@ export class ExplorerService {
               const newModeratingQuest = new Quest(moderatingQuest.id, moderatingQuest.data() as QuestData);
 
               if (newModeratingQuest.comment_last_view_date === undefined) {
-                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newModeratingQuest);
+                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newModeratingQuest.questId);
               }
 
               this.angularFirestore
@@ -221,7 +220,7 @@ export class ExplorerService {
               const newInProgressQuest = new Quest(inProgressQuest.id, inProgressQuest.data() as QuestData);
 
               if (newInProgressQuest.comment_last_view_date === undefined) {
-                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newInProgressQuest);
+                this.questService.updateLastViewCommentDate(planetName, planetExplorer.userId, newInProgressQuest.questId);
               }
 
               this.angularFirestore
