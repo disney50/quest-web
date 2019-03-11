@@ -115,7 +115,8 @@ export class QuestComponent implements OnInit {
       .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName);
     storageRef.getDownloadURL().then(url => {
       this.image = url;
-    });
+    })
+    .catch(error => this.message = 'There was a problem...');
   }
 
   getDocuments() {
