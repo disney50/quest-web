@@ -42,7 +42,7 @@ export class QuestComponent implements OnInit {
   selectedExplorer = {} as Explorer;
   uploads = [];
   image = null;
-
+  uploadMessage = null;
   newXP = 0;
   relaunchStatus = false;
   completedStatus = true;
@@ -212,10 +212,10 @@ export class QuestComponent implements OnInit {
     if (!this.selectedFile) {
       this.message = 'You forgot to upload a file';
     } else {
-      this.fileService
-        .uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest.questId);
-      this.questService.submitQuest(this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest);
-      this.navigateDashboard();
+      this.fileService.uploadFileToStorage(this.selectedFile, this.currentPlanet.name, this.signedInUser.userId, this.selectedQuest)
+        .then(uploadMessage => {
+          this.uploadMessage = uploadMessage;
+        });
     }
   }
 
