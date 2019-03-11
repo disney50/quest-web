@@ -111,12 +111,30 @@ export class QuestComponent implements OnInit {
   }
 
   fileClicked(selectedUploadName: string) {
-    const storageRef = firebase.storage().ref()
-      .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName);
-    storageRef.getDownloadURL().then(url => {
-      this.image = url;
-    })
-    .catch(error => this.message = 'There was a problem...');
+    firebase.storage()
+      .ref()
+      .child(this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName)
+      .getDownloadURL()
+      .then(url => {
+        this.image = url;
+      })
+      .catch(firstPathError => {
+        firebase.storage()
+          .ref()
+          .child('uploads/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName)
+          .getDownloadURL().then(url => {
+            this.image = url;
+          })
+          .catch(secondPathError => {
+            firebase.storage()
+              .ref()
+              .child('uploads/' + this.currentPlanet.name + '/' + this.selectedExplorer.userId + '/' + this.selectedQuest.questId + '/' + selectedUploadName)
+              .getDownloadURL().then(url => {
+                this.image = url;
+              })
+              .catch(thirdPathError => this.message = 'There was a problem...');
+          });
+      });
   }
 
   getDocuments() {
